@@ -1,4 +1,4 @@
-# 🌀 AniWorld — Ultimate Anime Portal
+# 🌀 Hashira — Ultimate Anime Portal
 
 Платформа для просмотра аниме, чтения манги, общения и покупок в одном месте.
 
