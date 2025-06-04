@@ -3,6 +3,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useSearchStore } from "../store/searchStore";
+import { useDebounce } from "use-debounce";
 
 const fetchSearchedAnime = async (animeName: string) => {
   const url = `https://api.jikan.moe/v4/anime?q=${animeName}&limit=10`;
@@ -12,12 +13,13 @@ const fetchSearchedAnime = async (animeName: string) => {
 };
 
 const HomePage = () => {
-  const query = useSearchStore((state) => state.query);
+  const rawQuery = useSearchStore((state) => state.query);
+  const [debouncedQuery] = useDebounce(rawQuery, 600);
 
   const { data: animeList, isLoading, error } = useQuery({
-    queryKey: ["searchedAnime", query],
-    queryFn: () => fetchSearchedAnime(query),
-    enabled: !!query,
+    queryKey: ["searchedAnime", debouncedQuery],
+    queryFn: () => fetchSearchedAnime(debouncedQuery),
+    enabled: !!debouncedQuery,
   });
 
   return (
