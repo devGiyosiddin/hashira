@@ -2,30 +2,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useSearchStore } from "../store/searchStore";
 
-const fetchSearchedAnime = async () => {
-  const animeName = "bleach";
+const fetchSearchedAnime = async (animeName: string) => {
   const url = `https://api.jikan.moe/v4/anime?q=${animeName}&limit=10`;
   const response = await fetch(url);
   const data = await response.json();
-  return data.data; // именно так, потому что внутри JSON поле "data"
+  return data.data;
 };
 
 const HomePage = () => {
+  const query = useSearchStore((state) => state.query);
+
   const { data: animeList, isLoading, error } = useQuery({
-    queryKey: ["searchedAnime"],
-    queryFn: fetchSearchedAnime,
+    queryKey: ["searchedAnime", query],
+    queryFn: () => fetchSearchedAnime(query),
+    enabled: !!query,
   });
 
   return (
     <>
       <div className="px-4 sm:px-8 lg:px-16 py-8 bg-gray-50 min-h-screen">
         <FontAwesomeIcon icon={faSearch} />
-        <div>salom</div>
 
         <section className="text-center mb-10">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-600 mb-4">
-            Добро пожаловать в Hashira ✨
+            Hashira - anime portaliga xush kelibsiz! ✨
           </h1>
           <p className="text-gray-600 text-lg max-w-xl mx-auto">
             Твой личный аниме-мир: новости, аниме, манга, форум, маркет и многое другое
