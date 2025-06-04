@@ -15,8 +15,7 @@ html {
 }
 
 *:focus {
-    outline: 3px dashed blue;
-    outline-offset: 3px;
+    outline: none;
 }
 
 body {
