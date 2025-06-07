@@ -26,10 +26,10 @@ body {
     font-size: ;
     font-weight: ;
     line-height: 1.5;
-    color: #222;
+    color: #e0e0ff;
     padding: 0;
     margin: 0;
-    background-color: #fff;
+    background-color: #0f0f1b;
 }
 
 img {
@@ -61,7 +61,6 @@ img {
 .main-content {
     flex-grow: 1;
 }
-
 
 
 /* RETINA */
