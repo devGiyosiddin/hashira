@@ -1,0 +1,14 @@
+.scrollbar-thin::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #a855f7;
+    /* Tailwind purple-500 */
+    border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background-color: #1e1b2e;
+    /* Dark background */
+}
