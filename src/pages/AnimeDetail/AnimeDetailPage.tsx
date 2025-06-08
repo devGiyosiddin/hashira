@@ -67,16 +67,16 @@ const AnimeDetailPage = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showTrailer, setShowTrailer] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const [scrollY, setScrollY] = useState(0);
+  // const [scrollY, setScrollY] = useState(0);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => setScrollY(window.scrollY);
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
 
   useEffect(() => {
     const fetchAnime = async () => {
@@ -149,7 +149,7 @@ const AnimeDetailPage = () => {
           ref={parallaxRef}
           className="absolute inset-0 w-full h-full"
           style={{
-            transform: `translateY(${scrollY * 0.5}px)`,
+            // {transform: `translateY(${scrollY * 0.5}px)`},
             backgroundImage: `url(${anime.images.jpg.large_image_url})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
