@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useSearchStore } from "../store/searchStore";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -130,14 +131,15 @@ const Search = () => {
       {/* Сетка результатов */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {results.map((anime) => (
-          <div
-            key={anime.mal_id}
-            className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 cursor-pointer"
-            style={{
-              background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-            }}
-          >
+          <Link
+          key={anime.mal_id}
+          to={`/anime/${anime.mal_id}`}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
+          style={{
+            background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+          }}
+        >
             {/* Фоновое изображение */}
             <div className="absolute inset-0 z-0">
               <img
@@ -210,7 +212,7 @@ const Search = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </Link>
         ))}
       </div>
 
