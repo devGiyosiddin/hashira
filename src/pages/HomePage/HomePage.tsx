@@ -60,6 +60,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
 
   return (
     <Link 
+      key={item.mal_id}
       to={`/anime/${item.mal_id}`}
       className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
       style={{
@@ -107,7 +108,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
             {item.synopsis 
               ? item.synopsis.slice(0, 120) + (item.synopsis.length > 120 ? '...' : '')
               : 'Описание недоступно'}
-          </p>
+          </p>\77777777777
         </div>
           
         {/* Favorite Button - только кнопка избранного */}
@@ -187,7 +188,7 @@ const AnimeSection = ({ title, data, isLoading, error, icon }: {
 );
 
 const HomePage = () => {
-  const rawQuery = useSearchStore((state) => state.query);
+const rawQuery = useSearchStore((state) => state.query);
   const [debouncedQuery] = useDebounce(rawQuery, 600);
   const observerRef = useRef<HTMLDivElement>(null);
 
