@@ -108,7 +108,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
             {item.synopsis 
               ? item.synopsis.slice(0, 120) + (item.synopsis.length > 120 ? '...' : '')
               : 'Описание недоступно'}
-          </p>\77777777777
+          </p>
         </div>
           
         {/* Favorite Button - только кнопка избранного */}
