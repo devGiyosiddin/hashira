@@ -1,7 +1,7 @@
 import './animeDetailPage.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom'; // Импортируем настоящий useParams
-import { Star, Play, Heart, Bookmark, Share2, Calendar, Clock, Users, Award, TrendingUp, Eye, Volume2, VolumeX } from 'lucide-react';
+import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp } from 'lucide-react';
 
 type AnimeDetails = {
   mal_id: number;
