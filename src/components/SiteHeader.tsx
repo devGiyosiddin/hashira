@@ -24,7 +24,6 @@ const fetchSearchedAnime = async (animeName: string): Promise<AnimeSearchResult[
 };
 
 const Header = () => {
-    const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<AnimeSearchResult[]>([]);
@@ -84,14 +83,6 @@ const Header = () => {
         setSearchQuery("");
         navigate(`/anime/${anime.mal_id}`);
     };
-
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 10);
-        };
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
     
     return (
         <header

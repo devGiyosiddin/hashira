@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Crown, LogIn } from 'lucide-react';
+import { Search, Crown, } from 'lucide-react';
 
 const Header: React.FC = () => {
   return (

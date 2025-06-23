@@ -1,9 +1,10 @@
 import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
-import {PlayCircle, Maximize} from 'lucide-react';
+// import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
+import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight} from 'lucide-react';
+// import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
+import { PlayCircle } from 'lucide-react';
 
 type AnimeDetails = {
   mal_id: number;
@@ -85,27 +86,27 @@ const AnimeDetailPage = () => {
   const [showTrailer, setShowTrailer] = useState(false);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState<number>(1);
-
-  const playerRef = useRef<Player | null>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
+
+  console.log(showVideoPlayer ? 'Video Player is shown' : 'Video Player is hidden');
 
   // Проверка: фильм или 1 эпизод
   const isMovieOrSingleEpisode = () => {
     return anime && (anime.type === 'Movie' || anime.episodes === 1);
   };
 
-  const nextEpisode = () => {
-    if (anime && currentEpisode < (anime.episodes || 0)) {
-      setCurrentEpisode((prev) => prev + 1);
-    }
-  };
+  // const nextEpisode = () => {
+  //   if (anime && currentEpisode < (anime.episodes || 0)) {
+  //     setCurrentEpisode((prev) => prev + 1);
+  //   }
+  // };
 
-  const previousEpisode = () => {
-    if (currentEpisode > 1) {
-      setCurrentEpisode((prev) => prev - 1);
-    }
-  };
-
+  // const previousEpisode = () => {
+  //   if (currentEpisode > 1) {
+  //     setCurrentEpisode((prev) => prev - 1);
+  //   }
+  // };
+  
   useEffect(() => {
     const fetchAnime = async () => {
       try {
@@ -179,7 +180,7 @@ const AnimeDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
+    <div className="min-h-screen">
       {/* Hero Section with Parallax */}
       <div className="relative h-screen overflow-hidden">
         {/* Background Image with Parallax */}
@@ -190,29 +191,9 @@ const AnimeDetailPage = () => {
             backgroundImage: `url(${anime.images.jpg.large_image_url})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            filter: 'blur(3px) brightness(0.3)',
+            filter: 'blur(30px) brightness(0.3)',
           }}
         />
-        
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-slate-900/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-transparent to-slate-900/80" />
-        
-        {/* Floating Particles */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-purple-500/30 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
-              }}
-            />
-          ))}
-        </div>
 
         {/* Main Content */}
         <div className="relative z-10 h-full flex items-center">
@@ -310,8 +291,8 @@ const AnimeDetailPage = () => {
               {/* Right Content - Poster */}
               <div className="flex justify-center lg:justify-end">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="relative overflow-hidden rounded-3xl shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                  <div className="absolute -inset-4 rounded-3xl blur-2xl"></div>
+                  <div className="relative overflow-hidden rounded-3xl">
                     <img
                       src={anime.images.jpg.large_image_url}
                       alt={anime.title}
@@ -581,100 +562,76 @@ const AnimeDetailPage = () => {
         )}
       </div>
       
-      <section className="py-10 px-6 lg:px-16">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-2xl font-bold mb-4">{anime.title}</h2>
-          <div className="relative bg-black rounded-xl overflow-hidden shadow-lg">
-            <VideoPlayer
-              options={{
-                autoplay: false,
-                controls: true,
-                responsive: true,
-                fluid: true,
-                sources: [{
-                  src: '/test.mp4',
-                  type: 'video/mp4'
-                }],
-                playbackRates: [0.5, 1, 1.25, 1.5, 2]
-              }}
-              onReady={player => {
-                playerRef.current = player;
-              }}
-            />
+      {/* Episode List Sidebar - Only for series */}
+      {!isMovieOrSingleEpisode() && (
+        <div className="w-80 bg-slate-900 border-l border-slate-700 overflow-y-auto">
+          <div className="p-4 border-b border-slate-700">
+            <h4 className="text-white font-bold">Episodes</h4>
+            <p className="text-gray-400 text-sm">{anime.episodes} episodes</p>
+          </div>
+          
+          <div className="p-2 space-y-2">
+            {episodes.length > 0 ? (
+              episodes.map((episode, index) => (
+                <div
+                  key={episode.mal_id}
+                  onClick={() => setCurrentEpisode(index + 1)}
+                  className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                    currentEpisode === index + 1
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
+                      currentEpisode === index + 1
+                        ? 'bg-white text-purple-600'
+                        : 'bg-slate-600 text-gray-300'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">
+                        Episode {index + 1}
+                      </p>
+                      {episode.title && (
+                        <p className="text-xs opacity-75 truncate">
+                          {episode.title}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              Array.from({ length: anime.episodes || 0 }, (_, index) => (
+                <div
+                  key={index}
+                  onClick={() => setCurrentEpisode(index + 1)}
+                  className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                    currentEpisode === index + 1
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
+                      currentEpisode === index + 1
+                        ? 'bg-white text-purple-600'
+                        : 'bg-slate-600 text-gray-300'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium">Episode {index + 1}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
-      </section>
-     
-      {/* Episode List Sidebar - Only for series */}
-          {!isMovieOrSingleEpisode() && (
-            <div className="w-80 bg-slate-900 border-l border-slate-700 overflow-y-auto">
-              <div className="p-4 border-b border-slate-700">
-                <h4 className="text-white font-bold">Episodes</h4>
-                <p className="text-gray-400 text-sm">{anime.episodes} episodes</p>
-              </div>
-              
-              <div className="p-2 space-y-2">
-                {episodes.length > 0 ? (
-                  episodes.map((episode, index) => (
-                    <div
-                      key={episode.mal_id}
-                      onClick={() => setCurrentEpisode(index + 1)}
-                      className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                        currentEpisode === index + 1
-                          ? 'bg-purple-600 text-white'
-                          : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
-                          currentEpisode === index + 1
-                            ? 'bg-white text-purple-600'
-                            : 'bg-slate-600 text-gray-300'
-                        }`}>
-                          {index + 1}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate">
-                            Episode {index + 1}
-                          </p>
-                          {episode.title && (
-                            <p className="text-xs opacity-75 truncate">
-                              {episode.title}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  Array.from({ length: anime.episodes || 0 }, (_, index) => (
-                    <div
-                      key={index}
-                      onClick={() => setCurrentEpisode(index + 1)}
-                      className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                        currentEpisode === index + 1
-                          ? 'bg-purple-600 text-white'
-                          : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
-                          currentEpisode === index + 1
-                            ? 'bg-white text-purple-600'
-                            : 'bg-slate-600 text-gray-300'
-                        }`}>
-                          {index + 1}
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium">Episode {index + 1}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
+      )}
       
 
       {/* Trailer Modal */}
