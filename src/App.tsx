@@ -4,7 +4,6 @@ import HomePage from './pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router-dom';
 import Search from './components/Search';
 import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
-import VideoPlayer from './components/VideoPlayer/VideoPlayer';
 
 function App() {
   return (
