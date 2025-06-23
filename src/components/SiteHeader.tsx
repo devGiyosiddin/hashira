@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Settings2 } from "lucide-react";
 
 type AnimeSearchResult = {
     mal_id: number;
@@ -94,36 +95,20 @@ const Header = () => {
     
     return (
         <header
-            className="sticky top-0 z-50 overflow-visible border-b border-zinc-700/30"
-            style={{
-                background: scrolled 
-                    ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(24, 24, 27, 0.95))' 
-                    : 'linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(24, 24, 27, 0.8))',
-                backdropFilter: "blur(20px)",
-                boxShadow: scrolled 
-                    ? "0 8px 32px rgba(147, 51, 234, 0.3), 0 0 0 1px rgba(147, 51, 234, 0.1)" 
-                    : "0 4px 16px rgba(0, 0, 0, 0.3)"
-            }}
+            className="relative sticky top-0 z-50 border-b border-zinc-700/30 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-black/30 before:to-transparent before:z-[-1]"
+            style={{backdropFilter: 'blur(20px'}}
         >
             <div className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-16 py-4">
                 {/* Logo */}
                 <Link
                     to="/"
-                    className="flex items-center gap-3 group relative select-none"
+                    className="flex items-center gap-3 group relative select-none transition-transform duration-300 hover:scale-90"
                 >
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-purple-500/50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <img
-                                className="w-12 h-12 sm:w-14 sm:h-14 object-contain rounded-full"
-                                src="../../public/logos/violet-logo.png"
-                                alt="Hashira website logo"
-                            />
-                        </div>
-                    </div>
-                    <span className="text-2xl sm:text-3xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300">
-                        HASHIRA
-                    </span>
+                    <img
+                        src="/logos/hashira-440x130.png"
+                        alt="site logo"
+                        className="w-[171px] h-[50x] object-contain rounded-full"
+                        />
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -147,7 +132,7 @@ const Header = () => {
                 {/* Search and Actions */}
                 <div className="flex items-center gap-4">
                     {/* Search Bar */}
-                    <div ref={searchContainerRef} className="relative hidden sm:block">
+                    <div ref={searchContainerRef} className="flex items-center relative gap-2 w-full max-w-md">
                         <input
                             ref={inputRef}
                             type="search"
@@ -155,9 +140,9 @@ const Header = () => {
                             value={searchQuery}
                             onChange={handleInputChange}
                             onFocus={() => searchResults.length > 0 && setShowDropdown(true)}
-                            className="w-64 py-2.5 pl-5 pr-12 rounded-xl border border-zinc-600/50 bg-zinc-800/50 backdrop-blur-sm text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                            className="w-64 py-2.5 pl-5 pr-12 rounded-xl border border-zinc-600/50 bg-(--bg-color) backdrop-blur-sm text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                             style={{
-                                background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
+                                background: 'var(--button-bg-color)',
                                 boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05)'
                             }}
                         />
@@ -214,26 +199,13 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-
                     {/* Filter Button */}
                     <Link
                         to="/search"
-                        className="p-2.5 rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-600/50 text-gray-300 hover:text-purple-400 hover:border-purple-500/50 transition-all duration-300 shadow-lg"
-                        style={{
-                            background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
-                            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05)'
-                        }}
+                        className="p-1.5 rounded-xl block"
                     >
-                        <FontAwesomeIcon icon={faSliders} className="w-4 h-4" />
+                        <Settings2  className="w-6 h-6"/>
                     </Link>
-
-                    {/* Login Button */}
-                    <button
-                        type="button"
-                        className="cursor-pointer hidden sm:block px-6 py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 border border-purple-500/50 shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
-                    >
-                        Kirish
-                    </button>
 
                     {/* Mobile Menu Button */}
                     <button
@@ -246,6 +218,13 @@ const Header = () => {
                         <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} className="w-5 h-5" />
                     </button>
                 </div>
+                {/* Login Button */}
+                <button
+                        type="button"
+                        className="cursor-pointer hidden sm:block px-6 py-2.5 rounded-xl font-semibold text-white bg-(--button-bg-color) transition-all duration-300 transform hover:scale-105"
+                    >
+                    Kirish
+                </button>
             </div>
 
             {/* Mobile Menu */}
