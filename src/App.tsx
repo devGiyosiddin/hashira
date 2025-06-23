@@ -1,5 +1,5 @@
 import './App.css';
-import Header from './components/SiteHeader';
+import SiteHeader from './components/Header/SiteHeader';
 import HomePage from './pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router-dom';
 import Search from './components/Search';
@@ -8,8 +8,9 @@ import VideoPlayer from './components/VideoPlayer/VideoPlayer';
 
 function App() {
   return (
-      <div className="min-h-screen bg-slate-900">
-      <Header />
+      <div className="min-h-screen">
+      <SiteHeader />
+        {/* Main content area */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path='/search' element={<Search />}></Route>
@@ -20,12 +21,6 @@ function App() {
           <Route path="/forum" element={<div>Forum Page</div>} />
           <Route path="/search" element={<div>Search Page</div>} />
         </Routes>
-        <VideoPlayer
-        source="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-        type="hls"
-        title="Тестовое видео"
-        poster="https://via.placeholder.com/1280x720.png?text=Poster"
-      />
       </div>
   );
 }
