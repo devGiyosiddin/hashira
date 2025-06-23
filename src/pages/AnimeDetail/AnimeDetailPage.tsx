@@ -4,9 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import '@videojs/themes/dist/forest/index.css'; // или 'city', 'fantasy', 'sea'
-import videojs from 'video.js';
 import {PlayCircle, Maximize} from 'lucide-react';
-type Player = videojs.Player;
 
 type AnimeDetails = {
   mal_id: number;
@@ -90,7 +88,6 @@ const AnimeDetailPage = () => {
   const [currentEpisode, setCurrentEpisode] = useState<number>(1);
 
   const playerRef = useRef<Player | null>(null);
-  const videoRef = useRef<HTMLDivElement | null>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   // Проверка: фильм или 1 эпизод
@@ -326,13 +323,6 @@ const AnimeDetailPage = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-purple-400 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-purple-400 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -591,70 +581,32 @@ const AnimeDetailPage = () => {
           </section>
         )}
       </div>
-
-      {/* Video Player Modal */}
-      {showVideoPlayer && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="w-full h-full">
-            <VideoPlayer 
+      
+      <section className="py-10 px-6 lg:px-16">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl font-bold mb-4">{anime.title}</h2>
+          <div className="relative bg-black rounded-xl overflow-hidden shadow-lg">
+            <VideoPlayer
               options={{
-                autoplay: true,
+                autoplay: false,
                 controls: true,
                 responsive: true,
                 fluid: true,
                 sources: [{
-                  src: '/test.mp4', // Локальный тестовый файл
+                  src: '/test.mp4',
                   type: 'video/mp4'
-                }]
+                }],
+                playbackRates: [0.5, 1, 1.25, 1.5, 2]
               }}
               onReady={player => {
                 playerRef.current = player;
-                player.httpSourceSelector({ default: 'auto' });
-                player.controlBar.addChild('QualitySelector');
               }}
-              
             />
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white flex items-center justify-between">
-                <h3 className="text-lg">Episode {currentEpisode}: {episodes.find(e => e.mal_id === currentEpisode)?.title || ''}</h3>
-                <div className="flex items-center space-x-4">
-                    <button onClick={previousEpisode} disabled={currentEpisode === 1} className="disabled:opacity-50"><SkipBack /></button>
-                    <button onClick={nextEpisode} disabled={currentEpisode === (anime?.episodes || 0)} className="disabled:opacity-50"><SkipForward /></button>
-                </div>
-                      <>
-                        <button
-                          onClick={previousEpisode}
-                          disabled={currentEpisode <= 1}
-                          className="p-2 hover:bg-white/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          <SkipBack className="w-6 h-6 text-white" />
-                        </button>
-                        
-                        <button
-                          onClick={nextEpisode}
-                          disabled={currentEpisode >= (anime.episodes || 0)}
-                          className="p-2 hover:bg-white/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          <SkipForward className="w-6 h-6 text-white" />
-                        </button>
-                      </>
-                    
-                    <button
-                      onClick={() => {
-                        if (videoRef.current) {
-                          if (videoRef.current.requestFullscreen) {
-                            videoRef.current.requestFullscreen();
-                          }
-                        }
-                      }}
-                      className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                    >
-                      <Maximize className="w-6 h-6 text-white" />
-                    </button>
-            </div>
           </div>
         </div>
-      )}
-          {/* Episode List Sidebar - Only for series */}
+      </section>
+     
+      {/* Episode List Sidebar - Only for series */}
           {!isMovieOrSingleEpisode() && (
             <div className="w-80 bg-slate-900 border-l border-slate-700 overflow-y-auto">
               <div className="p-4 border-b border-slate-700">
@@ -747,59 +699,6 @@ const AnimeDetailPage = () => {
           </div>
         </div>
       )}
-      <section className="py-10 px-6 lg:px-16">
-  <div className="container mx-auto max-w-4xl">
-    <h2 className="text-2xl font-bold mb-4">Смотреть онлайн</h2>
-    <div className="relative bg-black rounded-xl overflow-hidden shadow-lg">
-      <VideoPlayer
-        options={{
-          autoplay: false,
-          controls: true,
-          responsive: true,
-          fluid: true,
-          sources: [{
-            src: '/test.mp4',
-            type: 'video/mp4'
-          }],
-          playbackRates: [0.5, 1, 1.25, 1.5, 2]
-        }}
-        onReady={player => {
-          playerRef.current = player;
-        }}
-      />
-      {/* Кастомные кнопки */}
-      {/* <div className="absolute bottom-4 left-4 flex gap-2 z-10">
-        <button
-          onClick={() => playerRef.current && playerRef.current.currentTime(playerRef.current.currentTime() - 10)}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >⏪ 10с</button>
-        <button
-          onClick={() => playerRef.current && playerRef.current.currentTime(playerRef.current.currentTime() + 10)}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >10с ⏩</button>
-        <button
-          onClick={() => playerRef.current && playerRef.current.playbackRate(1)}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >1x</button>
-        <button
-          onClick={() => playerRef.current && playerRef.current.playbackRate(1.5)}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >1.5x</button>
-        <button
-          onClick={() => playerRef.current && playerRef.current.playbackRate(2)}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >2x</button>
-        <button
-          onClick={() => {
-            const el = playerRef.current?.el();
-            if (el && el.requestFullscreen) el.requestFullscreen();
-          }}
-          className="bg-gray-800 text-white px-3 py-2 rounded hover:bg-purple-600 transition"
-        >⛶</button>
-      </div> */}
-    </div>
-  </div>
-</section>
     </div>
   );
 };
