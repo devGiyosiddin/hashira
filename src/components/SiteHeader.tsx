@@ -127,7 +127,7 @@ const Header = () => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <div className="hidden lg:flex items-center gap-8">
+                {/* <div className="hidden lg:flex items-center gap-8">
                     <nav className="flex items-center gap-6">
                         <Link to="/anime" className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium">
                             Anime
@@ -142,7 +142,7 @@ const Header = () => {
                             Forum
                         </Link>
                     </nav>
-                </div>
+                </div> */}
 
                 {/* Search and Actions */}
                 <div className="flex items-center gap-4">
@@ -269,7 +269,7 @@ const Header = () => {
                     </div>
 
                     {/* Mobile Navigation */}
-                    <nav className="flex flex-col gap-3 mb-4">
+                    {/* <nav className="flex flex-col gap-3 mb-4">
                         <Link to="/anime" className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium py-2">
                             Anime
                         </Link>
@@ -282,7 +282,7 @@ const Header = () => {
                         <Link to="/forum" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 font-medium py-2">
                             Forum
                         </Link>
-                    </nav>
+                    </nav> */}
 
                     {/* Mobile Login */}
                     <button
