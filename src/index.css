@@ -1,5 +1,6 @@
 @import url('App.css');
 @import url('/src/assets/normalize.css');
+@import url('theme.css');
 
 /* GLOBAL STYLES */
 html {
