@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
-import '@videojs/themes/dist/forest/index.css'; // или 'city', 'fantasy', 'sea'
 import {PlayCircle, Maximize} from 'lucide-react';
 
 type AnimeDetails = {
