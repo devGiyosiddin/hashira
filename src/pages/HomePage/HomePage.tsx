@@ -33,6 +33,7 @@ type Anime = {
   episodes?: number;
 };
 
+
 // API функции
 const fetchTopAnime = async () => {
   const url = `https://api.jikan.moe/v4/anime?order_by=score&sort=desc&limit=10&min_score=8`;
@@ -90,7 +91,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
 
         {/* Genre Tags */}
         <div className="absolute top-4 left-4 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
-          {item.genres?.slice(0, 2).map((genre: any) => (
+          {item.genres?.slice(0, 2).map((genre) => (
             <span
               key={genre.mal_id}
               className="text-xs px-2 py-1 bg-purple-600/80 backdrop-blur-sm text-white rounded-full font-medium shadow-sm"
@@ -181,7 +182,7 @@ const AnimeSection = ({ title, data, isLoading, error, icon }: {
       </div>
     ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-        {data?.map((item: any) => (
+        {data?.map((item) => (
           <AnimeCard key={item.mal_id} item={item} />
         ))}
       </div>
@@ -218,17 +219,27 @@ const rawQuery = useSearchStore((state) => state.query);
     isFetchingNextPage,
     isLoading: allAnimeLoading,
     error: allAnimeError
-  } = useInfiniteQuery<FetchAnimeResponse>({
+  } = useInfiniteQuery<
+    FetchAnimeResponse,
+    Error,
+    FetchAnimeResponse,
+    unknown[],
+    number
+  >({
     queryKey: ["allAnime"],
-    queryFn: fetchAllAnime,
-    getNextPageParam: (lastPage) => 
-      lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
+    queryFn: async ({ pageParam = 1 }) => fetchAllAnime({ pageParam }),
+    getNextPageParam: (lastPage) =>
+      lastPage.pagination.has_next_page
+        ? lastPage.pagination.current_page + 1
+        : undefined,
     enabled: !debouncedQuery,
     staleTime: 1000 * 60 * 10,
-  });  
+    initialPageParam: 1,
+  });
 
-  // Функция для обработки пересечения с наблюдателем
-  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
+
+// Функция для обработки пересечения с наблюдателем
+const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
     if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -250,7 +261,7 @@ const rawQuery = useSearchStore((state) => state.query);
   }, [handleObserver]);
 
   // Объединяем все страницы аниме
-  const allAnime = allAnimeData?.pages.flatMap(page => page.data) || [];
+  const allAnime = allAnimeData?.pages.flatMap((page: FetchAnimeResponse) => page.data) || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
@@ -307,7 +318,7 @@ const rawQuery = useSearchStore((state) => state.query);
                 ) : (
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-                      {allAnime.map((item: any) => (
+                      {allAnime.map((item) => (
                         <AnimeCard key={`${item.mal_id}-${Math.random()}`} item={item} />
                       ))}
                     </div>
