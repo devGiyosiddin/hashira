@@ -33,6 +33,11 @@ type Anime = {
   episodes?: number;
 };
 
+// Type for infinite query data
+type InfiniteAnimeData = {
+  pages: FetchAnimeResponse[];
+  pageParams: number[];
+};
 
 // API функции
 const fetchTopAnime = async () => {
@@ -182,7 +187,7 @@ const AnimeSection = ({ title, data, isLoading, error, icon }: {
       </div>
     ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-        {data?.map((item) => (
+        {data?.map((item: Anime) => (
           <AnimeCard key={item.mal_id} item={item} />
         ))}
       </div>
@@ -222,7 +227,7 @@ const rawQuery = useSearchStore((state) => state.query);
   } = useInfiniteQuery<
     FetchAnimeResponse,
     Error,
-    FetchAnimeResponse,
+    InfiniteAnimeData,
     unknown[],
     number
   >({
@@ -318,7 +323,7 @@ const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
                 ) : (
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-                      {allAnime.map((item) => (
+                      {allAnime.map((item: Anime) => (
                         <AnimeCard key={`${item.mal_id}-${Math.random()}`} item={item} />
                       ))}
                     </div>
