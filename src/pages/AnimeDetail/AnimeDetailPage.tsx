@@ -207,7 +207,7 @@ const AnimeDetailPage = () => {
                     <img
                       src={anime.images.jpg.large_image_url}
                       alt={anime.title}
-                      className="w-55 h-auto object-cover"
+                      className="w-65 h-auto object-cover"
                     />
                     <div
                       className="absolute top-1 right-1 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
@@ -234,93 +234,146 @@ const AnimeDetailPage = () => {
               </div>
               
               {/* Right Content */}
-              <div className="space-y-8">
-                {/* Title */}
-                <div className="space-y-4">
-                  <h1 className="text-5xl lg:text-7xl font-black tracking-tight">
-                    <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                      {anime.title_english || anime.title}
-                    </span>
-                  </h1>
-                  {anime.title_japanese && (
-                    <p className="text-xl text-gray-400 font-light">
-                      {anime.title_japanese}
-                    </p>
-                  )}
-                </div>
+                <div className="space-y-8">
+                  {/* Адаптивные теги в одной строке */}
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                    {/* age limit */}
+                    {anime.rating && (
+                      <span className="px-3 py-1.5 bg-(--grey-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                        14+
+                      </span>
+                    )}
 
-                {/* Stats */}
-                <div className="flex flex-wrap gap-6">
-                  {anime.score && (
-                    <div className="flex items-center gap-2 bg-yellow-500/20 px-4 py-2 rounded-full border border-yellow-500/30">
-                      <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                      <span className="font-bold text-yellow-400">{anime.score}</span>
-                      <span className="text-gray-400 text-sm">({anime.scored_by?.toLocaleString()})</span>
-                    </div>
-                  )}
-                  {anime.rank && (
-                    <div className="flex items-center gap-2 bg-purple-500/20 px-4 py-2 rounded-full border border-purple-500/30">
-                      <Award className="w-5 h-5 text-purple-400" />
-                      <span className="font-bold text-purple-400">#{anime.rank}</span>
-                    </div>
-                  )}
-                  {anime.popularity && (
-                    <div className="flex items-center gap-2 bg-pink-500/20 px-4 py-2 rounded-full border border-pink-500/30">
-                      <TrendingUp className="w-5 h-5 text-pink-400" />
-                      <span className="font-bold text-pink-400">#{anime.popularity}</span>
-                    </div>
-                  )}
-                </div>
+                    {/* studio */}
+                    {anime.studios && anime.studios.length > 0 && (
+                      <span className="px-3 py-1.5 bg-(--grey-2-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                        {anime.studios[0].name}
+                      </span>
+                    )}
 
-                {/* Action Buttons */}
-                <div className="flex flex-wrap gap-4">
-                  {/* Watch Now Button - Show for all anime */}
-                  <button
-                    onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
-                    className="flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
-                  >
-                    <PlayCircle className="w-5 h-5 fill-current" />
-                    {isMovieOrSingleEpisode() ? 'Watch Now' : 'Watch Episode 1'}
-                  </button>
+                    {/* status */}
+                    {anime.status && (
+                      <span className="px-3 py-1.5 bg-(--secondary-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                        {anime.status}
+                      </span>
+                    )}
+                  </div>
 
-                  {anime.trailer?.youtube_id && (
-                    <button
-                      onClick={() => setShowTrailer(!showTrailer)}
-                      className="flex items-center gap-3 bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-6 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105"
+                  {/* Title */}
+                  <div className="space-y-4">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
+                      style={{
+                        fontSize: 'clamp(28px, 4vw, 44px)',
+                        fontWeight: '700',
+                        fontStyle: 'normal',
+                      }}
                     >
-                      <Play className="w-5 h-5 fill-current" />
-                      Trailer
-                    </button>
+                      <span className="color-(--text-color)">
+                        {anime.title_english || anime.title}
+                      </span>
+                    </h1>
+                    {anime.title_japanese && (
+                      <p className="text-lg sm:text-xl text-gray-400 font-light">
+                        {anime.title_japanese}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* genres */}
+                  {anime.genres && anime.genres.length > 0 && (
+                    <div>
+                      <div className="flex flex-wrap gap-2 sm:gap-3">
+                        {anime.genres.map((genre) => (
+                          <span
+                            key={genre.mal_id}
+                            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30 font-medium hover:bg-purple-500/30 transition-colors duration-300 cursor-pointer text-sm sm:text-base whitespace-nowrap"
+                          >
+                            {genre.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   )}
-                  
-                  <button
-                    onClick={() => setIsFavorite(!isFavorite)}
-                    className={`flex items-center gap-3 px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 ${
-                      isFavorite 
-                        ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
-                        : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-red-500/20 hover:text-red-400'
-                    }`}
-                  >
-                    <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
-                    {isFavorite ? 'Favorited' : 'Add to Favorites'}
-                  </button>
-                  
-                  <button
-                    onClick={() => setIsBookmarked(!isBookmarked)}
-                    className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 ${
-                      isBookmarked 
-                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' 
-                        : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-cyan-500/20 hover:text-cyan-400'
-                    }`}
-                  >
-                    <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
-                  </button>
-                  
-                  <button className="flex items-center gap-3 px-6 py-4 rounded-full font-bold bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105">
-                    <Share2 className="w-5 h-5" />
-                  </button>
+
+                  {/* Stats */}
+                  <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6">
+                    {anime.score && (
+                      <div className="flex items-center gap-2 bg-yellow-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-yellow-500/30">
+                        <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-current" />
+                        <span className="font-bold text-yellow-400 text-sm sm:text-base">{anime.score}</span>
+                        <span className="text-gray-400 text-xs sm:text-sm">({anime.scored_by?.toLocaleString()})</span>
+                      </div>
+                    )}
+                    {anime.rank && (
+                      <div className="flex items-center gap-2 bg-purple-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-purple-500/30">
+                        <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+                        <span className="font-bold text-purple-400 text-sm sm:text-base">#{anime.rank}</span>
+                      </div>
+                    )}
+                    {anime.popularity && (
+                      <div className="flex items-center gap-2 bg-pink-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-pink-500/30">
+                        <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400" />
+                        <span className="font-bold text-pink-400 text-sm sm:text-base">#{anime.popularity}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                    {/* Watch Now Button */}
+                    <button
+                      onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
+                      className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25 text-sm sm:text-base"
+                    >
+                      <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                      <span className="hidden sm:inline">
+                        {isMovieOrSingleEpisode() ? 'Watch Now' : 'Watch Episode 1'}
+                      </span>
+                      <span className="sm:hidden">
+                        {isMovieOrSingleEpisode() ? 'Watch' : 'Ep. 1'}
+                      </span>
+                    </button>
+
+                    {anime.trailer?.youtube_id && (
+                      <button
+                        onClick={() => setShowTrailer(!showTrailer)}
+                        className="flex items-center gap-2 sm:gap-3 bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                      >
+                        <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                        <span className="hidden sm:inline">Trailer</span>
+                      </button>
+                    )}
+                    
+                    <button
+                      onClick={() => setIsFavorite(!isFavorite)}
+                      className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base ${
+                        isFavorite 
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                          : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-red-500/20 hover:text-red-400'
+                      }`}
+                    >
+                      <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${isFavorite ? 'fill-current' : ''}`} />
+                      <span className="hidden lg:inline">
+                        {isFavorite ? 'Favorited' : 'Add to Favorites'}
+                      </span>
+                    </button>
+                    
+                    <button
+                      onClick={() => setIsBookmarked(!isBookmarked)}
+                      className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 ${
+                        isBookmarked 
+                          ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' 
+                          : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-cyan-500/20 hover:text-cyan-400'
+                      }`}
+                    >
+                      <Bookmark className={`w-4 h-4 sm:w-5 sm:h-5 ${isBookmarked ? 'fill-current' : ''}`} />
+                    </button>
+                    
+                    <button className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105">
+                      <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -525,21 +578,7 @@ const AnimeDetailPage = () => {
           <div className="container mx-auto max-w-6xl">
             <div className="grid md:grid-cols-2 gap-12">
               {/* Genres */}
-              {anime.genres && anime.genres.length > 0 && (
-                <div>
-                  <h3 className="text-2xl font-bold text-purple-400 mb-6">Genres</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {anime.genres.map((genre) => (
-                      <span
-                        key={genre.mal_id}
-                        className="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30 font-medium hover:bg-purple-500/30 transition-colors duration-300 cursor-pointer"
-                      >
-                        {genre.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              
 
               {/* Themes */}
               {anime.themes && anime.themes.length > 0 && (
