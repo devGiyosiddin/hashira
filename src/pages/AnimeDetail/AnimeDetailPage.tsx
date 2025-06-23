@@ -599,25 +599,6 @@ const AnimeDetailPage = () => {
             </div>
           </div>
         </section>
-
-        {/* Studios */}
-        {anime.studios && anime.studios.length > 0 && (
-          <section className="py-20 px-6 lg:px-16">
-            <div className="container mx-auto max-w-6xl">
-              <h3 className="text-2xl font-bold text-cyan-400 mb-6">Studios</h3>
-              <div className="flex flex-wrap gap-4">
-                {anime.studios.map((studio, index) => (
-                  <div
-                    key={index}
-                    className="px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 rounded-xl border border-cyan-500/30 font-bold hover:from-cyan-500/30 hover:to-blue-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105"
-                  >
-                    {studio.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
       </div>
       
       {/* Episode List Sidebar - Only for series */}
