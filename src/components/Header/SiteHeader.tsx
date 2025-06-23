@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Settings2 } from "lucide-react";
+import './siteHeader.css';
 
 type AnimeSearchResult = {
     mal_id: number;
@@ -23,7 +24,7 @@ const fetchSearchedAnime = async (animeName: string): Promise<AnimeSearchResult[
     return data.data || [];
 };
 
-const Header = () => {
+const SiteHeader = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<AnimeSearchResult[]>([]);
@@ -86,10 +87,10 @@ const Header = () => {
     
     return (
         <header
-            className="relative sticky top-0 z-50 border-b border-zinc-700/30 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-black/30 before:to-transparent before:z-[-1]"
+            className="fixed top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm"
             style={{backdropFilter: 'blur(20px'}}
         >
-            <div className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-16 py-4">
+            <div className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-16">
                 {/* Logo */}
                 <Link
                     to="/"
@@ -195,7 +196,9 @@ const Header = () => {
                         to="/search"
                         className="p-1.5 rounded-xl block"
                     >
-                        <Settings2  className="w-6 h-6"/>
+                    <Settings2 className="w-6 h-6"
+                        style={{ color: 'var(--text-color)' }}    
+                        />
                     </Link>
 
                     {/* Mobile Menu Button */}
@@ -267,4 +270,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default SiteHeader;
