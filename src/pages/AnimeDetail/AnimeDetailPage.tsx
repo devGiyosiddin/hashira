@@ -198,8 +198,42 @@ const AnimeDetailPage = () => {
         {/* Main Content */}
         <div className="relative z-10 h-full flex items-center">
           <div className="container mx-auto px-6 lg:px-16">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Content */}
+            <div className="flex gap-12 items-center">
+              {/* Left Content - Poster */}
+              <div className="flex">
+                <div className="relative group">
+                  <div className="absolute -inset-4 rounded-3xl blur-2xl"></div>
+                  <div className="relative overflow-hidden rounded-3xl cursor-pointer">
+                    <img
+                      src={anime.images.jpg.large_image_url}
+                      alt={anime.title}
+                      className="w-55 h-auto object-cover"
+                    />
+                    <div
+                      className="absolute top-1 right-1 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
+                      <span className='p-1 rounded-full bg-(--green-color) flex items-center justify-center w-12'>
+                        <svg
+                          className="w-4 h-4 fill-current color-(--text-color)"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
+                        {anime.score ? anime.score.toFixed(1) : 'N/A'}
+                      </span>
+                      <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
+                        <svg
+                          className="w-5 h-5 fill-current color-(--text-color)"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
+                      </span>
+                    </div>
+                    {/* quality */}
+                    <div
+                      className='absolute bottom-1 right-1 bg-(--violet-color) text-(--text-color) rounded-full px-3 py-1 text-xs font-semibold flex items-center gap-1 h-9'
+                    >
+                      QHD+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right Content */}
               <div className="space-y-8">
                 {/* Title */}
                 <div className="space-y-4">
@@ -285,21 +319,6 @@ const AnimeDetailPage = () => {
                   <button className="flex items-center gap-3 px-6 py-4 rounded-full font-bold bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105">
                     <Share2 className="w-5 h-5" />
                   </button>
-                </div>
-              </div>
-
-              {/* Right Content - Poster */}
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative group">
-                  <div className="absolute -inset-4 rounded-3xl blur-2xl"></div>
-                  <div className="relative overflow-hidden rounded-3xl">
-                    <img
-                      src={anime.images.jpg.large_image_url}
-                      alt={anime.title}
-                      className="w-80 h-auto object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
                 </div>
               </div>
             </div>
