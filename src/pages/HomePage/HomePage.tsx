@@ -48,7 +48,9 @@ const fetchNewReleases = async () => {
   return data.data;
 };
 
-const fetchAllAnime = async ({ pageParam = 1 }): Promise<FetchAnimeResponse> => {
+// Исправление для TS2769: убедитесь, что pageParam имеет правильный тип
+// Например, если используется useInfiniteQuery:
+const fetchAllAnime = async ({ pageParam = 1 }: { pageParam?: number }): Promise<FetchAnimeResponse> => {
   const url = `https://api.jikan.moe/v4/anime?page=${pageParam}&limit=24`;
   const response = await fetch(url);
   const data = await response.json();

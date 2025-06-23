@@ -54,7 +54,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         hlsRef.current = hls;
         hls.loadSource(source);
         hls.attachMedia(video);
-        hls.on(Hls.Events.ERROR, (event, data) => {
+        hls.on(Hls.Events.ERROR, (_event, data) => {
           setError('Ошибка HLS: ' + data?.details || 'Unknown');
         });
       } else {
