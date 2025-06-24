@@ -189,7 +189,7 @@ const HomePage = () => {
           <Sidebar />
 
         {/* Background animation */}
-        <div className="relative px-4 sm:px-8 lg:px-16 py-12">
+        <div className="relative">
           <HeroBanner anime={topAnime?.[0] || {}} />
 
           {!debouncedQuery.trim() && (
