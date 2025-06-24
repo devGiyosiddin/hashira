@@ -44,7 +44,7 @@ const Sidebar = () => {
             <Link
               key={item.id}
               to={item.path}
-              className={`flex items-center bg-(--grey-color) space-x-3 px-1 py-3 rounded-pill  transition-all duration-200 ease-in-out mb-2 hover:bg-zinc-800/50 hover:text-white cursor-pointer font-semibold ${item.icon && 'justify-center'} ${
+              className={`flex items-center bg-(--grey-color) space-x-3 px-1 py-3 rounded-pill  transition-all duration-200 ease-in-out mb-2 hover:bg-zinc-800/50 hover:text-white hover:scale-105 cursor-pointer font-semibold ${item.icon && 'justify-center'} ${
                 location.pathname === item.path
                   ? 'bg(--grey-color) border border-purple-500/30 text-purple-300'
                   : 'text-zinc-300 hover:bg-zinc-800/50 hover:text-white'
