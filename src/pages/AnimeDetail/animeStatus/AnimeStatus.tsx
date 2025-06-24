@@ -92,7 +92,7 @@ const StatusDropdown = () => {
                         
                         {/* Options */}
                         <div className="py-2">
-                            {statuses.map((status, index) => (
+                            {statuses.map((status) => (
                                 <button
                                     key={status.key}
                                     onClick={() => handleStatusChange(status)}
