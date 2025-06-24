@@ -36,9 +36,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="h-full w-64 z-40 overflow-y-auto">
+    <aside className="h-full w-64 z-40 overflow-y-auto pl-6">
       {/* Main Menu */}
-      <nav className="px-6 pb-4">
+      <nav className="pb-4">
         <div className="space-y-2">
           {menuItems.map((item) => (
             <Link
