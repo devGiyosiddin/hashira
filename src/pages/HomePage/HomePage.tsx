@@ -63,6 +63,33 @@ const fetchAllAnime = async ({ pageParam = 1 }: { pageParam?: number }): Promise
   return data;
 };
 
+const HeroBanner = ({ anime }: { anime: Anime }) => (
+  <div className="relative h-96 rounded-3xl overflow-hidden mb-12">
+    <div className="absolute inset-0">
+      <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
+" autoPlay loop muted className="w-full h-full object-cover"></video>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+    </div>
+    
+    <div className="relative z-10 h-full flex items-center px-8">
+      <div className="max-w-2xl">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+          {anime.title_english || anime.title}
+        </h1>
+        <p className="text-gray-200 text-lg mb-6 line-clamp-3">
+          {anime.synopsis 
+            ? anime.synopsis.slice(0, 200) + (anime.synopsis.length > 200 ? '...' : '')
+            : 'Описание недоступно'}
+        </p>
+        <button className="inline-flex items-center bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+          <span className="mr-2">▶</span>
+          Смотреть
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
 // Компонент карточки аниме
 const AnimeCard = ({ item }: { item: Anime }) => {
 
@@ -274,6 +301,12 @@ const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-cyan-600/10 animate-pulse"></div>
         <div className="relative px-4 sm:px-8 lg:px-16 py-12">
+          {/* Hero Banner */}
+          {topAnime && topAnime.length > 0 && (
+            <HeroBanner anime={topAnime[0]} />
+          )}
+
+          {/* Поиск аниме */}
 
           {!debouncedQuery.trim() && (
             <>
