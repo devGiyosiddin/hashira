@@ -1,4 +1,4 @@
-import { Anime } from "../../types/anime";
+import type { Anime } from "../../types/anime";
 import { AnimeCard } from "../AnimeCard/AnimeCard";
 import { LoadingSpinner } from "../Loading/LoadingSpinner";
 import { ErrorMessage } from "../ErrorMsg/ErrorMsg";

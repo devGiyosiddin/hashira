@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useSearchStore } from "../../store/searchStore";
 import { useDebounce } from "use-debounce";
+import { HeroBanner } from '../../components';
 
 type Anime = {
   mal_id: number;
@@ -194,7 +195,9 @@ const HomePage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
       {/* Hero Section with animated background */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-cyan-600/10 animate-pulse"></div>
+        <HeroBanner anime={topAnime?.[0] || {}} />
+
+        {/* Background animation */}
         <div className="relative px-4 sm:px-8 lg:px-16 py-12">
 
           {!debouncedQuery.trim() && (
