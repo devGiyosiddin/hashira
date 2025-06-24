@@ -2,16 +2,16 @@ import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 // import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight} from 'lucide-react';
+import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayCircle} from 'lucide-react';
 // import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
-import { PlayCircle } from 'lucide-react';
+import StatusDropdown from './animeStatus/AnimeStatus';
 
 type AnimeDetails = {
   mal_id: number;
   title: string;
   title_english?: string;
   title_japanese?: string;
-  type?: string; // Added to check if it's a movie or TV series
+  type?: string;
   images: {
     jpg: {
       image_url: string;
@@ -87,6 +87,7 @@ const AnimeDetailPage = () => {
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState<number>(1);
   const parallaxRef = useRef<HTMLDivElement>(null);
+
 
   console.log(showVideoPlayer ? 'Video Player is shown' : 'Video Player is hidden');
 
@@ -330,7 +331,8 @@ const AnimeDetailPage = () => {
                   )}
 
                   {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                <div className="flex flex-wrap gap-3 sm:gap-4">
+                  <StatusDropdown />
                     {/* Watch Now Button */}
                     <button
                       onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
