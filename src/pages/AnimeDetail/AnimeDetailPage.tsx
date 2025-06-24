@@ -2,7 +2,7 @@ import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 // import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayCircle} from 'lucide-react';
+import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayCircle, PlayIcon} from 'lucide-react';
 // import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import StatusDropdown from './animeStatus/AnimeStatus';
 
@@ -332,20 +332,22 @@ const AnimeDetailPage = () => {
 
                   {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3 sm:gap-4">
-                  <StatusDropdown />
                     {/* Watch Now Button */}
                     <button
                       onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
-                      className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25 text-sm sm:text-base"
+                      className="bg-(--grey-color) flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-gray-300 hover:bg-(--primary-color) hover:text-white border border-gray-600/50 hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
                     >
-                      <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                      <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                       <span className="hidden sm:inline">
-                        {isMovieOrSingleEpisode() ? 'Watch Now' : 'Watch Episode 1'}
+                        {isMovieOrSingleEpisode() ? `Ko'rish` : `1 seriya`}
                       </span>
                       <span className="sm:hidden">
-                        {isMovieOrSingleEpisode() ? 'Watch' : 'Ep. 1'}
+                        {isMovieOrSingleEpisode() ? `Ko'rish` : '1 seriya'}
                       </span>
-                    </button>
+                  </button>
+                  
+                  {/* Status Dropdown */}
+                  <StatusDropdown />
 
                     {anime.trailer?.youtube_id && (
                       <button
