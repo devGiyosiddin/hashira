@@ -295,28 +295,25 @@ const AnimeDetailPage = () => {
                     </div>
                   )}
 
-                  {/* Stats */}
-                  <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6">
-                    {anime.score && (
-                      <div className="flex items-center gap-2 bg-yellow-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-yellow-500/30">
-                        <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-current" />
-                        <span className="font-bold text-yellow-400 text-sm sm:text-base">{anime.score}</span>
-                        <span className="text-gray-400 text-xs sm:text-sm">({anime.scored_by?.toLocaleString()})</span>
-                      </div>
-                    )}
-                    {anime.rank && (
-                      <div className="flex items-center gap-2 bg-purple-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-purple-500/30">
-                        <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
-                        <span className="font-bold text-purple-400 text-sm sm:text-base">#{anime.rank}</span>
-                      </div>
-                    )}
-                    {anime.popularity && (
-                      <div className="flex items-center gap-2 bg-pink-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-pink-500/30">
-                        <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400" />
-                        <span className="font-bold text-pink-400 text-sm sm:text-base">#{anime.popularity}</span>
-                      </div>
-                    )}
-                  </div>
+                {/* release date */}
+                  {anime.aired?.from && (
+                    <p className="text-gray-500 text-sm sm:text-base mt-2">
+                    Chiqdi: {new Date(anime.aired.from).toLocaleDateString(
+                      'uz-UZ', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        }
+                      )}
+                    {anime.aired.to && ` dan - ${new Date(anime.aired.to).toLocaleDateString(
+                      'uz-UZ', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      }
+                      )} gacha`}
+                    </p>
+                  )}
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3 sm:gap-4">
