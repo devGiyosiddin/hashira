@@ -1,6 +1,7 @@
 import { useRef } from "react";
-import { useSearchStore } from "../store/searchStore";
+import { useSearchStore } from "../../store/searchStore";
 import { Link } from "react-router-dom";
+import './search.css';
 
 const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
