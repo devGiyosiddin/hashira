@@ -2,7 +2,7 @@ import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 // import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayIcon} from 'lucide-react';
+import { Star, Play, Heart, Users, ChevronRight, PlayIcon} from 'lucide-react';
 // import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import StatusDropdown from './animeStatus/AnimeStatus';
 
@@ -91,6 +91,10 @@ const AnimeDetailPage = () => {
 
   console.log(showVideoPlayer ? 'Video Player is shown' : 'Video Player is hidden');
 
+  const formatNumber = (num: number | undefined) => {
+    if (num === undefined) return 'N/A';
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
   // Проверка: фильм или 1 эпизод
   const isMovieOrSingleEpisode = () => {
     return anime && (anime.type === 'Movie' || anime.episodes === 1);
@@ -331,7 +335,7 @@ const AnimeDetailPage = () => {
                   )}
 
                   {/* Action Buttons */}
-                <div className="flex flex-wrap gap-3 sm:gap-4">
+                <div className="flex items-center flex-wrap gap-3 sm:gap-4">
                     {/* Watch Now Button */}
                     <button
                       onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
@@ -349,46 +353,29 @@ const AnimeDetailPage = () => {
                   {/* Status Dropdown */}
                   <StatusDropdown />
 
+                  {/* treyler */}
                     {anime.trailer?.youtube_id && (
                       <button
                         onClick={() => setShowTrailer(!showTrailer)}
-                        className="flex items-center gap-2 sm:gap-3 bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                        className="flex items-center gap-2 sm:gap-3 bg-(--grey-color) text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
                       >
                         <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
-                        <span className="hidden sm:inline">Trailer</span>
+                        <span className="hidden sm:inline">Treyler</span>
                       </button>
                     )}
-                    
-                    <button
-                      onClick={() => setIsFavorite(!isFavorite)}
-                      className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base ${
-                        isFavorite 
-                          ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
-                          : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-red-500/20 hover:text-red-400'
-                      }`}
-                    >
-                      <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${isFavorite ? 'fill-current' : ''}`} />
-                      <span className="hidden lg:inline">
-                        {isFavorite ? 'Favorited' : 'Add to Favorites'}
-                      </span>
-                    </button>
-                    
-                    <button
-                      onClick={() => setIsBookmarked(!isBookmarked)}
-                      className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 ${
-                        isBookmarked 
-                          ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' 
-                          : 'bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-cyan-500/20 hover:text-cyan-400'
-                      }`}
-                    >
-                      <Bookmark className={`w-4 h-4 sm:w-5 sm:h-5 ${isBookmarked ? 'fill-current' : ''}`} />
-                    </button>
-                    
-                    <button className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold bg-gray-800/50 text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105">
-                      <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                  </div>
+                
+                  {/* Views */}
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <svg
+                    className='w-4 h-4 sm:w-5 sm:h-5 fill-current text-gray-500'
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle style={{ fill: '#bdc3c7' }} cx="12" cy="12" r="3" /></svg>
+                  <span className="text-gray-500 text-sm sm:text-base">
+                    {formatNumber(anime.popularity)}
+                  </span>
                 </div>
+                </div>
+                
+              </div>
             </div>
           </div>
         </div>
