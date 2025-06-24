@@ -95,10 +95,10 @@ const SiteHeader = () => {
     return (
         <header
             ref={searchContainerRef}
-            className="sticky top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm"
+            className="sticky top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm py-7"
             style={{backdropFilter: 'blur(20px'}}
         >
-            <div className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-16">
+            <div className="relative z-10 flex items-center justify-between px-4 sm:px-4 lg:px-8">
                 {/* Logo */}
                 <Link
                     to="/"
