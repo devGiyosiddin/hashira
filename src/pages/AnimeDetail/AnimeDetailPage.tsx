@@ -207,7 +207,7 @@ const AnimeDetailPage = () => {
                     <img
                       src={anime.images.jpg.large_image_url}
                       alt={anime.title}
-                      className="w-65 h-auto object-cover"
+                      className="w-65 h-auto object-cover shadow-lg shadow-black transition-transform duration-300 transform group-hover:scale-105"
                     />
                     <div
                       className="absolute top-1 right-1 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
