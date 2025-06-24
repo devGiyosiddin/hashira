@@ -39,6 +39,73 @@ type InfiniteAnimeData = {
   pageParams: number[];
 };
 
+const mockAnime: Anime[] = [
+  {
+    mal_id: 1,
+    title: "Монолог фармацевта",
+    title_english: "The Apothecary Diaries",
+    images: {
+      jpg: {
+        image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop",
+        large_image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=1200&fit=crop"
+      }
+    },
+    score: 8.7,
+    synopsis: "Эта пушечка обошла всех. Смотреть обязательно челики",
+    genres: [{ mal_id: 1, name: "Драма" }, { mal_id: 2, name: "Исторический" }],
+    year: 2023,
+    episodes: 24
+  },
+  {
+    mal_id: 2,
+    title: "Ангел по соседству",
+    title_english: "The Angel Next Door",
+    images: {
+      jpg: {
+        image_url: "https://images.unsplash.com/photo-1558618068-fcd65c85cd64?w=400&h=600&fit=crop",
+        large_image_url: "https://images.unsplash.com/photo-1558618068-fcd65c85cd64?w=800&h=1200&fit=crop"
+      }
+    },
+    score: 7.8,
+    synopsis: "История о соседке-ангеле и парне, который живет рядом",
+    genres: [{ mal_id: 3, name: "Романтика" }, { mal_id: 4, name: "Школа" }],
+    year: 2023,
+    episodes: 12
+  },
+  {
+    mal_id: 3,
+    title: "Акира",
+    title_english: "Akira",
+    images: {
+      jpg: {
+        image_url: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=400&h=600&fit=crop",
+        large_image_url: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=800&h=1200&fit=crop"
+      }
+    },
+    score: 8.0,
+    synopsis: "Классика киберпанк аниме",
+    genres: [{ mal_id: 5, name: "Экшен" }, { mal_id: 6, name: "Научная фантастика" }],
+    year: 1988,
+    episodes: 1
+  },
+  {
+    mal_id: 4,
+    title: "Токийские мстители",
+    title_english: "Tokyo Revengers",
+    images: {
+      jpg: {
+        image_url: "https://images.unsplash.com/photo-1606915254717-4e30de0dd1b8?w=400&h=600&fit=crop",
+        large_image_url: "https://images.unsplash.com/photo-1606915254717-4e30de0dd1b8?w=800&h=1200&fit=crop"
+      }
+    },
+    score: 8.1,
+    synopsis: "Парень возвращается в прошлое чтобы спасти девушку",
+    genres: [{ mal_id: 7, name: "Драма" }, { mal_id: 8, name: "Сверхъестественное" }],
+    year: 2021,
+    episodes: 24
+  }
+];
+
 // API функции
 const fetchTopAnime = async () => {
   const url = `https://api.jikan.moe/v4/anime?order_by=score&sort=desc&limit=10&min_score=8`;
@@ -66,8 +133,7 @@ const fetchAllAnime = async ({ pageParam = 1 }: { pageParam?: number }): Promise
 const HeroBanner = ({ anime }: { anime: Anime }) => (
   <div className="relative h-96 rounded-3xl overflow-hidden mb-12">
     <div className="absolute inset-0">
-      <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
-" autoPlay loop muted className="w-full h-full object-cover"></video>
+      <video src="/one-chance.mp4" typeof='video/mp4' autoPlay loop muted className="w-full h-full object-cover"></video>
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
     </div>
     
@@ -88,6 +154,52 @@ const HeroBanner = ({ anime }: { anime: Anime }) => (
       </div>
     </div>
   </div>
+);
+
+const CompactAnimeCard = ({ item }: { item: Anime }) => (
+  <div className="group relative block cursor-pointer">
+    <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-800">
+      <img
+        src={item.images.jpg.large_image_url || item.images.jpg.image_url}
+        alt={item.title}
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+      
+      {/* Duration badge */}
+      <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+        02:07
+      </div>
+      
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="text-white text-sm mb-1">
+          {item.episodes || 4} серия, 1 сезон
+        </div>
+        <h3 className="text-white font-medium line-clamp-1">
+          {item.title_english || item.title}
+        </h3>
+      </div>
+    </div>
+  </div>
+);
+
+const Section = ({ title, children, showAll = false }: {
+  title: string;
+  children: React.ReactNode;
+  showAll?: boolean;
+}) => (
+  <section className="mb-12">
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-2xl font-bold text-white">{title}</h2>
+      {showAll && (
+        <button className="text-gray-400 hover:text-white text-sm">
+          Посмотреть все
+        </button>
+      )}
+    </div>
+    {children}
+  </section>
 );
 
 // Компонент карточки аниме
@@ -296,17 +408,24 @@ const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
   const allAnime = allAnimeData?.pages.flatMap((page: FetchAnimeResponse) => page.data) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
+    <div className="p-[85px] min-h-screen bg-(--bg-color)">
       {/* Hero Section with animated background */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-cyan-600/10 animate-pulse"></div>
-        <div className="relative px-4 sm:px-8 lg:px-16 py-12">
+        <div className="relative px-4 sm:px-8 lg:px-16">
           {/* Hero Banner */}
           {topAnime && topAnime.length > 0 && (
             <HeroBanner anime={topAnime[0]} />
           )}
 
-          {/* Поиск аниме */}
+          {/* Ko'rishni davom etish */}
+          {/* Continue Watching Section */}
+        <Section title="Продолжить просмотр">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {mockAnime.slice(0, 4).map((item) => (
+              <CompactAnimeCard key={item.mal_id} item={item} />
+            ))}
+          </div>
+        </Section>
 
           {!debouncedQuery.trim() && (
             <>
