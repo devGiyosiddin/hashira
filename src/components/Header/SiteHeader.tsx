@@ -36,6 +36,13 @@ const SiteHeader = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const searchContainerRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        // Focus the search input when the component mounts
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
     // Debounce search
     useEffect(() => {
         const timeoutId = setTimeout(async () => {
@@ -87,7 +94,8 @@ const SiteHeader = () => {
     
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm"
+            ref={searchContainerRef}
+            className="sticky top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm"
             style={{backdropFilter: 'blur(20px'}}
         >
             <div className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-16">
