@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSearchStore } from "../../store/searchStore";
 import { useDebounce } from "use-debounce";
 import { HeroBanner } from '../../components';
+import Sidebar from "../../components/SideBar/SideBar";
 
 type Anime = {
   mal_id: number;
@@ -183,6 +184,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with animated background */}
+        <Sidebar />
       <div className="relative overflow-hidden">
         <HeroBanner anime={topAnime?.[0] || {}} />
 
