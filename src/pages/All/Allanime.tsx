@@ -168,19 +168,17 @@ const AllAnimePage = () => {
   }, [handleObserver]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-cyan-600/10 animate-pulse"></div>
         <div className="relative px-4 sm:px-8 lg:px-16 py-12">
-          
           <section className="mb-16">
             {/* Заголовок секции */}
-            <div className="flex items-center justify-between mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                📺 Barcha animelar
+            <div className="flex flex-start flex-col mb-8">
+              <h1 className="text-4xl sm:text-4xl font-bold ">
+              Yaqinda yangilangan
               </h1>
-              <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
+              <div className="hidden sm:block w-24 h-2 bg-(--) rounded-full"></div>
             </div>
 
             {/* Состояния загрузки и ошибок */}
