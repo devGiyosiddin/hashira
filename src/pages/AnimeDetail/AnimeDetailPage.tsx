@@ -81,8 +81,6 @@ const AnimeDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [episodesLoading, setEpisodesLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [showTrailer, setShowTrailer] = useState(false);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState<number>(1);
