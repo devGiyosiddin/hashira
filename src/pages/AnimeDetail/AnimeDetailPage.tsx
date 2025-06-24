@@ -2,7 +2,7 @@ import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 // import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayCircle, PlayIcon} from 'lucide-react';
+import { Star, Play, Heart, Bookmark, Share2, Users, ChevronRight, PlayIcon} from 'lucide-react';
 // import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import StatusDropdown from './animeStatus/AnimeStatus';
 
