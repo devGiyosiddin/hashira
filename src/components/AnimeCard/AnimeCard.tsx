@@ -41,7 +41,7 @@ export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
   return (
     <Link 
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
+      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:border-purple-500/50 block"
       style={{
         background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
@@ -52,10 +52,10 @@ export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
         <img
           src={item.images.jpg.large_image_url || item.images.jpg.image_url}
           alt={item.title}
-          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:blur-sm group-hover:brightness-75"
+          className="w-full h-full object-cover transition-all duration-200 group-hover:scale-110 group-hover:blur-sm group-hover:brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/95 via-zinc-900/60 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
       </div>
 
       {/* Content Overlay */}
@@ -78,7 +78,7 @@ export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
         </div>
 
         {/* Title and Description - Hidden by default, shown on hover */}
-        <div className="mt-auto transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+        <div className="mt-auto transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 delay-100">
           <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 drop-shadow-lg">
             {item.title_english || item.title}
           </h3>
@@ -89,27 +89,16 @@ export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
               : 'Описание недоступно'}
           </p>
         </div>
-          
-        {/* Favorite Button */}
-        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 right-6 transition-all duration-500 z-20">
-          <button 
-            className="bg-zinc-700/80 backdrop-blur-sm hover:bg-zinc-600/80 text-white p-2.5 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-            </svg>
-          </button>
-        </div>
 
         {/* Watch indicator */}
-        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-500 z-20">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
+        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-200 z-20">
+          <div className="bg-(--grey-color) text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
             👁️ Ko'rish
           </div>
         </div>
 
         {/* Default state - Only title visible */}
-        <div className="group-hover:opacity-0 group-hover:translate-y-4 transition-all duration-500">
+        <div className="group-hover:opacity-0 group-hover:translate-y-4 transition-all duration-200">
           <h3 className="text-lg font-bold text-white drop-shadow-lg line-clamp-2">
             {item.title_english || item.title}
           </h3>
