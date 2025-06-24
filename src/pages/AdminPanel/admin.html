@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anime Admin Panel</title>
+    <link rel="stylesheet" href="./adminPanel.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🎌 Anime Admin Panel</h1>
+        <p>Anime va episodlarni boshqarish paneli</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="totalAnime">0</div>
+          <div class="stat-label">Jami Anime</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalEpisodes">0</div>
+          <div class="stat-label">Jami Episodlar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="ongoingAnime">0</div>
+          <div class="stat-label">Faol Anime</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('add-anime')">
+          Yangi Anime
+        </button>
+        <button class="tab-btn" onclick="showTab('manage-anime')">
+          Anime Boshqaruvi
+        </button>
+        <button class="tab-btn" onclick="showTab('server-info')">
+          Server Ma'lumotlari
+        </button>
+      </div>
+
+      <!-- Yangi Anime Qo'shish -->
+      <div class="tab-content active" id="add-anime">
+        <h2>Yangi Anime Qo'shish</h2>
+        <form id="animeForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="title">Anime Nomi *</label>
+              <input type="text" id="title" name="title" required />
+            </div>
+            <div class="form-group">
+              <label for="titleEn">Inglizcha Nomi</label>
+              <input type="text" id="titleEn" name="titleEn" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="year">Yili *</label>
+              <input
+                type="number"
+                id="year"
+                name="year"
+                min="1950"
+                max="2030"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="season">Fasl</label>
+              <select id="season" name="season">
+                <option value="">Tanlang</option>
+                <option value="winter">Qish</option>
+                <option value="spring">Bahor</option>
+                <option value="summer">Yoz</option>
+                <option value="fall">Kuz</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="genre">Janr *</label>
+              <input
+                type="text"
+                id="genre"
+                name="genre"
+                placeholder="Masalan: Action, Adventure, Drama"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="status">Holati *</label>
+              <select id="status" name="status" required>
+                <option value="ongoing">Davom etmoqda</option>
+                <option value="completed">Yakunlangan</option>
+                <option value="upcoming">Tez orada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="episodes">Episodlar Soni</label>
+              <input type="number" id="episodes" name="episodes" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="rating">Reyting (1-10)</label>
+              <input
+                type="number"
+                id="rating"
+                name="rating"
+                min="1"
+                max="10"
+                step="0.1"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Tavsif *</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="studio">Studio</label>
+            <input type="text" id="studio" name="studio" />
+          </div>
+
+          <div class="form-group">
+            <label>Poster Rasm</label>
+            <div class="file-upload">
+              <div class="upload-icon">📷</div>
+              <input type="file" id="poster" accept="image/*" />
+              <label
+                for="poster"
+                style="cursor: pointer; color: #667eea; font-weight: 600"
+              >
+                Rasm yuklash uchun bosing
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Anime Qo'shish</button>
+        </form>
+      </div>
+
+      <!-- Anime Boshqaruvi -->
+      <div class="tab-content" id="manage-anime">
+        <h2>Anime va Episodlar Boshqaruvi</h2>
+        <div class="anime-list" id="animeList">
+          <!-- Anime ro'yxati bu yerda ko'rsatiladi -->
+        </div>
+      </div>
+
+      <!-- Server Ma'lumotlari -->
+      <div class="tab-content" id="server-info">
+        <h2>Server Strukturasi va Ma'lumotlar</h2>
+        <div
+          style="
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+          "
+        >
+          <h3>📁 Server Fayl Strukturasi:</h3>
+          <pre
+            style="
+              background: #343a40;
+              color: #f8f9fa;
+              padding: 15px;
+              border-radius: 8px;
+              overflow-x: auto;
+              font-size: 13px;
+            "
+          >
+anime-server/
+├── uploads/
+│   ├── posters/           # Anime posterlari
+│   │   ├── poster_1.jpg
+│   │   └── poster_2.jpg
+│   └── videos/            # Video fayllar
+│       ├── anime_1/
+│       │   ├── episode_1.mp4
+│       │   ├── episode_2.mp4
+│       │   └── subtitles/
+│       │       ├── episode_1_uz.srt
+│       │       └── episode_1_en.srt
+│       └── anime_2/
+├── database/
+│   └── anime.db          # SQLite database
+├── api/
+│   ├── anime.php         # Anime API
+│   ├── episodes.php      # Episodlar API
+│   └── upload.php        # Fayl yuklash API
+└── admin/
+    └── index.html        # Admin panel
+                </pre
+          >
+        </div>
+
+        <div
+          style="
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+          "
+        >
+          <h3>🗄️ Database Strukturasi:</h3>
+          <h4>Anime Table:</h4>
+          <ul style="margin-left: 20px; line-height: 1.8">
+            <li><strong>id</strong> - Noyob identifikator</li>
+            <li><strong>title</strong> - Anime nomi</li>
+            <li><strong>title_en</strong> - Inglizcha nomi</li>
+            <li><strong>description</strong> - Tavsif</li>
+            <li><strong>year</strong> - Yili</li>
+            <li><strong>season</strong> - Fasl</li>
+            <li><strong>genre</strong> - Janr</li>
+            <li><strong>status</strong> - Holati</li>
+            <li><strong>episodes_count</strong> - Episodlar soni</li>
+            <li><strong>rating</strong> - Reyting</li>
+            <li><strong>studio</strong> - Studio nomi</li>
+            <li><strong>poster_url</strong> - Poster manzili</li>
+            <li><strong>created_at</strong> - Yaratilgan sana</li>
+          </ul>
+
+          <h4>Episodes Table:</h4>
+          <ul style="margin-left: 20px; line-height: 1.8">
+            <li><strong>id</strong> - Noyob identifikator</li>
+            <li><strong>anime_id</strong> - Anime ID</li>
+            <li><strong>episode_number</strong> - Episod raqami</li>
+            <li><strong>title</strong> - Episod nomi</li>
+            <li><strong>video_url</strong> - Video fayl manzili</li>
+            <li><strong>duration</strong> - Davomiyligi</li>
+            <li><strong>subtitle_uz</strong> - O'zbek titri</li>
+            <li><strong>subtitle_en</strong> - Ingliz titri</li>
+            <li><strong>thumbnail</strong> - Kichik rasm</li>
+            <li><strong>created_at</strong> - Yaratilgan sana</li>
+          </ul>
+        </div>
+
+        <div style="background: #fff3cd; padding: 20px; border-radius: 12px">
+          <h3>⚙️ Server Sozlamalari:</h3>
+          <ul style="margin-left: 20px; line-height: 1.8">
+            <li><strong>PHP 7.4+</strong> - Server tili</li>
+            <li><strong>SQLite/MySQL</strong> - Ma'lumotlar bazasi</li>
+            <li><strong>FFmpeg</strong> - Video ishlov berish</li>
+            <li><strong>ImageMagick</strong> - Rasm ishlov berish</li>
+            <li><strong>Apache/Nginx</strong> - Web server</li>
+            <li><strong>SSL sertifikat</strong> - Xavfsizlik</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global o'zgaruvchilar
+      let animeData = JSON.parse(localStorage.getItem("animeData") || "[]");
+      let currentEditingAnime = null;
+
+      // Tab'larni boshqarish
+      function showTab(tabName) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+
+        document.getElementById(tabName).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      // Anime qo'shish formasi
+      document
+        .getElementById("animeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+          const anime = {
+            id: Date.now(),
+            title: formData.get("title"),
+            titleEn: formData.get("titleEn"),
+            year: formData.get("year"),
+            season: formData.get("season"),
+            genre: formData.get("genre"),
+            status: formData.get("status"),
+            episodes: formData.get("episodes") || 0,
+            rating: formData.get("rating") || 0,
+            description: formData.get("description"),
+            studio: formData.get("studio"),
+            createdAt: new Date().toISOString(),
+            episodesList: [],
+          };
+
+          animeData.push(anime);
+          localStorage.setItem("animeData", JSON.stringify(animeData));
+
+          this.reset();
+          updateStats();
+          renderAnimeList();
+
+          alert("Anime muvaffaqiyatli qo'shildi!");
+        });
+
+      // Statistikani yangilash
+      function updateStats() {
+        document.getElementById("totalAnime").textContent = animeData.length;
+        document.getElementById("totalEpisodes").textContent = animeData.reduce(
+          (sum, anime) => sum + (anime.episodesList?.length || 0),
+          0
+        );
+        document.getElementById("ongoingAnime").textContent = animeData.filter(
+          (anime) => anime.status === "ongoing"
+        ).length;
+      }
+
+      // Anime ro'yxatini ko'rsatish
+      function renderAnimeList() {
+        const container = document.getElementById("animeList");
+
+        if (animeData.length === 0) {
+          container.innerHTML =
+            "<p style=\"text-align: center; color: #666;\">Hozircha anime yo'q. Yangi anime qo'shing!</p>";
+          return;
+        }
+
+        container.innerHTML = animeData
+          .map(
+            (anime) => `
+                <div class="anime-item">
+                    <div class="anime-header">
+                        <div class="anime-title">${anime.title}</div>
+                        <div>
+                            <span class="status-badge status-${anime.status}">
+                                ${
+                                  anime.status === "ongoing"
+                                    ? "Davom etmoqda"
+                                    : anime.status === "completed"
+                                    ? "Yakunlangan"
+                                    : "Tez orada"
+                                }
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="anime-meta">
+                        <div><strong>Yili:</strong> ${anime.year}</div>
+                        <div><strong>Janr:</strong> ${anime.genre}</div>
+                        <div><strong>Studio:</strong> ${
+                          anime.studio || "Noma'lum"
+                        }</div>
+                        <div><strong>Reyting:</strong> ${
+                          anime.rating || "N/A"
+                        }/10</div>
+                        <div><strong>Episodlar:</strong> ${
+                          anime.episodesList?.length || 0
+                        }/${anime.episodes || "?"}</div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <div class="episode-input-group">
+                            <input type="text" placeholder="Episod nomi" id="episodeName_${
+                              anime.id
+                            }">
+                            <input type="file" accept="video/*" id="episodeFile_${
+                              anime.id
+                            }" style="display: none;">
+                            <button class="btn" onclick="document.getElementById('episodeFile_${
+                              anime.id
+                            }').click()">Video tanlash</button>
+                            <button class="btn" onclick="addEpisode(${
+                              anime.id
+                            })">Episod qo'shish</button>
+                        </div>
+                        
+                        <div class="episode-list">
+                            ${(anime.episodesList || [])
+                              .map(
+                                (episode, index) => `
+                                <div class="episode-item">
+                                    <span>Episod ${index + 1}: ${
+                                  episode.name
+                                }</span>
+                                    <button class="btn btn-danger" onclick="removeEpisode(${
+                                      anime.id
+                                    }, ${index})" style="padding: 4px 12px; font-size: 12px;">O'chirish</button>
+                                </div>
+                            `
+                              )
+                              .join("")}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn" onclick="editAnime(${
+                          anime.id
+                        })">Tahrirlash</button>
+                        <button class="btn btn-danger" onclick="deleteAnime(${
+                          anime.id
+                        })">O'chirish</button>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      // Episod qo'shish
+      function addEpisode(animeId) {
+        const nameInput = document.getElementById(`episodeName_${animeId}`);
+        const fileInput = document.getElementById(`episodeFile_${animeId}`);
+
+        if (!nameInput.value.trim()) {
+          alert("Episod nomini kiriting!");
+          return;
+        }
+
+        const anime = animeData.find((a) => a.id === animeId);
+        if (!anime.episodesList) anime.episodesList = [];
+
+        anime.episodesList.push({
+          name: nameInput.value.trim(),
+          fileName: fileInput.files[0]?.name || "No file selected",
+          addedAt: new Date().toISOString(),
+        });
+
+        nameInput.value = "";
+        fileInput.value = "";
+
+        localStorage.setItem("animeData", JSON.stringify(animeData));
+        updateStats();
+        renderAnimeList();
+      }
+
+      // Episod o'chirish
+      function removeEpisode(animeId, episodeIndex) {
+        if (confirm("Episodni o'chirishga ishonchingiz komilmi?")) {
+          const anime = animeData.find((a) => a.id === animeId);
+          anime.episodesList.splice(episodeIndex, 1);
+
+          localStorage.setItem("animeData", JSON.stringify(animeData));
+          updateStats();
+          renderAnimeList();
+        }
+      }
+
+      // Anime o'chirish
+      function deleteAnime(animeId) {
+        if (confirm("Animeni butunlay o'chirishga ishonchingiz komilmi?")) {
+          animeData = animeData.filter((anime) => anime.id !== animeId);
+          localStorage.setItem("animeData", JSON.stringify(animeData));
+          updateStats();
+          renderAnimeList();
+        }
+      }
+
+      // Anime tahrirlash
+      function editAnime(animeId) {
+        const anime = animeData.find((a) => a.id === animeId);
+        if (!anime) return;
+
+        // Formani to'ldirish
+        document.getElementById("title").value = anime.title;
+        document.getElementById("titleEn").value = anime.titleEn || "";
+        document.getElementById("year").value = anime.year;
+        document.getElementById("season").value = anime.season || "";
+        document.getElementById("genre").value = anime.genre;
+        document.getElementById("status").value = anime.status;
+        document.getElementById("episodes").value = anime.episodes || "";
+        document.getElementById("rating").value = anime.rating || "";
+        document.getElementById("description").value = anime.description;
+        document.getElementById("studio").value = anime.studio || "";
+
+        currentEditingAnime = animeId;
+        showTab("add-anime");
+
+        // Submit tugmasini o'zgartirish
+        const submitBtn = document.querySelector(
+          '#animeForm button[type="submit"]'
+        );
+        submitBtn.textContent = "Anime Yangilash";
+        submitBtn.style.background =
+          "linear-gradient(135deg, #28a745 0%, #20c997 100%)";
+      }
+
+      // Sahifa yuklanganda
+      document.addEventListener("DOMContentLoaded", function () {
+        updateStats();
+        renderAnimeList();
+      });
+
+      // Form submit hodisasini yangilash (tahrirlash uchun)
+      document
+        .getElementById("animeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+
+          if (currentEditingAnime) {
+            // Mavjud animeni yangilash
+            const animeIndex = animeData.findIndex(
+              (a) => a.id === currentEditingAnime
+            );
+            if (animeIndex !== -1) {
+              animeData[animeIndex] = {
+                ...animeData[animeIndex],
+                title: formData.get("title"),
+                titleEn: formData.get("titleEn"),
+                year: formData.get("year"),
+                season: formData.get("season"),
+                genre: formData.get("genre"),
+                status: formData.get("status"),
+                episodes: formData.get("episodes") || 0,
+                rating: formData.get("rating") || 0,
+                description: formData.get("description"),
+                studio: formData.get("studio"),
+                updatedAt: new Date().toISOString(),
+              };
+
+              localStorage.setItem("animeData", JSON.stringify(animeData));
+              alert("Anime muvaffaqiyatli yangilandi!");
+            }
+
+            currentEditingAnime = null;
+            const submitBtn = document.querySelector(
+              '#animeForm button[type="submit"]'
+            );
+            submitBtn.textContent = "Anime Qo'shish";
+            submitBtn.style.background =
+              "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+          } else {
+            // Yangi anime qo'shish (oldingi kod)
+            const anime = {
+              id: Date.now(),
+              title: formData.get("title"),
+              titleEn: formData.get("titleEn"),
+              year: formData.get("year"),
+              season: formData.get("season"),
+              genre: formData.get("genre"),
+              status: formData.get("status"),
+              episodes: formData.get("episodes") || 0,
+              rating: formData.get("rating") || 0,
+              description: formData.get("description"),
+              studio: formData.get("studio"),
+              createdAt: new Date().toISOString(),
+              episodesList: [],
+            };
+
+            animeData.push(anime);
+            localStorage.setItem("animeData", JSON.stringify(animeData));
+            alert("Anime muvaffaqiyatli qo'shildi!");
+          }
+
+          this.reset();
+          updateStats();
+          renderAnimeList();
+        });
+    </script>
+  </body>
+</html>
