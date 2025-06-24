@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router-dom';
 import Search from './components/Search/Search';
 import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
+import AllAnime from './pages/All/Allanime';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/news" element={<div>News Page</div>} />
           <Route path="/forum" element={<div>Forum Page</div>} />
         <Route path="/search" element={<div>Search Page</div>} />
-        <Route path="/all" element={<div>Barcha animelar</div>} />
+        <Route path="/all" element={<AllAnime />} />
         </Routes>
       </div>
   );

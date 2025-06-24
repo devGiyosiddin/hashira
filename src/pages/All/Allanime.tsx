@@ -1,8 +1,18 @@
-import './homePage.css';
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import './allAnime.css';
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchStore } from "../../store/searchStore";
 import { useDebounce } from "use-debounce";
+import { useEffect, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
+
+// Типы данных
+type FetchAnimeResponse = {
+  pagination: {
+    has_next_page: boolean;
+    current_page: number;
+  };
+  data: Anime[];
+};
 
 type Anime = {
   mal_id: number;
@@ -24,19 +34,12 @@ type Anime = {
   episodes?: number;
 };
 
-// API функции
-const fetchTopAnime = async () => {
-  const url = `https://api.jikan.moe/v4/anime?order_by=score&sort=desc&limit=10&min_score=8`;
+// API функция для получения всех аниме
+const fetchAllAnime = async ({ pageParam = 1 }): Promise<FetchAnimeResponse> => {
+  const url = `https://api.jikan.moe/v4/anime?page=${pageParam}&limit=24`;
   const response = await fetch(url);
   const data = await response.json();
-  return data.data;
-};
-
-const fetchNewReleases = async () => {
-  const url = `https://api.jikan.moe/v4/anime?order_by=start_date&sort=desc&limit=10&status=airing`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.data;
+  return data;
 };
 
 // Компонент карточки аниме
@@ -128,114 +131,116 @@ const AnimeCard = ({ item }: { item: Anime }) => {
   );
 };
 
-// Компонент секции
-const AnimeSection = ({ title, data, isLoading, error, icon }: {
-  title: string;
-  data: Anime[];
-  isLoading: boolean;
-  error: Error | null;
-  icon: string;
-}) => (
-  <section className="mb-16">
-    <div className="flex items-center justify-between mb-8">
-      <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-        {icon} {title}
-      </h2>
-      <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
-    </div>
-
-    {isLoading ? (
-      <div className="flex justify-center items-center py-20">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
-          <div className="absolute inset-0 w-16 h-16 border-4 border-pink-500/20 border-r-pink-500 rounded-full animate-spin animate-reverse"></div>
-        </div>
-      </div>
-    ) : error ? (
-      <div className="text-center py-20">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-4">
-          <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <p className="text-red-400 text-lg font-medium">Ошибка загрузки: {error.message}</p>
-      </div>
-    ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-        {data?.map((item) => (
-          <AnimeCard key={item.mal_id} item={item} />
-        ))}
-      </div>
-    )}
-  </section>
-);
-
-const HomePage = () => {
+const AllAnimePage = () => {
   const rawQuery = useSearchStore((state) => state.query);
   const [debouncedQuery] = useDebounce(rawQuery, 600);
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  // Топ аниме
-  const { data: topAnime, isLoading: topLoading, error: topError } = useQuery({
-    queryKey: ["topAnime"],
-    queryFn: fetchTopAnime,
+  // Все аниме с бесконечной прокруткой
+  const {
+    data: allAnimeData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: allAnimeLoading,
+    error: allAnimeError
+  } = useInfiniteQuery<FetchAnimeResponse>({
+    queryKey: ["allAnime"],
+    queryFn: fetchAllAnime,
+    getNextPageParam: (lastPage) =>
+      lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
     enabled: !debouncedQuery,
-    staleTime: 1000 * 60 * 30, // 30 минут кэш
+    staleTime: 1000 * 60 * 10, // 10 минут кэш
   });
 
-  // Новые релизы
-  const { data: newReleases, isLoading: newLoading, error: newError } = useQuery({
-    queryKey: ["newReleases"],
-    queryFn: fetchNewReleases,
-    enabled: !debouncedQuery,
-    staleTime: 1000 * 60 * 15, // 15 минут кэш
-  });
+  // Объединяем все страницы в один массив
+  const allAnime = allAnimeData?.pages.flatMap(page => page.data) || [];
+
+  // Функция для обработки пересечения с наблюдателем
+  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [target] = entries;
+    if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  // Настройка наблюдателя пересечений
+  useEffect(() => {
+    const element = observerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0.1,
+      rootMargin: '100px',
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [handleObserver]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
-      {/* Hero Section with animated background */}
+      {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-cyan-600/10 animate-pulse"></div>
         <div className="relative px-4 sm:px-8 lg:px-16 py-12">
+          
+          <section className="mb-16">
+            {/* Заголовок секции */}
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                📺 Barcha animelar
+              </h1>
+              <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
+            </div>
 
-          {!debouncedQuery.trim() && (
-            <>
-              {/* Топ аниме */}
-              <AnimeSection
-                title="Топ аниме"
-                data={topAnime}
-                isLoading={topLoading}
-                error={topError}
-                icon="🏆"
-              />
-
-              {/* Новые релизы */}
-              <AnimeSection
-                title="Новые релизы"
-                data={newReleases}
-                isLoading={newLoading}
-                error={newError}
-                icon="🆕"
-              />
-
-              {/* Кнопка "Посмотреть все аниме" */}
-              <div className="text-center mt-12">
-                <Link 
-                  to="/all-anime"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <span className="mr-2">📺</span>
-                  Посмотреть все аниме
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
+            {/* Состояния загрузки и ошибок */}
+            {allAnimeLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-pink-500/20 border-r-pink-500 rounded-full animate-spin animate-reverse"></div>
+                </div>
               </div>
-            </>
-          )}
+            ) : allAnimeError ? (
+              <div className="text-center py-20">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-4">
+                  <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <p className="text-red-400 text-lg font-medium">Ошибка загрузки: {allAnimeError.message}</p>
+              </div>
+            ) : (
+              <>
+                {/* Сетка аниме карточек */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+                  {allAnime.map((item) => (
+                    <AnimeCard key={`${item.mal_id}-${Math.random()}`} item={item} />
+                  ))}
+                </div>
+
+                {/* Элемент-наблюдатель для бесконечной прокрутки */}
+                <div ref={observerRef} className="flex justify-center items-center py-8">
+                  {isFetchingNextPage && (
+                    <div className="relative">
+                      <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 w-12 h-12 border-4 border-pink-500/20 border-r-pink-500 rounded-full animate-spin animate-reverse"></div>
+                    </div>
+                  )}
+                  {!hasNextPage && allAnime.length > 0 && (
+                    <p className="text-gray-400 text-center">
+                      🎉 Вы посмотрели все доступные аниме!
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+          </section>
         </div>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default AllAnimePage;
