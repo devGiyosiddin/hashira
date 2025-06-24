@@ -37,7 +37,6 @@ const Sidebar = () => {
 
   return (
     <aside className="h-full w-64 z-40 overflow-y-auto">
-
       {/* Main Menu */}
       <nav className="px-6 pb-4">
         <div className="space-y-2">
