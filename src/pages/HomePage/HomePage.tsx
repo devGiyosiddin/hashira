@@ -94,21 +94,10 @@ const AnimeCard = ({ item }: { item: Anime }) => {
               : 'Описание недоступно'}
           </p>
         </div>
-          
-        {/* Favorite Button */}
-        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 right-6 transition-all duration-500 z-20">
-          <button 
-            className="bg-zinc-700/80 backdrop-blur-sm hover:bg-zinc-600/80 text-white p-2.5 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-            </svg>
-          </button>
-        </div>
 
         {/* Watch indicator */}
         <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-500 z-20">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
+          <div className="bg-(--violet-color) text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
             👁️ Ko'rish
           </div>
         </div>
@@ -192,7 +181,7 @@ const HomePage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-900">
+    <div className="min-h-screen">
       {/* Hero Section with animated background */}
       <div className="relative overflow-hidden">
         <HeroBanner anime={topAnime?.[0] || {}} />
