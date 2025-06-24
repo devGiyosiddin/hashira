@@ -95,6 +95,20 @@ const AnimeDetailPage = () => {
     return anime && (anime.type === 'Movie' || anime.episodes === 1);
   };
 
+  // close modal when clicked outside of modal trailer
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showTrailer && parallaxRef.current && !parallaxRef.current.contains(event.target as Node)) {
+        setShowTrailer(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showTrailer]);
+
   // const nextEpisode = () => {
   //   if (anime && currentEpisode < (anime.episodes || 0)) {
   //     setCurrentEpisode((prev) => prev + 1);
@@ -210,17 +224,17 @@ const AnimeDetailPage = () => {
                       className="w-65 h-auto object-cover shadow-lg shadow-black transition-transform duration-300 transform group-hover:scale-105"
                     />
                     <div
-                      className="absolute top-1 right-1 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
+                      className="absolute top-2 right-2 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
+                      <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
+                        <svg
+                          className="w-5 h-5 fill-current color-(--text-color)"
+                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
+                      </span>
                       <span className='p-1 rounded-full bg-(--green-color) flex items-center justify-center w-12'>
                         <svg
                           className="w-4 h-4 fill-current color-(--text-color)"
                           xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
                         {anime.score ? anime.score.toFixed(1) : 'N/A'}
-                      </span>
-                      <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
-                        <svg
-                          className="w-5 h-5 fill-current color-(--text-color)"
-                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
                       </span>
                     </div>
                     {/* quality */}
