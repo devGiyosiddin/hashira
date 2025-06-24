@@ -2,7 +2,7 @@ import './App.css';
 import SiteHeader from './components/Header/SiteHeader';
 import HomePage from './pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router-dom';
-import Search from './components/Search';
+import Search from './components/Search/Search';
 import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
 
 function App() {
@@ -18,7 +18,8 @@ function App() {
           <Route path="/manga" element={<div>Manga Page</div>} />
           <Route path="/news" element={<div>News Page</div>} />
           <Route path="/forum" element={<div>Forum Page</div>} />
-          <Route path="/search" element={<div>Search Page</div>} />
+        <Route path="/search" element={<div>Search Page</div>} />
+        <Route path="/all" element={<div>Barcha animelar</div>} />
         </Routes>
       </div>
   );
