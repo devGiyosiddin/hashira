@@ -184,12 +184,13 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with animated background */}
-        <Sidebar />
       <div className="relative overflow-hidden">
-        <HeroBanner anime={topAnime?.[0] || {}} />
+        <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-4 lg:gap-8">
+          <Sidebar />
 
         {/* Background animation */}
         <div className="relative px-4 sm:px-8 lg:px-16 py-12">
+          <HeroBanner anime={topAnime?.[0] || {}} />
 
           {!debouncedQuery.trim() && (
             <>
@@ -227,6 +228,8 @@ const HomePage = () => {
             </>
           )}
         </div>
+        </div>
+
       </div>
     </div>
   );
