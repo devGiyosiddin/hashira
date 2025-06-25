@@ -36,7 +36,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="h-full w-64 z-40 overflow-y-auto pl-6">
+    <aside className="bg-(--bg-color) w-64 fixed flex top-[120px] left-0 flex-col z-40 overflow-hidden pl-6">
       {/* Main Menu */}
       <nav className="pb-4">
         <div className="space-y-2">

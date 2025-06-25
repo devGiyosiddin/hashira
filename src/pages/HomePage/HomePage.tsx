@@ -182,57 +182,49 @@ const HomePage = () => {
   });
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section with animated background */}
-      <div className="relative overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-4 lg:gap-8">
-          <Sidebar />
+    <div className="min-h-screen flex flex-row">
+      {/* Hero Banner Section */}
+      <div className="relative px-6 pl-[280px] pt-6 pb-12 w-full bg-zinc-900 text-white">
+      <Sidebar />
+        <HeroBanner anime={topAnime?.[0] || {}} />
+          
+          {/* Ko'rishni davom etish */}
 
-        {/* Background animation */}
-        <div className="relative px-6">
-          <HeroBanner anime={topAnime?.[0] || {}} />
-            
-            {/* Ko'rishni davom etish */}
+        {!debouncedQuery.trim() && (
+          <>
+            {/* Топ аниме */}
+            <AnimeSection
+              title="Top anime"
+              data={topAnime}
+              isLoading={topLoading}
+              error={topError}
+              icon="🏆"
+            />
 
+            {/* Новые релизы */}
+            <AnimeSection
+              title="Yangi relizlar"
+              data={newReleases}
+              isLoading={newLoading}
+              error={newError}
+              icon="🆕"
+            />
 
-          {!debouncedQuery.trim() && (
-            <>
-              {/* Топ аниме */}
-              <AnimeSection
-                title="Top anime"
-                data={topAnime}
-                isLoading={topLoading}
-                error={topError}
-                icon="🏆"
-              />
-
-              {/* Новые релизы */}
-              <AnimeSection
-                title="Yangi relizlar"
-                data={newReleases}
-                isLoading={newLoading}
-                error={newError}
-                icon="🆕"
-              />
-
-              {/* Кнопка "Посмотреть все аниме" */}
-              <div className="text-center mt-12">
-                <Link 
-                  to="/all-anime"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <span className="mr-2">📺</span>
-                  Посмотреть все аниме
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
-        </div>
-
+            {/* Кнопка "Посмотреть все аниме" */}
+            <div className="text-center mt-12">
+              <Link 
+                to="/all-anime"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                <span className="mr-2">📺</span>
+                Посмотреть все аниме
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
