@@ -95,7 +95,7 @@ const SiteHeader = () => {
     return (
         <header
             ref={searchContainerRef}
-            className="sticky top-0 left-0 right-0 z-40 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm py-7"
+            className="sticky top-0 left-0 right-0 z-50 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm py-7"
             style={{backdropFilter: 'blur(20px'}}
         >
             <div className="relative z-10 flex items-center justify-between px-4 sm:px-4 lg:px-8">
@@ -140,7 +140,7 @@ const SiteHeader = () => {
                             value={searchQuery}
                             onChange={handleInputChange}
                             onFocus={() => searchResults.length > 0 && setShowDropdown(true)}
-                            className="w-64 py-2.5 pl-5 pr-12 rounded-xl border border-zinc-600/50 bg-(--bg-color) backdrop-blur-sm text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                            className="w-134 py-2.5 pl-5 pr-12 rounded-xl border border-zinc-600/50 bg-(--bg-color) backdrop-blur-sm text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                             style={{
                                 background: 'var(--button-bg-color)',
                                 boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05)'
