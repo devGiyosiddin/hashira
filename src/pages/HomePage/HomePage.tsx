@@ -44,10 +44,11 @@ const fetchNewReleases = async () => {
 // Компонент карточки аниме
 const AnimeCard = ({ item }: { item: Anime }) => {
   return (
-    <Link 
+    <Link
       key={item.mal_id}
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
+      className="group relative overflow-hidden rounded-2xl backdrop-blur-sm border-none shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block
+                 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80" // Фиксированная высота для разных экранов
       style={{
         background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
@@ -60,60 +61,69 @@ const AnimeCard = ({ item }: { item: Anime }) => {
           alt={item.title}
           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:blur-sm group-hover:brightness-75"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/95 via-zinc-900/60 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        {/* Top Right Icons */}
+        <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
+          <span className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
+            <svg
+              className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-white"
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+            </svg>
+          </span>
+          
+          <span className="p-1 rounded-full bg-green-500/80 backdrop-blur-sm h-8 sm:h-9 px-2 sm:px-3 flex items-center justify-center gap-1">
+            <svg
+              className="w-3 h-3 sm:w-4 sm:h-4 fill-current text-white"
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+            </svg>
+            <span className="text-xs sm:text-sm font-medium text-white">
+              {item.score ? item.score.toFixed(1) : 'N/A'}
+            </span>
+          </span>
+        </div>
+
+        {/* Quality Badge - Bottom Right */}
+        <div className="absolute bottom-2 right-2 bg-purple-600/90 backdrop-blur-sm text-white rounded-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold flex items-center gap-1 h-7 sm:h-8 z-10">
+          QHD+
+        </div>
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 z-[1]"></div>
+        
+        {/* Hover Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[2]"></div>
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 h-80 flex flex-col p-6">
-        {/* Rating Badge */}
-        <div className="absolute top-4 right-4 bg-yellow-500/90 backdrop-blur-sm text-black px-2 py-1 rounded-full text-sm font-bold shadow-lg">
-          ⭐ {item.score || 'N/A'}
-        </div>
-
-        {/* Genre Tags */}
-        <div className="absolute top-4 left-4 flex flex-wrap gap-1 max-w-[calc(100%-120px)]">
-          {item.genres?.slice(0, 2).map((genre) => (
-            <span
-              key={genre.mal_id}
-              className="text-xs px-2 py-1 bg-purple-600/80 backdrop-blur-sm text-white rounded-full font-medium shadow-sm"
-            >
-              {genre.name}
-            </span>
-          ))}
-        </div>
-
-        {/* Title and Description - Hidden by default, shown on hover */}
-        <div className="mt-auto transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-          <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 drop-shadow-lg">
-            {item.title_english || item.title}
-          </h3>
-          
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed">
-            {item.synopsis 
-              ? item.synopsis.slice(0, 120) + (item.synopsis.length > 120 ? '...' : '')
-              : 'Описание недоступно'}
+      {/* Title overlay - показывается только при hover */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+      <h3 className="text-white text-base sm:text-lg md:text-xl font-bold line-clamp-2">
+          {item.title}
+        </h3>
+        {item.synopsis && (
+          <p className="text-gray-300 text-sm sm:text-base mt-2 line-clamp-3 mb-10">
+            {item.synopsis.length > 120 ? `${item.synopsis.slice(0, 120)}...` : item.synopsis}
           </p>
-        </div>
-
-        {/* Watch indicator */}
-        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-500 z-20">
-          <div className="bg-(--violet-color) text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
-            👁️ Ko'rish
-          </div>
-        </div>
-
-        {/* Default state - Only title visible */}
-        <div className="group-hover:opacity-0 group-hover:translate-y-4 transition-all duration-500">
-          <h3 className="text-lg font-bold text-white drop-shadow-lg line-clamp-2">
-            {item.title_english || item.title}
-          </h3>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-gray-400 text-sm">
-              {item.year || 'N/A'} • {item.episodes || '?'} ep.
-            </span>
-          </div>
-        </div>
+        )}
       </div>
     </Link>
   );
