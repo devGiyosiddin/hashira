@@ -45,7 +45,7 @@ const StatusDropdown = () => {
                              text-gray-200 font-medium rounded-xl shadow-2xl
                              hover:bg-black/60 hover:border-white/20 hover:shadow-purple-500/20
                              transition-all duration-300 ease-out
-                             focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                             focus:outline-none focus:ring-2 focus:ring-purple-500/50 h-[53px]"
                     onClick={() => setShowDropdown(!showDropdown)}
                     // onMouseEnter={() => setShowDropdown(true)}
                 >
