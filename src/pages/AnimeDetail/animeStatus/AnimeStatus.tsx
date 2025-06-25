@@ -47,7 +47,7 @@ const StatusDropdown = () => {
                              transition-all duration-300 ease-out
                              focus:outline-none focus:ring-2 focus:ring-purple-500/50"
                     onClick={() => setShowDropdown(!showDropdown)}
-                    onMouseEnter={() => setShowDropdown(true)}
+                    // onMouseEnter={() => setShowDropdown(true)}
                 >
                     {/* Status indicator dot */}
                     <div className="flex items-center space-x-3">
@@ -83,8 +83,8 @@ const StatusDropdown = () => {
                                    transform transition-all duration-300 ease-out
                                    animate-in fade-in-0 slide-in-from-top-1 zoom-in-95
                                    opacity-100 scale-100 translate-y-0"
-                         onMouseLeave={() => setShowDropdown(false)}>
-                        
+                        //  onMouseLeave={() => setShowDropdown(false)}
+                        >
                         {/* Header */}
                         <div className="px-4 py-3 border-b border-white/10">
                             <p className="text-sm font-medium text-gray-300/80">Status tanlang</p>
