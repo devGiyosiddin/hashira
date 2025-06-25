@@ -30,6 +30,7 @@ const SiteHeader = () => {
     const [searchResults, setSearchResults] = useState<AnimeSearchResult[]>([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -82,6 +83,15 @@ const SiteHeader = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Blur on scroll
+    useEffect(() => {
+        const onScroll = () => {
+            setScrolled(window.scrollY > 10);
+        };
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
@@ -95,8 +105,13 @@ const SiteHeader = () => {
     return (
         <header
             ref={searchContainerRef}
-            className="sticky top-0 left-0 right-0 z-50 p-4 bg-gradient-to-b from-slate-900/80 to-transparent backdrop-blur-sm py-7"
-            style={{backdropFilter: 'blur(20px'}}
+            className={`fixed top-0 left-0 right-0 z-50 p-4 bg-gradient-to-b from-slate-900/80 to-transparent py-7 transition-all duration-300 ${
+                scrolled ? 'backdrop-blur-lg' : 'backdrop-blur-sm'
+            }`}
+            style={{
+                backdropFilter: scrolled ? 'blur(24px)' : 'blur(0)',
+                background: 'linear-gradient(180deg,#000c,#0000)'
+            }}
         >
             <div className="relative z-10 flex items-center justify-between px-4 sm:px-4 lg:px-8">
                 {/* Logo */}
