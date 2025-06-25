@@ -34,11 +34,21 @@ type Anime = {
   episodes?: number;
 };
 
+// Тип для параметров пагинации
+type FetchAnimeParams = {
+  pageParam?: number;
+};
+
 // API функция для получения всех аниме
-const fetchAllAnime = async ({ pageParam = 1 }): Promise<FetchAnimeResponse> => {
+const fetchAllAnime = async ({ pageParam = 1 }: FetchAnimeParams): Promise<FetchAnimeResponse> => {
   const url = `https://api.jikan.moe/v4/anime?page=${pageParam}&limit=24`;
   const response = await fetch(url);
-  const data = await response.json();
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  
+  const data: FetchAnimeResponse = await response.json();
   return data;
 };
 
@@ -133,17 +143,18 @@ const AllAnimePage = () => {
     isFetchingNextPage,
     isLoading: allAnimeLoading,
     error: allAnimeError
-  } = useInfiniteQuery<FetchAnimeResponse>({
+  } = useInfiniteQuery({
     queryKey: ["allAnime"],
     queryFn: fetchAllAnime,
-    getNextPageParam: (lastPage) =>
+    getNextPageParam: (lastPage: FetchAnimeResponse) =>
       lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
     enabled: !debouncedQuery,
     staleTime: 1000 * 60 * 10, // 10 минут кэш
+    initialPageParam: 1, // Добавляем начальный параметр страницы
   });
 
   // Объединяем все страницы в один массив
-  const allAnime = allAnimeData?.pages.flatMap(page => page.data) || [];
+  const allAnime = allAnimeData?.pages.flatMap((page: FetchAnimeResponse) => page.data) || [];
 
   // Функция для обработки пересечения с наблюдателем
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
