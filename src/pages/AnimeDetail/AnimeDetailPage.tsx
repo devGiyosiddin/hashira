@@ -240,7 +240,7 @@ const AnimeDetailPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <div className="relative overflow-hidden pt-20"
+      <div className="relative pt-20"
         style={{
           // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
           boxShadow: 'rgb(19, 17, 17) 0px 0px 80px 40px inset',
