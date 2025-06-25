@@ -132,7 +132,6 @@ const AnimeSection = ({ title, data, isLoading, error, icon }: {
       <h2 className="text-3xl sm:text-4xl font-bold">
         {icon} {title}
       </h2>
-      <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
     </div>
 
     {isLoading ? (
