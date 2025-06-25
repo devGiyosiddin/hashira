@@ -105,7 +105,7 @@ const SiteHeader = () => {
     return (
         <header
             ref={searchContainerRef}
-            className={`fixed top-0 left-0 right-0 z-50 p-4 bg-gradient-to-b from-slate-900/80 to-transparent py-7 transition-all duration-300 ${
+            className={`fixed top-0 left-0 right-0 z-50 p-4 py-7 transition-all duration-300 ${
                 scrolled ? 'backdrop-blur-lg' : 'backdrop-blur-sm'
             }`}
             style={{
