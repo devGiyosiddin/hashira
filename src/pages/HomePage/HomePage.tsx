@@ -184,7 +184,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-row)">
       {/* Hero Banner Section */}
-      <div className="relative px-6 pl-[280px] pt-6 pb-12 w-full text-white">
+      <div className="relative px-6 pl-[280px] pt-[100px] pb-12 w-full text-white">
       <Sidebar />
         <HeroBanner anime={topAnime?.[0] || {}} />
           
