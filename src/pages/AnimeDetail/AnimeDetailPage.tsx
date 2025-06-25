@@ -175,7 +175,7 @@ const AnimeDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
           <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-pink-500 rounded-full animate-spin animation-delay-150"></div>
@@ -199,7 +199,12 @@ const AnimeDetailPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative overflow-hidden py-20 lg:py-32"
+        style={{
+          // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+          boxShadow: 'rgb(19, 17, 17) 0px 0px 80px 40px inset',
+        }}
+      >
         {/* Background Image with Parallax */}
         <div 
           ref={parallaxRef}
@@ -214,13 +219,13 @@ const AnimeDetailPage = () => {
 
         {/* Main Content */}
         <div className="relative z-10 h-full flex items-center">
-          <div className="container mx-auto px-6 lg:px-16">
+          <div className="pb-16 px-6 lg:px-16">
             <div className="flex gap-12 items-center">
               {/* Left Content - Poster */}
               <div className="flex">
                 <div className="relative group">
-                  <div className="absolute -inset-4 rounded-3xl blur-2xl"></div>
-                  <div className="relative overflow-hidden rounded-3xl cursor-pointer">
+                  <div className="relative overflow-hidden rounded-3xl cursor-pointer"
+                    style={{ boxShadow: '0 8px 32px rgba(0, 0, 0, 0.7)' }} >
                     <img
                       src={anime.images.jpg.large_image_url}
                       alt={anime.title}
