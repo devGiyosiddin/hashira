@@ -129,7 +129,7 @@ const AnimeSection = ({ title, data, isLoading, error, icon }: {
 }) => (
   <section className="mb-16">
     <div className="flex items-center justify-between mb-8">
-      <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+      <h2 className="text-3xl sm:text-4xl font-bold">
         {icon} {title}
       </h2>
       <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
@@ -191,12 +191,15 @@ const HomePage = () => {
         {/* Background animation */}
         <div className="relative px-6">
           <HeroBanner anime={topAnime?.[0] || {}} />
+            
+            {/* Ko'rishni davom etish */}
+
 
           {!debouncedQuery.trim() && (
             <>
               {/* Топ аниме */}
               <AnimeSection
-                title="Топ аниме"
+                title="Top anime"
                 data={topAnime}
                 isLoading={topLoading}
                 error={topError}
@@ -205,7 +208,7 @@ const HomePage = () => {
 
               {/* Новые релизы */}
               <AnimeSection
-                title="Новые релизы"
+                title="Yangi relizlar"
                 data={newReleases}
                 isLoading={newLoading}
                 error={newError}
