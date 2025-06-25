@@ -1,9 +1,7 @@
 import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-// import { Star, Play, Heart, Bookmark, Share2, Users, Award, TrendingUp, ChevronRight, SkipBack, SkipForward } from 'lucide-react';
-import { Star, Play, Heart, Users, ChevronRight, PlayIcon} from 'lucide-react';
-// import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
+import { Star, Play, ChevronRight, PlayIcon} from 'lucide-react';
 import StatusDropdown from './animeStatus/AnimeStatus';
 
 type AnimeDetails = {
@@ -72,6 +70,49 @@ type Episode = {
   filler?: boolean;
   recap?: boolean;
   forum_url?: string;
+};
+
+const SynopsisSection = ({ anime }: { anime: AnimeDetails }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const synopsis = anime.synopsis || 'No synopsis available.';
+  const shortSynopsis = synopsis.length > 200 ? synopsis.slice(0, 200) + '...' : synopsis;
+  const shouldShowButton = synopsis.length > 200;
+
+  return (
+    <section className="py-20 px-6 lg:px-16">
+      <div className="max-w-2xl">
+        <h2 className="text-4xl font-bold mb-8">
+          Nima haqida
+        </h2>
+        <div className="grid lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2">
+            <div className="relative rounded-b-lg">
+              <p className="text-lg text-gray-300 leading-relaxed">
+                {isExpanded ? synopsis : shortSynopsis}
+              </p>
+              
+              {shouldShowButton && (
+              <button
+                  onClick={(e) => {
+                    setIsExpanded(!isExpanded)
+                    e.currentTarget.style.display = 'none';
+                  }}  
+                className={`-translate-y-full bottom-0 w-full h-20 ml-5 mt-4 py-4 font-medium transition-all duration-200 flex items-center cursor-pointer justify-center gap-2 hover:scale-105 text-sm ${
+                  !isExpanded 
+                    ? 'bg-[linear-gradient(180deg,#0000,#111)]' 
+                    : ''
+                }`}
+              >
+                {isExpanded ? 'Yashirish' : `To'liq ko'rsatish`}
+              </button>
+            )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 const AnimeDetailPage = () => {
@@ -199,7 +240,7 @@ const AnimeDetailPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <div className="relative overflow-hidden py-20 lg:py-32"
+      <div className="relative overflow-hidden pt-20"
         style={{
           // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
           boxShadow: 'rgb(19, 17, 17) 0px 0px 80px 40px inset',
@@ -385,10 +426,13 @@ const AnimeDetailPage = () => {
       </div>
 
       {/* Content Sections */}
-      <div className="relative z-10 bg-slate-900">
+      <div className="relative z-10">
+
+        <SynopsisSection anime={anime} />
+
         {/* Episodes Section - Only show for TV series with multiple episodes */}
         {!isMovieOrSingleEpisode() && (
-          <section className="py-20 px-6 lg:px-16 bg-gradient-to-r from-purple-900/10 to-pink-900/10">
+          <section className="py-20 px-6 lg:px-16">
             <div className="container mx-auto max-w-6xl">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -479,131 +523,6 @@ const AnimeDetailPage = () => {
             </div>
           </section>
         )}
-
-        {/* Synopsis Section */}
-        <section className="py-20 px-6 lg:px-16">
-          <div className="container mx-auto max-w-6xl">
-            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Synopsis
-            </h2>
-            <div className="grid lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2">
-                <p className="text-lg text-gray-300 leading-relaxed">
-                  {anime.synopsis || 'No synopsis available.'}
-                </p>
-                {anime.background && (
-                  <div className="mt-8 p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20">
-                    <h3 className="text-xl font-bold text-purple-400 mb-4">Background</h3>
-                    <p className="text-gray-300">{anime.background}</p>
-                  </div>
-                )}
-              </div>
-              
-              {/* Info Panel */}
-              <div className="space-y-6">
-                <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700">
-                  <h3 className="text-xl font-bold text-purple-400 mb-4">Information</h3>
-                  <div className="space-y-4">
-                    {anime.type && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Type</span>
-                        <span className="font-semibold">{anime.type}</span>
-                      </div>
-                    )}
-                    {anime.episodes && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Episodes</span>
-                        <span className="font-semibold">{anime.episodes}</span>
-                      </div>
-                    )}
-                    {anime.duration && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Duration</span>
-                        <span className="font-semibold">{anime.duration}</span>
-                      </div>
-                    )}
-                    {anime.status && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Status</span>
-                        <span className="font-semibold">{anime.status}</span>
-                      </div>
-                    )}
-                    {anime.season && anime.year && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Season</span>
-                        <span className="font-semibold">{anime.season} {anime.year}</span>
-                      </div>
-                    )}
-                    {anime.rating && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Rating</span>
-                        <span className="font-semibold">{anime.rating}</span>
-                      </div>
-                    )}
-                    {anime.source && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Source</span>
-                        <span className="font-semibold">{anime.source}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Stats Panel */}
-                <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700">
-                  <h3 className="text-xl font-bold text-cyan-400 mb-4">Statistics</h3>
-                  <div className="space-y-4">
-                    {anime.members && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400 flex items-center gap-2">
-                          <Users className="w-4 h-4" />
-                          Members
-                        </span>
-                        <span className="font-semibold">{anime.members.toLocaleString()}</span>
-                      </div>
-                    )}
-                    {anime.favorites && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-400 flex items-center gap-2">
-                          <Heart className="w-4 h-4" />
-                          Favorites
-                        </span>
-                        <span className="font-semibold">{anime.favorites.toLocaleString()}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Genres & Themes */}
-        <section className="py-20 px-6 lg:px-16 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
-          <div className="container mx-auto max-w-6xl">
-            <div className="grid md:grid-cols-2 gap-12">
-              {/* Genres */}
-              
-
-              {/* Themes */}
-              {anime.themes && anime.themes.length > 0 && (
-                <div>
-                  <h3 className="text-2xl font-bold text-pink-400 mb-6">Themes</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {anime.themes.map((theme) => (
-                      <span
-                        key={theme.mal_id}
-                        className="px-4 py-2 bg-pink-500/20 text-pink-300 rounded-full border border-pink-500/30 font-medium hover:bg-pink-500/30 transition-colors duration-300 cursor-pointer"
-                      >
-                        {theme.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
       </div>
       
       {/* Episode List Sidebar - Only for series */}
@@ -676,7 +595,6 @@ const AnimeDetailPage = () => {
           </div>
         </div>
       )}
-      
 
       {/* Trailer Modal */}
       {showTrailer && anime.trailer?.youtube_id && (
