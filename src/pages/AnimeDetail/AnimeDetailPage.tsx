@@ -74,18 +74,17 @@ type Episode = {
 
 const SynopsisSection = ({ anime }: { anime: AnimeDetails }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  
   const synopsis = anime.synopsis || 'No synopsis available.';
   const shortSynopsis = synopsis.length > 200 ? synopsis.slice(0, 200) + '...' : synopsis;
   const shouldShowButton = synopsis.length > 200;
 
   return (
-    <section className="py-20 px-6 lg:px-16">
+    <section className="py-20 pl-[64px] pr-0 px-6 w-full lg:w-[35%]">
       <div className="max-w-2xl">
         <h2 className="text-4xl font-bold mb-8">
           Nima haqida
         </h2>
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12">
           <div className="lg:col-span-2">
             <div className="relative rounded-b-lg">
               <p className="text-lg text-gray-300 leading-relaxed">
@@ -126,7 +125,6 @@ const AnimeDetailPage = () => {
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState<number>(1);
   const parallaxRef = useRef<HTMLDivElement>(null);
-
 
   console.log(showVideoPlayer ? 'Video Player is shown' : 'Video Player is hidden');
 
@@ -444,17 +442,16 @@ const AnimeDetailPage = () => {
       </div>
 
       {/* Content Sections */}
-      <div className="relative">
-
-        <SynopsisSection anime={anime} />
+      <div className="relative flex gap-6 flex-col lg:flex-row gap-6 ">
+      <SynopsisSection anime={anime} />
 
         {/* Episodes Section - Only show for TV series with multiple episodes */}
         {!isMovieOrSingleEpisode() && (
-          <section className="py-20 px-6 lg:px-16">
-            <div className="container mx-auto max-w-6xl">
+          <section className="w-full lg:w-[65%] py-20 pr-0">
+            <div className="container max-w-6xl">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Episodes ({anime.episodes})
+                <h2 className="text-4xl font-bold">
+                  Epizodlar ({anime.episodes})
                 </h2>
                 {episodesLoading && (
                   <div className="w-6 h-6 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
@@ -467,72 +464,44 @@ const AnimeDetailPage = () => {
                     <div
                       key={episode.mal_id}
                       onClick={() => playEpisode(index + 1)}
-                      className="group bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                      className="flex flex-col justify-content-around rounded-xl p-4 transition-all duration-300 cursor-pointer transform translate-y-0 hover:translate-y-3 h-[200px]"
+                      style={{
+                        boxShadow: '0 15px 30px #00000080',
+                      }}
                     >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold">
-                          {index + 1}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-white truncate group-hover:text-purple-400 transition-colors">
-                            Episode {index + 1}
-                          </h3>
-                          {episode.score && (
-                            <div className="flex items-center gap-1 text-yellow-400 text-sm">
-                              <Star className="w-3 h-3 fill-current" />
-                              {episode.score}
-                            </div>
-                          )}
-                        </div>
+                      <div className="flex gap-2">
+                        {episode.filler && (
+                          <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
+                            Filler
+                          </span>
+                        )}
+                        {episode.recap && (
+                          <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
+                            Recap
+                          </span>
+                        )}
                       </div>
-                      
-                      {episode.title && (
-                        <p className="text-gray-400 text-sm line-clamp-2 mb-2">
-                          {episode.title}
-                        </p>
-                      )}
-                      
-                      {episode.aired && (
-                        <p className="text-gray-500 text-xs">
-                          {new Date(episode.aired).toLocaleDateString()}
-                        </p>
-                      )}
-                      
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex gap-2">
-                          {episode.filler && (
-                            <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
-                              Filler
-                            </span>
-                          )}
-                          {episode.recap && (
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
-                              Recap
-                            </span>
-                          )}
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-purple-400 transition-colors" />
+
+                      <div className="w-full h-5 rounded-lg flex text-white font-bold mt-auto">
+                        {index + 1}- seria
                       </div>
                     </div>
                   ))
                 ) : (
                   // Fallback: Generate episode list based on episode count
-                  Array.from({ length: anime.episodes || 0 }, (_, index) => (
+                  Array.from({ length: anime.episodes || 0 }, ( _, index) => (
                     <div
                       key={index}
                       onClick={() => playEpisode(index + 1)}
-                      className="group bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                      className="flex flex-col justify-content-around gap-3 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
                     >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold">
-                          {index + 1}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-white group-hover:text-purple-400 transition-colors">
-                            Episode {index + 1}
-                          </h3>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-purple-400 transition-colors" />
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-white">
+                          {index + 1} - seria
+                        </h3>
                       </div>
                     </div>
                   ))
@@ -542,77 +511,6 @@ const AnimeDetailPage = () => {
           </section>
         )}
       </div>
-      
-      {/* Episode List Sidebar - Only for series */}
-      {/* {!isMovieOrSingleEpisode() && (
-        <div className="w-80 bg-slate-900 border-l border-slate-700 overflow-y-auto">
-          <div className="p-4 border-b border-slate-700">
-            <h4 className="text-white font-bold">Episodes</h4>
-            <p className="text-gray-400 text-sm">{anime.episodes} episodes</p>
-          </div>
-          
-          <div className="p-2 space-y-2">
-            {episodes.length > 0 ? (
-              episodes.map((episode, index) => (
-                <div
-                  key={episode.mal_id}
-                  onClick={() => setCurrentEpisode(index + 1)}
-                  className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                    currentEpisode === index + 1
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
-                      currentEpisode === index + 1
-                        ? 'bg-white text-purple-600'
-                        : 'bg-slate-600 text-gray-300'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">
-                        Episode {index + 1}
-                      </p>
-                      {episode.title && (
-                        <p className="text-xs opacity-75 truncate">
-                          {episode.title}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              Array.from({ length: anime.episodes || 0 }, (_, index) => (
-                <div
-                  key={index}
-                  onClick={() => setCurrentEpisode(index + 1)}
-                  className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                    currentEpisode === index + 1
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-slate-800 hover:bg-slate-700 text-gray-300'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
-                      currentEpisode === index + 1
-                        ? 'bg-white text-purple-600'
-                        : 'bg-slate-600 text-gray-300'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium">Episode {index + 1}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      )} */}
 
       {/* Trailer Modal */}
       {showTrailer && anime.trailer?.youtube_id && (
