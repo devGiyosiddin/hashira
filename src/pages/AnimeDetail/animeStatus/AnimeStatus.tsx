@@ -35,7 +35,7 @@ const StatusDropdown = () => {
     };
 
     return (
-        <div className="relative inline-block text-left font-sans">
+        <div className="relative inline-block text-left font-sans z-50">
             {/* Main Button */}
             <div>
                 <button
