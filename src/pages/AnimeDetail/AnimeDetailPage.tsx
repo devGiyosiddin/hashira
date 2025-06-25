@@ -323,7 +323,7 @@ const AnimeDetailPage = () => {
 
                 {/* Title */}
                 <div className="space-y-0">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight my-2"
                     style={{
                       fontSize: 'clamp(28px, 4vw, 44px)',
                       fontWeight: '700',
@@ -379,19 +379,39 @@ const AnimeDetailPage = () => {
 
                 {/* Action Buttons */}
               <div className="flex items-center flex-wrap gap-3 sm:gap-4">
-                  {/* Watch Now Button */}
-                  <button
-                    onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
-                    className="bg-(--grey-color) flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-gray-300 hover:bg-(--primary-color) hover:text-white border border-gray-600/50 hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
-                  >
-                    <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
-                    <span className="hidden sm:inline">
-                      {isMovieOrSingleEpisode() ? `Ko'rish` : `1 seriya`}
-                    </span>
-                    <span className="sm:hidden">
-                      {isMovieOrSingleEpisode() ? `Ko'rish` : '1 seriya'}
-                    </span>
+                  {/* Watch Button */}
+                <button
+                  onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
+                  className="bg-white flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-black rounded-full "
+                  style={{
+                    borderTopLeftRadius: '6px',
+                    borderEndEndRadius: '6px',
+                  }}
+                >
+                  <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                  <span className="hidden sm:inline">
+                    {isMovieOrSingleEpisode() ? `Ko'rish` : `1 seriya`}
+                  </span>
+                  <span className="sm:hidden">
+                    {isMovieOrSingleEpisode() ? `Ko'rish` : '1 seriya'}
+                  </span>
                 </button>
+
+                {/* Notify Button */}
+                <button
+                  onClick={() => alert('Bu funksiya hali qo\'shilmagan')}
+                  className="bg-[var(--grey-color)] text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-[var(--primary-color)] hover:shadow-[var(--primary-color)] hover:shadow-lg rounded-full"
+                  style={{
+                    borderTopLeftRadius: '6px',
+                    borderEndEndRadius: '6px',
+                  }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-bell-icon lucide-bell">
+                    <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                  </svg>
+                </button>
+
                 
                 {/* Status Dropdown */}
                 <StatusDropdown />
