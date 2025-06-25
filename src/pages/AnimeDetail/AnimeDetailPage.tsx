@@ -260,166 +260,164 @@ const AnimeDetailPage = () => {
 
         {/* Main Content */}
         <div className="relative z-10 h-full flex items-center">
-          <div className="pb-16 px-6 lg:px-16">
-            <div className="flex gap-12 items-center">
-              {/* Left Content - Poster */}
-              <div className="flex">
-                <div className="relative group">
-                  <div className="relative overflow-hidden rounded-3xl cursor-pointer"
-                    style={{ boxShadow: '0 8px 32px rgba(0, 0, 0, 0.7)' }} >
-                    <img
-                      src={anime.images.jpg.large_image_url}
-                      alt={anime.title}
-                      className="w-65 h-auto object-cover shadow-lg shadow-black transition-transform duration-300 transform group-hover:scale-105"
-                    />
-                    <div
-                      className="absolute top-2 right-2 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
-                      <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
-                        <svg
-                          className="w-5 h-5 fill-current color-(--text-color)"
-                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
-                      </span>
-                      <span className='p-1 rounded-full bg-(--green-color) flex items-center justify-center w-12'>
-                        <svg
-                          className="w-4 h-4 fill-current color-(--text-color)"
-                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
-                        {anime.score ? anime.score.toFixed(1) : 'N/A'}
-                      </span>
-                    </div>
-                    {/* quality */}
-                    <div
-                      className='absolute bottom-1 right-1 bg-(--violet-color) text-(--text-color) rounded-full px-3 py-1 text-xs font-semibold flex items-center gap-1 h-9'
-                    >
-                      QHD+
-                    </div>
+          <div className="flex gap-12 items-center pb-16 px-6 lg:px-16">
+            {/* Left Content - Poster */}
+            <div className="flex">
+              <div className="relative group">
+                <div className="relative overflow-hidden rounded-3xl cursor-pointer"
+                  style={{ boxShadow: '0 8px 32px rgba(0, 0, 0, 0.7)' }} >
+                  <img
+                    src={anime.images.jpg.large_image_url}
+                    alt={anime.title}
+                    className="w-65 h-auto object-cover shadow-lg shadow-black transition-transform duration-300 transform group-hover:scale-105"
+                  />
+                  <div
+                    className="absolute top-2 right-2 border-none rounded-full bg-transparent w-[90px] h-9 flex itmes-center justify-center gap-1">
+                    <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
+                      <svg
+                        className="w-5 h-5 fill-current color-(--text-color)"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
+                    </span>
+                    <span className='p-1 rounded-full bg-(--green-color) flex items-center justify-center w-12'>
+                      <svg
+                        className="w-4 h-4 fill-current color-(--text-color)"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
+                      {anime.score ? anime.score.toFixed(1) : 'N/A'}
+                    </span>
+                  </div>
+                  {/* quality */}
+                  <div
+                    className='absolute bottom-1 right-1 bg-(--violet-color) text-(--text-color) rounded-full px-3 py-1 text-xs font-semibold flex items-center gap-1 h-9'
+                  >
+                    QHD+
                   </div>
                 </div>
               </div>
-              
-              {/* Right Content */}
-                <div className="space-y-8">
-                  {/* Адаптивные теги в одной строке */}
-                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                    {/* age limit */}
-                    {anime.rating && (
-                      <span className="px-3 py-1.5 bg-(--grey-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
-                        14+
-                      </span>
-                    )}
-
-                    {/* studio */}
-                    {anime.studios && anime.studios.length > 0 && (
-                      <span className="px-3 py-1.5 bg-(--grey-2-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
-                        {anime.studios[0].name}
-                      </span>
-                    )}
-
-                    {/* status */}
-                    {anime.status && (
-                      <span className="px-3 py-1.5 bg-(--secondary-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
-                        {anime.status}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Title */}
-                  <div className="space-y-4">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
-                      style={{
-                        fontSize: 'clamp(28px, 4vw, 44px)',
-                        fontWeight: '700',
-                        fontStyle: 'normal',
-                      }}
-                    >
-                      <span className="color-(--text-color)">
-                        {anime.title_english || anime.title}
-                      </span>
-                    </h1>
-                    {anime.title_japanese && (
-                      <p className="text-lg sm:text-xl text-gray-400 font-light">
-                        {anime.title_japanese}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* genres */}
-                  {anime.genres && anime.genres.length > 0 && (
-                    <div>
-                      <div className="flex flex-wrap gap-2 sm:gap-3">
-                        {anime.genres.map((genre) => (
-                          <span
-                            key={genre.mal_id}
-                            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30 font-medium hover:bg-purple-500/30 transition-colors duration-300 cursor-pointer text-sm sm:text-base whitespace-nowrap"
-                          >
-                            {genre.name}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+            </div>
+            
+            {/* Right Content */}
+              <div className="space-y-4">
+                {/* Адаптивные теги в одной строке */}
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  {/* age limit */}
+                  {anime.rating && (
+                    <span className="px-3 py-1.5 bg-(--grey-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                      14+
+                    </span>
                   )}
 
-                {/* release date */}
-                  {anime.aired?.from && (
-                    <p className="text-gray-500 text-sm sm:text-base mt-2">
-                    Chiqdi: {new Date(anime.aired.from).toLocaleDateString(
-                      'uz-UZ', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        }
-                      )}
-                    {anime.aired.to && ` dan - ${new Date(anime.aired.to).toLocaleDateString(
-                      'uz-UZ', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }
-                      )} gacha`}
+                  {/* studio */}
+                  {anime.studios && anime.studios.length > 0 && (
+                    <span className="px-3 py-1.5 bg-(--grey-2-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                      {anime.studios[0].name}
+                    </span>
+                  )}
+
+                  {/* status */}
+                  {anime.status && (
+                    <span className="px-3 py-1.5 bg-(--secondary-color) rounded-full text-sm sm:text-base font-semibold color-(--text-color) whitespace-nowrap">
+                      {anime.status}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <div className="space-y-0">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"
+                    style={{
+                      fontSize: 'clamp(28px, 4vw, 44px)',
+                      fontWeight: '700',
+                      fontStyle: 'normal',
+                    }}
+                  >
+                    <span className="color-(--text-color)">
+                      {anime.title_english || anime.title}
+                    </span>
+                  </h1>
+                  {anime.title_japanese && (
+                    <p className="text-lg sm:text-xl text-gray-400 font-light">
+                      {anime.title_japanese}
                     </p>
                   )}
+                </div>
 
-                  {/* Action Buttons */}
-                <div className="flex items-center flex-wrap gap-3 sm:gap-4">
-                    {/* Watch Now Button */}
-                    <button
-                      onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
-                      className="bg-(--grey-color) flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-gray-300 hover:bg-(--primary-color) hover:text-white border border-gray-600/50 hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
-                    >
-                      <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
-                      <span className="hidden sm:inline">
-                        {isMovieOrSingleEpisode() ? `Ko'rish` : `1 seriya`}
-                      </span>
-                      <span className="sm:hidden">
-                        {isMovieOrSingleEpisode() ? `Ko'rish` : '1 seriya'}
-                      </span>
-                  </button>
-                  
-                  {/* Status Dropdown */}
-                  <StatusDropdown />
+                {/* genres */}
+                {anime.genres && anime.genres.length > 0 && (
+                  <div>
+                    <div className="flex flex-wrap gap-2 sm:gap-3">
+                      {anime.genres.map((genre) => (
+                        <span
+                          key={genre.mal_id}
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30 font-medium hover:bg-purple-500/30 transition-colors duration-300 cursor-pointer text-sm sm:text-base whitespace-nowrap"
+                        >
+                          {genre.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                  {/* treyler */}
-                    {anime.trailer?.youtube_id && (
-                      <button
-                        onClick={() => setShowTrailer(!showTrailer)}
-                        className="flex items-center gap-2 sm:gap-3 bg-(--grey-color) text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
-                      >
-                        <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
-                        <span className="hidden sm:inline">Treyler</span>
-                      </button>
+              {/* release date */}
+                {anime.aired?.from && (
+                  <p className="text-gray-500 text-sm sm:text-base mt-2">
+                  Chiqdi: {new Date(anime.aired.from).toLocaleDateString(
+                    'uz-UZ', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      }
                     )}
+                  {anime.aired.to && ` dan - ${new Date(anime.aired.to).toLocaleDateString(
+                    'uz-UZ', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    }
+                    )} gacha`}
+                  </p>
+                )}
+
+                {/* Action Buttons */}
+              <div className="flex items-center flex-wrap gap-3 sm:gap-4">
+                  {/* Watch Now Button */}
+                  <button
+                    onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
+                    className="bg-(--grey-color) flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-gray-300 hover:bg-(--primary-color) hover:text-white border border-gray-600/50 hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
+                  >
+                    <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                    <span className="hidden sm:inline">
+                      {isMovieOrSingleEpisode() ? `Ko'rish` : `1 seriya`}
+                    </span>
+                    <span className="sm:hidden">
+                      {isMovieOrSingleEpisode() ? `Ko'rish` : '1 seriya'}
+                    </span>
+                </button>
                 
-                  {/* Views */}
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <svg
-                    className='w-4 h-4 sm:w-5 sm:h-5 fill-current text-gray-500'
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle style={{ fill: '#bdc3c7' }} cx="12" cy="12" r="3" /></svg>
-                  <span className="text-gray-500 text-sm sm:text-base">
-                    {formatNumber(anime.popularity)}
-                  </span>
-                </div>
-                </div>
-                
+                {/* Status Dropdown */}
+                <StatusDropdown />
+
+                {/* treyler */}
+                  {anime.trailer?.youtube_id && (
+                    <button
+                      onClick={() => setShowTrailer(!showTrailer)}
+                      className="flex items-center gap-2 sm:gap-3 bg-(--grey-color) text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-(--primary-color) hover:shadow-(--primary-color) hover:shadow-lg"
+                    >
+                      <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                      <span className="hidden sm:inline">Treyler</span>
+                    </button>
+                  )}
+              
+                {/* Views */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                <svg
+                  className='w-4 h-4 sm:w-5 sm:h-5 fill-current text-gray-500'
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle style={{ fill: '#bdc3c7' }} cx="12" cy="12" r="3" /></svg>
+                <span className="text-gray-500 text-sm sm:text-base">
+                  {formatNumber(anime.popularity)}
+                </span>
               </div>
+              </div>
+              
             </div>
           </div>
         </div>
