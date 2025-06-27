@@ -21,11 +21,15 @@ type Anime = {
   episodes?: number;
 };
 
-type FilterState = {
-  genre: string;
-  year: string;
+export type FilterState = {
+  genres: string[];
+  yearFrom: string;
+  yearTo: string;
   status: string;
   type: string;
+  minScore?: number;
+  maxScore?: number;
+  isMovieOnly?: boolean;
 };
 
 type SearchState = {
@@ -78,10 +82,10 @@ export const useSearchStore = create<SearchState>((set, get) => {
     set({ isLoading: true, error: null });
     
     try {
-      const { genre, year, status, type } = get().filter;
+      const { genres, yearFrom, yearTo, status, type, minScore, maxScore, isMovieOnly } = get().filter;
 
       // Если ничего не выбрано, покажем топ популярные аниме
-      if (!genre && !year && !status && !type) {
+      if ((!genres || genres.length === 0) && !yearFrom && !yearTo && !status && !type && !minScore && !maxScore && !isMovieOnly) {
         const url = `https://api.jikan.moe/v4/anime?order_by=popularity&sort=asc&limit=20&min_score=7`;
         const response = await fetch(url);
         
@@ -99,10 +103,14 @@ export const useSearchStore = create<SearchState>((set, get) => {
       }
 
       const queryParams = [];
-      if (genre) queryParams.push(`genres=${genre}`);
-      if (year) queryParams.push(`start_date=${year}`);
+      if (genres && genres.length > 0) queryParams.push(`genres=${genres.join(',')}`);
+      if (yearFrom) queryParams.push(`start_date=${yearFrom.length === 4 ? yearFrom + '-01-01' : yearFrom}`);
+      if (yearTo) queryParams.push(`end_date=${yearTo.length === 4 ? yearTo + '-12-31' : yearTo}`);
       if (status) queryParams.push(`status=${status}`);
       if (type) queryParams.push(`type=${type}`);
+      if (isMovieOnly) queryParams.push('type=movie');
+      if (minScore !== undefined) queryParams.push(`min_score=${minScore}`);
+      if (maxScore !== undefined) queryParams.push(`max_score=${maxScore}`);
 
       queryParams.push('limit=20');
       queryParams.push('order_by=popularity');
@@ -144,10 +152,14 @@ export const useSearchStore = create<SearchState>((set, get) => {
   return {
     query: '',
     filter: { 
-      genre: '', 
-      year: '', 
+      genres: [], 
+      yearFrom: '', 
+      yearTo: '', 
       status: '',
-      type: ''
+      type: '',
+      minScore: undefined,
+      maxScore: undefined,
+      isMovieOnly: false,
     },
     results: [],
     isLoading: false,
