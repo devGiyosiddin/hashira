@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Play, PlayIcon } from 'lucide-react';
 import StatusDropdown from './animeStatus/AnimeStatus';
+import EpisodesSection from '../../components/EpisodesSection/EpisodesSection';
 
 type AnimeDetails = {
   mal_id: number;
@@ -82,7 +83,7 @@ const SynopsisSection = ({ anime }: { anime: AnimeDetails }) => {
     <section className="py-20 pl-[64px] pr-0 px-6 w-full lg:w-[35%]">
       <div className="max-w-2xl">
         <h2 className="text-4xl font-bold mb-8">
-          Nima haqida
+          Anime haqida
         </h2>
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="lg:col-span-2">
@@ -172,9 +173,10 @@ const AnimeDetailPage = () => {
         if (!response.ok) throw new Error('Failed to fetch anime');
         const data = await response.json();
         setAnime(data.data);
+        console.log('DEBUG ANIME:', data.data);
         
-        // Fetch episodes only if it's a TV series and has more than 1 episode
-        if (data.data.type === 'TV' && data.data.episodes && data.data.episodes > 1) {
+        // Fetch episodes for all except Movie and only if episodes > 1
+        if (data.data.type !== 'Movie' && data.data.episodes && data.data.episodes > 1) {
           fetchEpisodes(id);
         }
       } catch (err) {
@@ -273,12 +275,12 @@ const AnimeDetailPage = () => {
                     <span className='p-1 rounded-full bg-(--danger-color) w-10 flex items-center justify-center'>
                       <svg
                         className="w-5 h-5 fill-current color-(--text-color)"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg>
                     </span>
                     <span className='p-1 rounded-full bg-(--green-color) flex items-center justify-center w-12'>
                       <svg
                         className="w-4 h-4 fill-current color-(--text-color)"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
                       {anime.score ? anime.score.toFixed(1) : 'N/A'}
                     </span>
                   </div>
@@ -428,7 +430,13 @@ const AnimeDetailPage = () => {
               <div className="flex items-center gap-2 sm:gap-3">
                 <svg
                   className='w-8 h-8 sm:w-8 sm:h-8 fill-current text-gray-500'
-                    fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.108 10.044c-3.313 0-6 2.687-6 6s2.687 6 6 6 6-2.686 6-6-2.686-6-6-6zM16.108 20.044c-2.206 0-4.046-1.838-4.046-4.044s1.794-4 4-4c2.206 0 4 1.794 4 4s-1.748 4.044-3.954 4.044zM31.99 15.768c-0.012-0.050-0.006-0.104-0.021-0.153-0.006-0.021-0.020-0.033-0.027-0.051-0.011-0.028-0.008-0.062-0.023-0.089-2.909-6.66-9.177-10.492-15.857-10.492s-13.074 3.826-15.984 10.486c-0.012 0.028-0.010 0.057-0.021 0.089-0.007 0.020-0.021 0.030-0.028 0.049-0.015 0.050-0.009 0.103-0.019 0.154-0.018 0.090-0.035 0.178-0.035 0.269s0.017 0.177 0.035 0.268c0.010 0.050 0.003 0.105 0.019 0.152 0.006 0.023 0.021 0.032 0.028 0.052 0.010 0.027 0.008 0.061 0.021 0.089 2.91 6.658 9.242 10.428 15.922 10.428s13.011-3.762 15.92-10.422c0.015-0.029 0.012-0.058 0.023-0.090 0.007-0.017 0.020-0.030 0.026-0.050 0.015-0.049 0.011-0.102 0.021-0.154 0.018-0.090 0.034-0.177 0.034-0.27 0-0.088-0.017-0.175-0.035-0.266zM16 25.019c-5.665 0-11.242-2.986-13.982-8.99 2.714-5.983 8.365-9.047 14.044-9.047 5.678 0 11.203 3.067 13.918 9.053-2.713 5.982-8.301 8.984-13.981 8.984z"></path> </g></svg>
+                  fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M16.108 10.044c-3.313 0-6 2.687-6 6s2.687 6 6 6 6-2.686 6-6-2.686-6-6-6zM16.108 20.044c-2.206 0-4.046-1.838-4.046-4.044s1.794-4 4-4c2.206 0 4 1.794 4 4s-1.748 4.044-3.954 4.044zM31.99 15.768c-0.012-0.050-0.006-0.104-0.021-0.153-0.006-0.021-0.020-0.033-0.027-0.051-0.011-0.028-0.008-0.062-0.023-0.089-2.909-6.66-9.177-10.492-15.857-10.492s-13.074 3.826-15.984 10.486c-0.012 0.028-0.010 0.057-0.021 0.089-0.007 0.020-0.021 0.030-0.028 0.049-0.015 0.050-0.009 0.103-0.019 0.154-0.018 0.090-0.035 0.178-0.035 0.269s0.017 0.177 0.035 0.268c0.010 0.050 0.003 0.105 0.019 0.152 0.006 0.023 0.021 0.032 0.028 0.052 0.010 0.027 0.008 0.061 0.021 0.089 2.91 6.658 9.242 10.428 15.922 10.428s13.011-3.762 15.92-10.422c0.015-0.029 0.012-0.058 0.023-0.090 0.007-0.017 0.020-0.030 0.026-0.050 0.015-0.049 0.011-0.102 0.021-0.154 0.018-0.090 0.034-0.177 0.034-0.27 0-0.088-0.017-0.175-0.035-0.266zM16 25.019c-5.665 0-11.242-2.986-13.982-8.99 2.714-5.983 8.365-9.047 14.044-9.047 5.678 0 11.203 3.067 13.918 9.053-2.713 5.982-8.301 8.984-13.981 8.984z"></path>
+                  </g>
+                </svg>
                 <span className="text-gray-500 text-sm sm:text-base">
                   {formatNumber(anime.popularity)}
                 </span>
@@ -444,89 +452,15 @@ const AnimeDetailPage = () => {
       <div className="relative flex gap-6 flex-col lg:flex-row gap-6 ">
       <SynopsisSection anime={anime} />
 
-        {/* Episodes Section - Only show for TV series with multiple episodes */}
-        {!isMovieOrSingleEpisode() && (
-          <section className="w-full lg:w-[65%] py-20 pr-0">
-            <div className="max-w-6xl">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h2 className="text-4xl font-bold">
-                    Serialarni ko'rish ({anime.episodes})
-                  </h2>    
-                  <div>
-                    <input type="text" value={episodeSearch} onChange={(e) => setEpisodeSearch(e.target.value)} placeholder='Nomer' />
-                    {/* Seasons */}
-                    {anime.season && (
-                      <span className="text-gray-500 text-sm">
-                        {` (${anime.season})`}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                {episodesLoading && (
-                  <div className="w-6 h-6 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
-                )}
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {episodes.length > 0 ? (
-                  episodes
-                    .filter((episode, index) => {
-                      if (!episodeSearch) return true;
-                      const searchNum = parseInt(episodeSearch, 10);
-                      return !isNaN(searchNum) && (index + 1) === searchNum;
-                    })
-                    .map((episode, index) => (
-                      <div
-                        key={episode.mal_id}
-                        onClick={() => playEpisode()}
-                        className="flex flex-col justify-content-around rounded-xl p-4 transition-all duration-300 cursor-pointer transform translate-y-0 hover:translate-y-3 h-[200px]"
-                        style={{
-                          boxShadow: '0 15px 30px #00000080',
-                        }}
-                      >
-                        <div className="flex gap-2">
-                          {episode.filler && (
-                            <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
-                              Filler
-                            </span>
-                          )}
-                          {episode.recap && (
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
-                              Recap
-                            </span>
-                          )}
-                        </div>
-                        <div className="w-full h-5 rounded-lg flex text-white font-bold mt-auto">
-                          {index + 1}- seria
-                        </div>
-                      </div>
-                    ))
-                ) : (
-                  // Fallback: Generate episode list based on episode count
-                  Array.from({ length: anime.episodes || 0 }, (_, index) => {
-                    if (episodeSearch && (index + 1) !== parseInt(episodeSearch, 10)) return null;
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => playEpisode()}
-                        className="flex flex-col justify-content-around gap-3 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
-                      >
-                        <div className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold">
-                          {index + 1}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-white">
-                            {index + 1} - seria
-                          </h3>
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Episodes Section - теперь всегда рендерится, даже для фильмов и спецвыпусков */}
+        <EpisodesSection
+          episodes={episodes}
+          episodesLoading={episodesLoading}
+          episodeSearch={episodeSearch}
+          setEpisodeSearch={setEpisodeSearch}
+          playEpisode={playEpisode}
+          anime={anime}
+        />
       </div>
 
       {/* Trailer Modal */}
