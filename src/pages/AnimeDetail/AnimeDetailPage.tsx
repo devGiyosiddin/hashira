@@ -1,7 +1,7 @@
 import './animeDetailPage.css';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Star, Play, ChevronRight, PlayIcon} from 'lucide-react';
+import { Play, PlayIcon } from 'lucide-react';
 import StatusDropdown from './animeStatus/AnimeStatus';
 
 type AnimeDetails = {
@@ -123,7 +123,7 @@ const AnimeDetailPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [showTrailer, setShowTrailer] = useState(false);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
-  const [currentEpisode, setCurrentEpisode] = useState<number>(1);
+  const [episodeSearch, setEpisodeSearch] = useState('');
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   console.log(showVideoPlayer ? 'Video Player is shown' : 'Video Player is hidden');
@@ -207,8 +207,7 @@ const AnimeDetailPage = () => {
     }
   };
 
-  const playEpisode = (episodeNumber: number) => {
-    setCurrentEpisode(episodeNumber);
+  const playEpisode = () => {
     setShowVideoPlayer(true);
   };
 
@@ -379,7 +378,7 @@ const AnimeDetailPage = () => {
               <div className="flex items-center flex-wrap gap-3 sm:gap-4">
                   {/* Watch Button */}
                 <button
-                  onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode(1)}
+                  onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode()}
                   className="bg-white flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-black rounded-full "
                   style={{
                     borderTopLeftRadius: '6px',
@@ -448,63 +447,81 @@ const AnimeDetailPage = () => {
         {/* Episodes Section - Only show for TV series with multiple episodes */}
         {!isMovieOrSingleEpisode() && (
           <section className="w-full lg:w-[65%] py-20 pr-0">
-            <div className="container max-w-6xl">
+            <div className="max-w-6xl">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-4xl font-bold">
-                  Epizodlar ({anime.episodes})
-                </h2>
+                <div>
+                  <h2 className="text-4xl font-bold">
+                    Serialarni ko'rish ({anime.episodes})
+                  </h2>    
+                  <div>
+                    <input type="text" value={episodeSearch} onChange={(e) => setEpisodeSearch(e.target.value)} placeholder='Nomer' />
+                    {/* Seasons */}
+                    {anime.season && (
+                      <span className="text-gray-500 text-sm">
+                        {` (${anime.season})`}
+                      </span>
+                    )}
+                  </div>
+                </div>
                 {episodesLoading && (
                   <div className="w-6 h-6 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
                 )}
               </div>
-              
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {episodes.length > 0 ? (
-                  episodes.map((episode, index) => (
-                    <div
-                      key={episode.mal_id}
-                      onClick={() => playEpisode(index + 1)}
-                      className="flex flex-col justify-content-around rounded-xl p-4 transition-all duration-300 cursor-pointer transform translate-y-0 hover:translate-y-3 h-[200px]"
-                      style={{
-                        boxShadow: '0 15px 30px #00000080',
-                      }}
-                    >
-                      <div className="flex gap-2">
-                        {episode.filler && (
-                          <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
-                            Filler
-                          </span>
-                        )}
-                        {episode.recap && (
-                          <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
-                            Recap
-                          </span>
-                        )}
+                  episodes
+                    .filter((episode, index) => {
+                      if (!episodeSearch) return true;
+                      const searchNum = parseInt(episodeSearch, 10);
+                      return !isNaN(searchNum) && (index + 1) === searchNum;
+                    })
+                    .map((episode, index) => (
+                      <div
+                        key={episode.mal_id}
+                        onClick={() => playEpisode()}
+                        className="flex flex-col justify-content-around rounded-xl p-4 transition-all duration-300 cursor-pointer transform translate-y-0 hover:translate-y-3 h-[200px]"
+                        style={{
+                          boxShadow: '0 15px 30px #00000080',
+                        }}
+                      >
+                        <div className="flex gap-2">
+                          {episode.filler && (
+                            <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
+                              Filler
+                            </span>
+                          )}
+                          {episode.recap && (
+                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
+                              Recap
+                            </span>
+                          )}
+                        </div>
+                        <div className="w-full h-5 rounded-lg flex text-white font-bold mt-auto">
+                          {index + 1}- seria
+                        </div>
                       </div>
-
-                      <div className="w-full h-5 rounded-lg flex text-white font-bold mt-auto">
-                        {index + 1}- seria
-                      </div>
-                    </div>
-                  ))
+                    ))
                 ) : (
                   // Fallback: Generate episode list based on episode count
-                  Array.from({ length: anime.episodes || 0 }, ( _, index) => (
-                    <div
-                      key={index}
-                      onClick={() => playEpisode(index + 1)}
-                      className="flex flex-col justify-content-around gap-3 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
-                    >
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold">
-                        {index + 1}
+                  Array.from({ length: anime.episodes || 0 }, (_, index) => {
+                    if (episodeSearch && (index + 1) !== parseInt(episodeSearch, 10)) return null;
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => playEpisode()}
+                        className="flex flex-col justify-content-around gap-3 rounded-xl p-4 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                      >
+                        <div className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-white">
+                            {index + 1} - seria
+                          </h3>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-white">
-                          {index + 1} - seria
-                        </h3>
-                      </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
             </div>
