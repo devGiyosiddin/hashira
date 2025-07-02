@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // Локальные типы для избежания ошибок импорта
 type AnimeDetails = {
@@ -33,14 +34,14 @@ interface EpisodesSectionProps {
   episodesLoading: boolean;
   episodeSearch: string;
   setEpisodeSearch: (v: string) => void;
-  playEpisode: () => void;
+  playEpisode: (epNum?: number) => void;
   anime: AnimeDetails;
 }
 
 // Helper: получить номер серии для карточки
-const getEpisodeNumber = (episode: Episode, index: number) => {
-  if (typeof episode === 'object' && episode && 'number' in episode && episode.number) return episode.number;
-  if (typeof episode === 'object' && episode && 'mal_id' in episode && episode.mal_id) return episode.mal_id;
+const getEpisodeNumber = (episode: Episode, index: number): number => {
+  if ('number' in episode && typeof episode.number === 'number') return episode.number;
+  if ('mal_id' in episode && typeof episode.mal_id === 'number') return episode.mal_id;
   return index + 1;
 };
 
@@ -52,9 +53,15 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
   playEpisode,
   anime,
 }) => {
+  const navigate = useNavigate();
+  const handlePlay = (epNum: number) => {
+    navigate(`/watch/${anime.mal_id}/${epNum}`);
+    if (playEpisode) playEpisode(epNum);
+  };
+
   return (
     <section className="w-full lg:w-[65%] py-20 pr-0">
-      <div className="max-w-6xl">
+      <div className="w-full px-4 md:px-8 lg:px-12">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-4xl font-bold">
@@ -107,7 +114,7 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                   {anime.year && <span className="ml-2">Год: {anime.year}</span>}
                 </div>
                 <button
-                  onClick={playEpisode}
+                  onClick={() => handlePlay(1)}
                   className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 px-4 rounded-full shadow-lg transition-all duration-300 text-xs mt-3"
                 >
                   Смотреть фильм
@@ -127,7 +134,7 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                     return (
                       <div
                         key={episode.mal_id}
-                        onClick={() => playEpisode()}
+                        onClick={() => handlePlay(epNumber)}
                         className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group h-[260px] bg-cover bg-center"
                         style={{ backgroundImage: `url(${('image_url' in episode && episode.image_url) ? episode.image_url : anime.images.jpg.large_image_url})` }}
                       >
@@ -164,7 +171,7 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                   .map(num => (
                     <div
                       key={num}
-                      onClick={() => playEpisode()}
+                      onClick={() => handlePlay(num)}
                       className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group h-[260px] md:h-[320px] xl:h-[360px] bg-cover bg-center"
                       style={{ backgroundImage: `url(${anime.images.jpg.large_image_url})` }}
                     >
