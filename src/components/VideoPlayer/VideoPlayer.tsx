@@ -309,39 +309,39 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
               className="h-full bg-purple-500 rounded relative"
               style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
             >
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-500 rounded-full shadow-lg"></div>
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-500 rounded-full shadow-lg ring-2 ring-white/40"></div>
             </div>
           </div>
         </div>
 
         {/* Control Buttons */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-3 md:gap-5 lg:gap-7">
             <button
               onClick={togglePlay}
-              className="text-white hover:text-purple-400 transition-colors"
+              className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 md:p-3 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
-              {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+              {isPlaying ? <Pause className="w-7 h-7 md:w-8 md:h-8" /> : <Play className="w-7 h-7 md:w-8 md:h-8" />}
             </button>
 
             <button
               onClick={skip10Backward}
-              className="text-white hover:text-purple-400 transition-colors"
+              className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 md:p-3 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
-              <SkipBack className="w-5 h-5" />
+              <SkipBack className="w-6 h-6" />
             </button>
 
             <button
               onClick={skip10Forward}
-              className="text-white hover:text-purple-400 transition-colors"
+              className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 md:p-3 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
-              <SkipForward className="w-5 h-5" />
+              <SkipForward className="w-6 h-6" />
             </button>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2 ml-2">
               <button
                 onClick={toggleMute}
-                className="text-white hover:text-purple-400 transition-colors"
+                className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400"
               >
                 {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
               </button>
@@ -352,23 +352,23 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 step="0.1"
                 value={isMuted ? 0 : volume}
                 onChange={handleVolumeChange}
-                className="w-20 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
               />
             </div>
 
-            <div className="text-white text-sm">
+            <div className="text-white text-xs md:text-sm ml-2">
               {formatTime(currentTime)} / {formatTime(duration)}
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <button className="text-white hover:text-purple-400 transition-colors">
+          <div className="flex items-center gap-3 md:gap-5">
+            <button className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400">
               <Settings className="w-5 h-5" />
             </button>
 
             <button
               onClick={toggleFullscreen}
-              className="text-white hover:text-purple-400 transition-colors"
+              className="text-white bg-black/40 hover:bg-purple-600 transition-colors rounded-full p-2 shadow ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
               <Maximize className="w-5 h-5" />
             </button>
