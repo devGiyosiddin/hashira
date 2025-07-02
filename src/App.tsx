@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Search from './components/Search/Search';
 import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
 import AllAnime from './pages/All/Allanime';
+import WatchPage from './pages/watch';
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
           <Route path="/manga" element={<div>Manga Page</div>} />
           <Route path="/news" element={<div>News Page</div>} />
           <Route path="/forum" element={<div>Forum Page</div>} />
-        <Route path="/search" element={<div>Search Page</div>} />
-        <Route path="/all" element={<AllAnime />} />
+          <Route path="/search" element={<div>Search Page</div>} />
+          <Route path="/all" element={<AllAnime />} />
+          <Route path="/watch/:animeId/:episodeNumber" element={<WatchPage />} />
         </Routes>
       </div>
   );
