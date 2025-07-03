@@ -1,33 +1,7 @@
 import React from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-// Локальные типы для избежания ошибок импорта
-type AnimeDetails = {
-  mal_id: number;
-  title: string;
-  title_english?: string;
-  images: {
-    jpg: {
-      image_url: string;
-      large_image_url: string;
-    };
-  };
-  type?: string;
-  episodes?: number;
-  duration?: string;
-  year?: number;
-  season?: string;
-  genres?: Array<{ mal_id: number; name: string }>;
-};
-
-type Episode = {
-  mal_id: number;
-  title: string;
-  filler?: boolean;
-  recap?: boolean;
-  image_url?: string;
-};
+import type { AnimeDetails, Episode } from '../../types/anime';
 
 interface EpisodesSectionProps {
   episodes: Episode[];

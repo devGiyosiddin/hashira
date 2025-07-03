@@ -4,40 +4,7 @@ import { useSearchStore } from "../../store/searchStore";
 import { useDebounce } from "use-debounce";
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-
-// Типы данных
-type FetchAnimeResponse = {
-  pagination: {
-    has_next_page: boolean;
-    current_page: number;
-  };
-  data: Anime[];
-};
-
-type Anime = {
-  mal_id: number;
-  title: string;
-  title_english?: string;
-  images: {
-    jpg: {
-      image_url: string;
-      large_image_url?: string;
-    };
-  };
-  score?: number;
-  synopsis?: string;
-  genres?: Array<{
-    mal_id: number;
-    name: string;
-  }>;
-  year?: number;
-  episodes?: number;
-};
-
-// Тип для параметров пагинации
-type FetchAnimeParams = {
-  pageParam?: number;
-};
+import type { Anime, FetchAnimeResponse, FetchAnimeParams } from "../../types/anime";
 
 // API функция для получения всех аниме
 const fetchAllAnime = async ({ pageParam = 1 }: FetchAnimeParams): Promise<FetchAnimeResponse> => {

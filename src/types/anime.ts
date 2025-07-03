@@ -18,10 +18,22 @@ export type Anime = {
   episodes?: number;
 };
 
-export type FetchAnimeResponse = {
-  data: Anime[];
-    has_next_page: boolean;
-    current_page: number;
+// export type FetchAnimeResponse = {
+//   data: Anime[];
+//     has_next_page: boolean;
+//     current_page: number;
+// };
+
+export type AnimeSearchResult = {
+  mal_id: number;
+  title: string;
+  title_english?: string;
+  images: {
+      jpg: {
+          image_url: string;
+      };
+  };
+  score?: number;
 };
 
 export type InfiniteAnimeData = {

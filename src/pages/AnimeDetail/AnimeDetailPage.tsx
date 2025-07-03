@@ -4,74 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Play, PlayIcon } from 'lucide-react';
 import StatusDropdown from './animeStatus/AnimeStatus';
 import EpisodesSection from '../../components/EpisodesSection/EpisodesSection';
-
-type AnimeDetails = {
-  mal_id: number;
-  title: string;
-  title_english?: string;
-  title_japanese?: string;
-  type?: string;
-  images: {
-    jpg: {
-      image_url: string;
-      large_image_url: string;
-    };
-  };
-  trailer?: {
-    youtube_id?: string;
-    url?: string;
-  };
-  score?: number;
-  scored_by?: number;
-  rank?: number;
-  popularity?: number;
-  members?: number;
-  favorites?: number;
-  synopsis?: string;
-  background?: string;
-  season?: string;
-  year?: number;
-  broadcast?: {
-    day?: string;
-    time?: string;
-  };
-  episodes?: number;
-  duration?: string;
-  rating?: string;
-  source?: string;
-  status?: string;
-  aired?: {
-    from?: string;
-    to?: string;
-  };
-  studios?: Array<{
-    name: string;
-  }>;
-  genres?: Array<{
-    mal_id: number;
-    name: string;
-  }>;
-  themes?: Array<{
-    mal_id: number;
-    name: string;
-  }>;
-  demographics?: Array<{
-    mal_id: number;
-    name: string;
-  }>;
-};
-
-type Episode = {
-  mal_id: number;
-  title: string;
-  title_japanese?: string;
-  title_romanji?: string;
-  aired?: string;
-  score?: number;
-  filler?: boolean;
-  recap?: boolean;
-  forum_url?: string;
-};
+import type { AnimeDetails, Episode } from '../../types/anime';
 
 const SynopsisSection = ({ anime }: { anime: AnimeDetails }) => {
   const [isExpanded, setIsExpanded] = useState(false);

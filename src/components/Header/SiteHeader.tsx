@@ -4,18 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Settings2 } from "lucide-react";
 import './siteHeader.css';
-
-type AnimeSearchResult = {
-    mal_id: number;
-    title: string;
-    title_english?: string;
-    images: {
-        jpg: {
-            image_url: string;
-        };
-    };
-    score?: number;
-};
+import type { AnimeSearchResult } from "../../types/anime";
 
 const fetchSearchedAnime = async (animeName: string): Promise<AnimeSearchResult[]> => {
     const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(animeName)}&limit=8`;
