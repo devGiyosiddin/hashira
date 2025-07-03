@@ -371,6 +371,7 @@ const AnimeDetailPage = () => {
 
       {/* Content Sections */}
       <div className="relative flex gap-6 flex-col lg:flex-row gap-6 ">
+        <SynopsisSection anime={anime} />
 
         {/* Episodes Section - теперь всегда рендерится, даже для фильмов и спецвыпусков */}
         <EpisodesSection
@@ -381,7 +382,6 @@ const AnimeDetailPage = () => {
           playEpisode={playEpisode}
           anime={anime}
         />
-      <SynopsisSection anime={anime} />
       </div>
 
       {/* Trailer Modal */}
