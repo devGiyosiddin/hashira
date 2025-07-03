@@ -69,15 +69,23 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
             />
           </div>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        
+        {/* Контейнер с адаптивными отступами и фиксированными размерами карточек */}
+        <div className="flex flex-wrap justify-center gap-4">
           {/* Если это фильм, спецвыпуск, OVA и т.д. с 1 эпизодом — показываем только одну карточку */}
           {anime.episodes === 1 && anime.images?.jpg && (anime.title_english || anime.title) ? (
             <div
-              className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group h-[260px] md:h-[320px] xl:h-[360px]"
-              style={{ backgroundImage: `url(${anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || ''})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group bg-cover bg-center"
+              style={{ 
+                backgroundImage: `url(${anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || ''})`,
+                width: '280px',
+                height: '160px',
+                minWidth: '280px',
+                minHeight: '160px'
+              }}
             >
               {/* Overlay */}
-              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/0 transition-all duration-300 z-0" />
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-300 z-0" />
               {/* Контент карточки */}
               <div className="relative z-10 flex flex-col items-center justify-end h-full p-4">
                 <div className="w-full rounded-lg flex text-white font-bold text-base justify-center drop-shadow-lg text-center">
@@ -109,13 +117,19 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                       <div
                         key={episode.mal_id}
                         onClick={() => handlePlay(epNumber)}
-                        className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group h-[260px] bg-cover bg-center"
-                        style={{ backgroundImage: `url(${('image_url' in episode && episode.image_url) ? episode.image_url : anime.images.jpg.large_image_url})` }}
+                        className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group bg-cover bg-center"
+                        style={{ 
+                          backgroundImage: `url(${('image_url' in episode && episode.image_url) ? episode.image_url : anime.images.jpg.large_image_url})`,
+                          width: '280px',
+                          height: '160px',
+                          minWidth: '280px',
+                          minHeight: '160px'
+                        }}
                       >
                         {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/0 transition-all duration-300 z-0" />
+                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-300 z-0" />
                         {/* Контент карточки */}
-                        <div className="relative z-10 flex flex-col items-center justify-end h-full p-4">
+                        <div className="relative z-10 flex flex-col items-start justify-end h-full p-4">
                           <div className="flex gap-2 mb-2">
                             {episode.filler && (
                               <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">
@@ -128,10 +142,10 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                               </span>
                             )}
                           </div>
-                          <div className="w-full rounded-lg flex text-white font-bold mt-auto text-base justify-center drop-shadow-lg text-center">
-                            {`${epNumber || ''}-seria`}
+                          <div className="w-full text-white font-bold text-lg drop-shadow-lg">
+                            Серия {epNumber}
                           </div>
-                          <div className="text-gray-200 text-xs truncate mt-1 text-center drop-shadow-lg">
+                          <div className="text-gray-200 text-sm truncate mt-1 drop-shadow-lg w-full">
                             {episode.title || ''}
                           </div>
                         </div>
@@ -146,19 +160,25 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
                     <div
                       key={num}
                       onClick={() => handlePlay(num)}
-                      className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group h-[260px] md:h-[320px] xl:h-[360px] bg-cover bg-center"
-                      style={{ backgroundImage: `url(${anime.images.jpg.large_image_url})` }}
+                      className="relative flex flex-col justify-end rounded-xl overflow-hidden transition-all duration-300 cursor-pointer border border-slate-700 hover:border-purple-500/50 shadow-lg group bg-cover bg-center"
+                      style={{ 
+                        backgroundImage: `url(${anime.images.jpg.large_image_url})`,
+                        width: '280px',
+                        height: '160px',
+                        minWidth: '280px',
+                        minHeight: '160px'
+                      }}
                     >
                       {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/60 group-hover:bg-black/0 transition-all duration-300 z-0" />
+                      <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-300 z-0" />
                       {/* Контент карточки */}
-                      <div className="relative z-10 flex flex-col items-center justify-end h-full p-4">
-                        <div className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold bg-purple-700/30 mx-auto mb-2">
-                          {num}
+                      <div className="relative z-10 flex flex-col items-start justify-end h-full p-4">
+                        <div className="w-full text-white font-bold text-lg drop-shadow-lg">
+                          Серия {num}
                         </div>
-                        <h3 className="font-semibold text-white text-center mt-2 drop-shadow-lg">
+                        <div className="text-gray-200 text-sm mt-1 drop-shadow-lg">
                           {num} - seria
-                        </h3>
+                        </div>
                       </div>
                     </div>
                   ))
@@ -171,4 +191,4 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
   );
 };
 
-export default EpisodesSection; 
+export default EpisodesSection;
