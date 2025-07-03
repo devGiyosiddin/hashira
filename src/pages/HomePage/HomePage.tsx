@@ -26,7 +26,7 @@ type Anime = {
   episodes?: number;
 };
 
-// API функции
+// API fuktsiyalar
 const fetchTopAnime = async () => {
   const url = `https://api.jikan.moe/v4/anime?order_by=score&sort=desc&limit=10&min_score=8`;
   const response = await fetch(url);
@@ -41,7 +41,7 @@ const fetchNewReleases = async () => {
   return data.data;
 };
 
-// Компонент карточки аниме
+// Anime kartochka komponenti
 const AnimeCard = ({ item }: { item: Anime }) => {
   return (
     <Link
@@ -54,7 +54,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
       }}
     >
-      {/* Background Image */}
+      {/* Fon rasmi */}
       <div className="absolute inset-0 z-0">
         <img
           src={item.images.jpg.large_image_url || item.images.jpg.image_url}
@@ -62,7 +62,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:blur-sm group-hover:brightness-75"
         />
         
-        {/* Top Right Icons */}
+        {/* Tepa-o'ng ikonkalar */}
         <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
           <span className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
             <svg
@@ -102,7 +102,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
           </span>
         </div>
 
-        {/* Quality Badge - Bottom Right */}
+        {/* Video sifati ko'rsatilgan QHD+ mini icon */}
         <div className="absolute bottom-2 right-2 bg-purple-600/90 backdrop-blur-sm text-white rounded-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold flex items-center gap-1 h-7 sm:h-8 z-10">
           QHD+
         </div>
@@ -114,7 +114,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[2]"></div>
       </div>
 
-      {/* Title overlay - показывается только при hover */}
+      {/* Title overlay - faqat hover qilinganda ko'rsatilsin */}
       <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
       <h3 className="text-white text-base sm:text-lg md:text-xl font-bold line-clamp-2">
           {item.title}
@@ -129,7 +129,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
   );
 };
 
-// Компонент секции
+// Bo'limlar komponenti
 const AnimeSection = ({ title, data, isLoading, error, icon }: {
   title: string;
   data: Anime[];
@@ -174,15 +174,15 @@ const HomePage = () => {
   const rawQuery = useSearchStore((state) => state.query);
   const [debouncedQuery] = useDebounce(rawQuery, 600);
 
-  // Топ аниме
+  // Top anime
   const { data: topAnime, isLoading: topLoading, error: topError } = useQuery({
     queryKey: ["topAnime"],
     queryFn: fetchTopAnime,
     enabled: !debouncedQuery,
-    staleTime: 1000 * 60 * 30, // 30 минут кэш
+    staleTime: 1000 * 60 * 30, // 30 daqiqa kesh
   });
 
-  // Новые релизы
+  // Yangi relizlar
   const { data: newReleases, isLoading: newLoading, error: newError } = useQuery({
     queryKey: ["newReleases"],
     queryFn: fetchNewReleases,
@@ -197,7 +197,8 @@ const HomePage = () => {
       <Sidebar />
         <HeroBanner anime={topAnime?.[0] || {}} />
           
-          {/* Ko'rishni davom etish */}
+        {/* Ko'rishni davom etish */}
+        {/* TODO: bo'limni yaratish */}
 
         {!debouncedQuery.trim() && (
           <>
@@ -219,7 +220,7 @@ const HomePage = () => {
               icon="🆕"
             />
 
-            {/* Кнопка "Посмотреть все аниме" */}
+            {/* Barcha animelarni ko'rish tugmasi" */}
             <div className="text-center mt-12">
               <Link 
                 to="/all"
