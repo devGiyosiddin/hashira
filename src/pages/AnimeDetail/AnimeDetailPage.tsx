@@ -160,7 +160,7 @@ const AnimeDetailPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <div className="relative pt-40"
+      <div className="relative"
         style={{
           // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
           boxShadow: 'rgb(19, 17, 17) 0px 0px 80px 40px inset',
@@ -371,7 +371,6 @@ const AnimeDetailPage = () => {
 
       {/* Content Sections */}
       <div className="relative flex gap-6 flex-col lg:flex-row gap-6 ">
-      <SynopsisSection anime={anime} />
 
         {/* Episodes Section - теперь всегда рендерится, даже для фильмов и спецвыпусков */}
         <EpisodesSection
@@ -382,6 +381,7 @@ const AnimeDetailPage = () => {
           playEpisode={playEpisode}
           anime={anime}
         />
+      <SynopsisSection anime={anime} />
       </div>
 
       {/* Trailer Modal */}
