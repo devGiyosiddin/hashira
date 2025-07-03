@@ -222,7 +222,7 @@ const HomePage = () => {
             {/* Кнопка "Посмотреть все аниме" */}
             <div className="text-center mt-12">
               <Link 
-                to="/all-anime"
+                to="/all"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 <span className="mr-2">📺</span>
