@@ -10,7 +10,7 @@ interface AnimeCardProps {
 export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
   if (variant === 'compact') {
     return (
-      <div className="group relative block cursor-pointer">
+      <div className="group relative block cursor-pointer max-w-sm mx-auto">
         <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-800">
           <img
             src={item.images.jpg.large_image_url || item.images.jpg.image_url}
@@ -41,13 +41,13 @@ export const AnimeCard = ({ item, variant = 'default' }: AnimeCardProps) => {
   return (
     <Link 
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:border-purple-500/50 block"
+      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-[1.02] hover:border-purple-500/50 block max-w-sm mx-auto w-full"
       style={{
         background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
       }}
     >
-      {/* Background Image */}
+    {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
           src={item.images.jpg.large_image_url || item.images.jpg.image_url}
