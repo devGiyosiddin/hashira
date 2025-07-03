@@ -247,6 +247,9 @@ const SiteHeader = () => {
                         <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} className="w-5 h-5" />
                     </button>
                 </div>
+
+                {/* Bildirishnomalar tugmasi */}
+
                 {/* Login Button */}
                 <button
                         type="button"

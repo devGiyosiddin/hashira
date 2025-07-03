@@ -60,6 +60,7 @@ const Sidebar = () => {
         </div>
       </nav>
 
+      {/* TODO:Realize friends section */}
       {/* Друзья в сети */}
       <div className="px-4 py-4 border-t border-zinc-700/50">
         <h3 className="text-zinc-400 text-sm font-semibold mb-3">Друзья в сети</h3>
@@ -67,7 +68,8 @@ const Sidebar = () => {
           Друзей в сети пока что нет
         </div>
       </div>
-
+      
+      {/* TODO:Realize theme section */}
       {/* Тема сайта */}
       <div className="px-4 py-4 border-t border-zinc-700/50">
         <h3 className="text-zinc-400 text-sm font-semibold mb-3">Тема сайта</h3>

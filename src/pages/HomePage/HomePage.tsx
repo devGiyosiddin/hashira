@@ -305,6 +305,24 @@ const HomePage = () => {
               icon="🆕"
             />
 
+            {/* TODO: Virus daraada top animelar bo'limi */}
+
+            {/* Userlar tomonidan baxolangan animelar
+             Anime kartochka komponenti
+              baxo yulduzli ikonkalar bilan
+              va koment
+              p - Foydalanuvchi tomonidan baxolangan animelar
+              - Foydalanuvchi tomonidan baxolangan animelar bo'limi
+
+            <AnimeSection
+              title="Userlar tomonidan baxolangan animelar"
+              data={topAnime} // Placeholder, real data needed
+              isLoading={false} // Placeholder, real loading state needed
+              error={null} // Placeholder, real error state needed
+              icon="⭐"
+            />
+            */}
+
             {/* Barcha animelarni ko'rish tugmasi" */}
             <div className="text-center mt-12">
               <Link 
