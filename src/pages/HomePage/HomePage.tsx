@@ -259,14 +259,17 @@ const HomePage = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-row)">
+    <main className="min-h-screen gap-6"
+      style={{
+        "display": "flex",
+      }}
+    >
       {/* Hero Banner Section */}
-      <div className="relative px-6 pl-[280px] pt-[100px] pb-12 w-full text-white">
       <Sidebar />
+      <div className="flex-1 max-w-[2000px]">
         <HeroBanner anime={topAnime?.[0] || {}} />
-          
         {/* Ko'rishni davom etish */}
-        <div className="mt-12">
+        <div className="my-12">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold">
               ⏳ Ko'rishni davom etish
@@ -308,7 +311,7 @@ const HomePage = () => {
             {/* TODO: Virus daraada top animelar bo'limi */}
 
             {/* Userlar tomonidan baxolangan animelar
-             Anime kartochka komponenti
+            Anime kartochka komponenti
               baxo yulduzli ikonkalar bilan
               va koment
               p - Foydalanuvchi tomonidan baxolangan animelar
@@ -339,7 +342,7 @@ const HomePage = () => {
           </>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 
