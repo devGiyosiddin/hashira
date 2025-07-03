@@ -118,7 +118,7 @@ const Search = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 pt-[100px]">
+    <div className="w-full max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Фильтры + Поиск */}
         <aside className="md:w-80 w-full bg-zinc-900/90 rounded-3xl p-6 shadow-2xl border border-zinc-800/70 mb-8 md:mb-0">
