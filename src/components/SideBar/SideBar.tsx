@@ -36,7 +36,11 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="bg-(--bg-color) w-64 fixed flex top-[120px] left-0 flex-col z-40 overflow-hidden pl-6">
+    <aside className="sticky top-[100px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-40 overflow-hidden lg:flex hidden"
+    style={{
+      'height': 'fit-content',
+    }}
+    >
       {/* Main Menu */}
       <nav className="pb-4">
         <div className="space-y-2">
