@@ -90,11 +90,7 @@ const WatchPage: React.FC = () => {
   if (!anime) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-4xl mx-auto pt-8">
-        <h1 className="text-3xl font-bold text-white mb-4 text-center">
-          {anime.title_english || anime.title} — {currentEpisode}-серия
-        </h1>
+    <div className="min-h-screen pt[-100px]">
         <div className="rounded-xl overflow-hidden shadow-lg mb-8">
           <VideoPlayer
             source={getVideoSource()}
@@ -103,8 +99,12 @@ const WatchPage: React.FC = () => {
             poster={anime.images.jpg.large_image_url}
           />
         </div>
+      <div className="max-w-4xl mx-auto pt-8">
+        <h1 className="text-3xl font-bold text-white mb-4 text-center">
+          {anime.title_english || anime.title} — {currentEpisode}-серия
+        </h1>
       </div>
-      <div className="max-w-6xl mx-auto">
+      <div className="">
         <EpisodesSection
           episodes={episodes}
           episodesLoading={episodesLoading}
