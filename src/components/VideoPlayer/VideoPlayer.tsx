@@ -278,12 +278,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </button>
       )}
 
-      <button 
+      {/* <button 
         className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/70 hover:bg-black/90 rounded-full flex items-center justify-center text-white transition-colors duration-300"
         onClick={() => window.parent?.postMessage({ type: 'closePlayer' }, '*')}
       >
         ✕
-      </button>
+      </button> */}
 
       {/* Play Button Overlay */}
       {!isPlaying && !isLoading && (
