@@ -62,6 +62,18 @@ const WatchPage: React.FC = () => {
     if (episodeNumber) setCurrentEpisode(Number(episodeNumber));
   }, [episodeNumber]);
 
+  const nextEpisode = () => {
+    if (anime && currentEpisode < (anime.episodes || 0)) {
+      setCurrentEpisode((prev) => prev + 1);
+    }
+  };
+
+  const previousEpisode = () => {
+    if (currentEpisode > 1) {
+      setCurrentEpisode((prev) => prev - 1);
+    }
+  };
+
   // Для примера: видеофайл для теста
   const getVideoSource = () => {
     // Здесь можно реализовать реальную логику выбора источника видео по номеру серии

@@ -84,18 +84,6 @@ const AnimeDetailPage = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showTrailer]);
-
-  // const nextEpisode = () => {
-  //   if (anime && currentEpisode < (anime.episodes || 0)) {
-  //     setCurrentEpisode((prev) => prev + 1);
-  //   }
-  // };
-
-  // const previousEpisode = () => {
-  //   if (currentEpisode > 1) {
-  //     setCurrentEpisode((prev) => prev - 1);
-  //   }
-  // };
   
   useEffect(() => {
     const fetchAnime = async () => {
