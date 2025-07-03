@@ -3,8 +3,6 @@ import { useSearchStore } from "../../store/searchStore";
 import { Link } from "react-router-dom";
 import './search.css';
 import { debounce } from "lodash";
-
-// Тип для фильтра
 import type { FilterState } from "../../store/searchStore";
 
 const GENRES = [
@@ -48,7 +46,7 @@ const Search = () => {
     if (!filter.genres.length) {
       setFilter({ genres: ["1"] }); // Экшен
     }
-  }, []);
+  }, [ filter.genres, setFilter ]);
 
   // Debounce для фильтров
   const debouncedSetFilter = debounce((filter: Partial<FilterState>) => {
