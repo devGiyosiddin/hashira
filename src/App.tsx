@@ -24,7 +24,12 @@ function App() {
           <Route path="/all" element={<AllAnime />} />
           <Route path="/watch/:animeId/:episodeNumber" element={<WatchPage />} />
         </Routes>
-      </div>
+    </div>
+    
+    // TODO: Add Footer component
+    // <Footer />
+
+    // TODO: Add Leaderboard, Categories, Collection pages
   );
 }
 
