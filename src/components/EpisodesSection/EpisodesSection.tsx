@@ -34,8 +34,8 @@ const EpisodesSection: React.FC<EpisodesSectionProps> = ({
   };
 
   return (
-    <section className="w-full lg:w-[65%] py-20 pr-0">
-      <div className="w-full px-4 md:px-8 lg:px-12">
+    <section className="w-full lg:w-[65%] pr-0">
+      <div className="w-full">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-4xl font-bold">
