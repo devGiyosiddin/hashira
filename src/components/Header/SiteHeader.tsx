@@ -5,6 +5,7 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Settings2 } from "lucide-react";
 import './siteHeader.css';
 import type { AnimeSearchResult } from "../../types/anime";
+import RandomAnimeButton from "./RandomAnimeButton";
 
 const fetchSearchedAnime = async (animeName: string): Promise<AnimeSearchResult[]> => {
     const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(animeName)}&limit=8`;
@@ -263,6 +264,8 @@ const SiteHeader = () => {
                         />
                     </Link>
                 </div>
+
+                <RandomAnimeButton />
 
                 {/* Right side buttons */}
                 <div className="flex items-center gap-4">
