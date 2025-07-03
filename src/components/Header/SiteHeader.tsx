@@ -36,6 +36,27 @@ const SiteHeader = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const searchContainerRef = useRef<HTMLDivElement>(null);
+    const [showHeader, setShowHeader] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+          const currentScrollY = window.scrollY;
+    
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Pastga scroll — yashir
+            setShowHeader(false);
+          } else {
+            // Tepaga scroll — ko'rsat
+            setShowHeader(true);
+          }
+    
+          setLastScrollY(currentScrollY);
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+      }, [lastScrollY]);
 
     useEffect(() => {
         // Focus the search input when the component mounts
@@ -105,9 +126,11 @@ const SiteHeader = () => {
     return (
         <header
             ref={searchContainerRef}
-            className={`fixed top-0 left-0 right-0 z-50 p-4 py-7 transition-all duration-300 ${
+            className={`fixed top-0 left-0 right-0 z-50 p-4 py-7 transition-all duration-400 ${
                 scrolled ? 'backdrop-blur-lg' : 'backdrop-blur-sm'
-            }`}
+                }
+                ${showHeader ? 'translate-y-0' : '-translate-y-full'}
+                `}
             style={{
                 backdropFilter: scrolled ? 'blur(24px)' : 'blur(0)',
                 background: 'linear-gradient(180deg,#000c,#0000)'
