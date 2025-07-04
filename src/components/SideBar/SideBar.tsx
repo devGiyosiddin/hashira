@@ -85,7 +85,7 @@ const Sidebar = () => {
       </div>
 
       {/* Хостинг */}
-      <div className="px-4 py-4 border-t border-zinc-700/50">
+      {/* <div className="px-4 py-4 border-t border-zinc-700/50">
         <h3 className="text-zinc-400 text-sm font-semibold mb-3">ХОСТИНГ ПРЕДОСТАВЛЕН</h3>
         <div className="flex items-center space-x-2 bg-blue-600/20 rounded-lg p-3">
           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -93,7 +93,7 @@ const Sidebar = () => {
           </div>
           <span className="text-blue-300 font-medium">cloud</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Social Links */}
       <div className="px-4 py-4 border-t border-zinc-700/50">
