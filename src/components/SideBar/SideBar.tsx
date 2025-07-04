@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Trophy, ChartBarStacked, LibraryBig } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import Theme from '../theme/Theme';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -119,15 +120,7 @@ const Sidebar = () => {
       </div>
       
       {/* TODO:Realize theme section */}
-      {/* Тема сайта */}
-      <div className="px-4 py-4 border-t border-zinc-700/50">
-        <h3 className="text-zinc-400 text-sm font-semibold mb-3">Тема сайта</h3>
-        <select className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-lg px-3 py-2 text-white text-sm">
-          <option value="default">По умолчанию</option>
-          <option value="dark">Темная</option>
-          <option value="light">Светлая</option>
-        </select>
-      </div>
+      <Theme />
 
       {/* Хостинг */}
       {/* <div className="px-4 py-4 border-t border-zinc-700/50">
