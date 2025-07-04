@@ -257,6 +257,7 @@ const HomePage = () => {
     enabled: !debouncedQuery,
     staleTime: 1000 * 60 * 15, // 15 минут кэш
   });
+  console.log("Top Anime:", topAnime);
 
   return (
     <main className="min-h-screen gap-6"
@@ -267,7 +268,8 @@ const HomePage = () => {
       {/* Hero Banner Section */}
       <Sidebar />
       <div className="flex-1 max-w-[2000px]">
-        <HeroBanner anime={topAnime?.[0] || {}} />
+        <HeroBanner />
+        {/* <HeroBanner anime={topAnime?.[0] || {}}/> */}
         {/* Ko'rishni davom etish */}
         <div className="my-12">
           <div className="flex items-center justify-between mb-8">
