@@ -60,7 +60,7 @@ const Theme = () => {
   ];
 
   return (
-    <div className="px-4 py-4 border-t">
+    <div className="p-4">
       <h3 className="text-sm font-semibold mb-3">
         Sayt mavzusi
       </h3>
@@ -73,15 +73,17 @@ const Theme = () => {
           setTheme(selectedTheme);
           localStorage.setItem("theme", selectedTheme);
         }}
-        className="w-full px-3 py-2 text-sm rounded-lg border input"
+        className="w-full px-3 py-2 text-sm rounded-lg bg-transparent"
         style={{
-          backgroundColor: 'var(--bg-secondary)',
+          backgroundColor: 'var(--bg-color)',
           color: 'var(--text-primary)',
           borderColor: 'var(--border-color)'
         }}
       >
         {themes.map((t) => (
-          <option key={t.value} value={t.value}>
+          <option
+            className="py-2 bg-transparent"
+            key={t.value} value={t.value}>
             {t.label}
           </option>
         ))}
