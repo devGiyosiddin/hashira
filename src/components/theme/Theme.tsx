@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./theme.css";
 
 const Theme = () => {
   const [theme, setTheme] = useState("default");
@@ -8,57 +9,63 @@ const Theme = () => {
     const savedTheme = localStorage.getItem("theme");
     
     if (savedTheme) {
-      // Agar saqlangan mavzu mavjud bo'lsa
       if (savedTheme === "default") {
-        // Agar mavzu "default", tizim sozlamalarini tekshiramiz 
+        // Если сохранённая тема "default", используем системные настройки
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        
-        if (prefersDark) {
-          setTheme("default");
-          document.documentElement.setAttribute("data-theme", "dark");
-        } else {
-          setTheme("default");
-          document.documentElement.setAttribute("data-theme", "light");
-        }
+        setTheme("default");
+        document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
       } else {
-        // Если сохранённая тема "dark" или "light"
+        // Если сохранённая тема конкретная
         setTheme(savedTheme);
         document.documentElement.setAttribute("data-theme", savedTheme);
       }
     } else {
       // Если нет сохранённой темы, используем системные настройки
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      
       setTheme("default");
-      if (prefersDark) {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else {
-        document.documentElement.setAttribute("data-theme", "light");
-      }
+      document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
     }
   }, []);
 
   // Обновляем атрибут при изменении theme
   useEffect(() => {
     if (theme === "default") {
-      // При выборе "default" определяем тему по системным настройкам
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
     } else {
-      // При выборе конкретной темы используем её
       document.documentElement.setAttribute("data-theme", theme);
     }
   }, [theme]);
 
+  // Слушатель изменений системной темы
+  useEffect(() => {
+    if (theme === "default") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = (e: MediaQueryListEvent) => {
+        document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
+      };
+      
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+  }, [theme]);
+
   const themes = [
-    { value: "default", label: "По умолчанию" },
-    { value: "dark", label: "Темная" },
-    { value: "light", label: "Светлая" },
+    { value: "default", label: "Odatiy"},
+    { value: "light", label: "Yorug'"},
+    { value: "dark", label: "Qora"},
+    { value: "blue", label: "Ko'k"},
+    { value: "green", label: "Yashil"},
+    { value: "purple", label: "Binafsha"},
   ];
 
   return (
-    <div className="px-4 py-4 border-t border-zinc-700/50">
-      <h3 className="text-zinc-400 text-sm font-semibold mb-3">Тема сайта</h3>
+    <div className="px-4 py-4 border-t">
+      <h3 className="text-sm font-semibold mb-3">
+        Sayt mavzusi
+      </h3>
+      
+      {/* Вариант 1: Dropdown */}
       <select
         value={theme}
         onChange={(e) => {
@@ -66,7 +73,12 @@ const Theme = () => {
           setTheme(selectedTheme);
           localStorage.setItem("theme", selectedTheme);
         }}
-        className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-lg px-3 py-2 text-white text-sm"
+        className="w-full px-3 py-2 text-sm rounded-lg border input"
+        style={{
+          backgroundColor: 'var(--bg-secondary)',
+          color: 'var(--text-primary)',
+          borderColor: 'var(--border-color)'
+        }}
       >
         {themes.map((t) => (
           <option key={t.value} value={t.value}>
@@ -74,6 +86,35 @@ const Theme = () => {
           </option>
         ))}
       </select>
+
+      {/* Вариант 2: Сетка кнопок (раскомментируйте для использования) */}
+      {/*
+      <div className="grid grid-cols-2 gap-2 mt-3">
+        {themes.map((t) => (
+          <button
+            key={t.value}
+            onClick={() => {
+              setTheme(t.value);
+              localStorage.setItem("theme", t.value);
+            }}
+            className={`p-2 text-xs rounded-lg border transition-all ${
+              theme === t.value ? 'ring-2' : ''
+            }`}
+            style={{
+              backgroundColor: theme === t.value ? 'var(--text-accent)' : 'var(--bg-secondary)',
+              color: theme === t.value ? 'var(--bg-primary)' : 'var(--text-primary)',
+              borderColor: 'var(--border-color)',
+              ringColor: 'var(--text-accent)'
+            }}
+          >
+            <div className="flex items-center justify-center gap-1">
+              <span>{t.icon}</span>
+              <span>{t.label}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+      */}
     </div>
   );
 };
