@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Trophy, ChartBarStacked, LibraryBig } from 'lucide-react';
 import { Settings2 } from "lucide-react";
 import './siteHeader.css';
 import type { AnimeSearchResult } from "../../types/anime";
@@ -35,6 +36,33 @@ const SiteHeader = () => {
     const mobileSearchContainerRef = useRef<HTMLDivElement>(null);
     const [showHeader, setShowHeader] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    const menuItems = [
+        {
+          id: 'home',
+          icon: '🏠',
+          label: 'Главная',
+          path: '/'
+        },
+        {
+          id: 'leaderboard',
+          icon: <Trophy />,
+          label: 'Лидерборд',
+          path: '/leaderboard'
+        },
+        {
+          id: 'categories',
+          icon: <ChartBarStacked />,
+          label: 'Категории',
+          path: '/categories'
+        },
+        {
+          id: 'collection',
+          icon: <LibraryBig />,
+          label: 'Моя коллекция',
+          path: '/collection'
+        }
+      ];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -265,14 +293,14 @@ const SiteHeader = () => {
                     </Link>
                 </div>
 
-                <RandomAnimeButton />
 
                 {/* Right side buttons */}
                 <div className="flex items-center gap-4">
+                <RandomAnimeButton />
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="xl:hidden p-2.5 rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-600/50 text-gray-300 hover:text-purple-400 transition-all duration-300"
+                        className="lg:hidden cursor-pointer p-2.5 rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-600/50 text-gray-300 hover:text-purple-400 transition-all duration-300"
                         style={{
                             background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
                         }}
@@ -361,7 +389,29 @@ const SiteHeader = () => {
                             </div>
                         )}
                     </div>
-
+                    {/* Mobile Menu Items */}
+                    {/* Main Menu */}
+                    <nav className="pb-4">
+                        <div className="space-y-2 p-2">
+                        {menuItems.map((item) => (
+                            <Link
+                            key={item.id}
+                            to={item.path}
+                            className={`flex items-center bg-(--grey-color) space-x-3 px-1 py-3 rounded-pill  transition-all duration-200 ease-in-out mb-2 hover:bg-zinc-800/50 hover:text-white hover:scale-105 cursor-pointer font-semibold ${item.icon && 'justify-center'} ${
+                                location.pathname === item.path
+                                ? 'bg(--grey-color) border border-purple-500/30 text-purple-300'
+                                : 'text-zinc-300 hover:bg-zinc-800/50 hover:text-white'
+                                }`}
+                            style={{
+                                backgroundColor: 'var(--grey-color)',
+                                borderRadius: '20px' }}
+                            >
+                            <span className="text-lg">{item.icon}</span>
+                            <span className="font-medium">{item.label}</span>
+                            </Link>
+                        ))}
+                        </div>
+                    </nav>
                     <div className="flex items-center justify-between gap-4">
                         {/* Mobile Filter Button */}
                         <div className="max-w-[200px]">
