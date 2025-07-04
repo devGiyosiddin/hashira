@@ -62,17 +62,17 @@ const WatchPage: React.FC = () => {
     if (episodeNumber) setCurrentEpisode(Number(episodeNumber));
   }, [episodeNumber]);
 
-  const nextEpisode = () => {
-    if (anime && currentEpisode < (anime.episodes || 0)) {
-      setCurrentEpisode((prev) => prev + 1);
-    }
-  };
+  // const nextEpisode = () => {
+  //   if (anime && currentEpisode < (anime.episodes || 0)) {
+  //     setCurrentEpisode((prev) => prev + 1);
+  //   }
+  // };
 
-  const previousEpisode = () => {
-    if (currentEpisode > 1) {
-      setCurrentEpisode((prev) => prev - 1);
-    }
-  };
+  // const previousEpisode = () => {
+  //   if (currentEpisode > 1) {
+  //     setCurrentEpisode((prev) => prev - 1);
+  //   }
+  // };
 
   // Для примера: видеофайл для теста
   const getVideoSource = () => {
@@ -110,7 +110,9 @@ const WatchPage: React.FC = () => {
           episodesLoading={episodesLoading}
           episodeSearch={episodeSearch}
           setEpisodeSearch={setEpisodeSearch}
-          playEpisode={(epNum) => {}}
+          playEpisode={(epNum) => {
+            handlePlayEpisode(epNum);
+          }}
           anime={anime}
         />
       </div>
