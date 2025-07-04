@@ -1,10 +1,18 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Trophy, ChartBarStacked, LibraryBig } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 const Sidebar = () => {
   const location = useLocation();
+  const lastScrollY = useRef(0);
 
   const menuItems = [
+    {
+      id: 'home',
+      icon: '🏠',
+      label: 'Главная',
+      path: '/'
+    },
     {
       id: 'leaderboard',
       icon: <Trophy />,
@@ -35,15 +43,52 @@ const Sidebar = () => {
     }
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sidebar = document.querySelector('aside');
+      if (sidebar) {
+        const currentScrollY = window.scrollY;
+        
+        // Если находимся в самом верху страницы
+        if (currentScrollY <= 0) {
+          sidebar.style.top = '-35px';
+        } 
+        // Если скроллим вниз
+        else if (currentScrollY > lastScrollY.current) {
+          sidebar.style.top = '0';
+        }
+        // Если скроллим вверх (но не в самый верх)
+        else if (currentScrollY < lastScrollY.current) {
+          sidebar.style.top = '35px';
+        }
+        
+        lastScrollY.current = currentScrollY;
+      }
+    };
+
+    // Установить начальное положение
+    const sidebar = document.querySelector('aside');
+    if (sidebar) {
+      sidebar.style.top = '-35px';
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <aside className="sticky top-[100px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-40 overflow-hidden lg:flex hidden"
+    <aside className="sticky top-[-35px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-40 overflow-hidden lg:flex hidden"
     style={{
       'height': 'fit-content',
+      'transition': 'top 0.3s ease-in-out'
     }}
     >
       {/* Main Menu */}
       <nav className="pb-4">
-        <div className="space-y-2">
+        <div className="space-y-2 p-2">
           {menuItems.map((item) => (
             <Link
               key={item.id}
