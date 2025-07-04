@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./theme.css";
+// import "./theme.css";
 
 const Theme = () => {
   const [theme, setTheme] = useState("default");
