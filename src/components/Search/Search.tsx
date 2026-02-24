@@ -1,9 +1,11 @@
-import { useRef, useEffect, useState } from "react";
-import { useSearchStore } from "../../store/searchStore";
-import { Link } from "react-router-dom";
 import './search.css';
-import { debounce } from "lodash";
+
+import { useEffect, useRef, useState } from "react";
+
 import type { FilterState } from "../../store/searchStore";
+import { Link } from "react-router-dom";
+import { debounce } from "lodash";
+import { useSearchStore } from "../../store/searchStore";
 
 const GENRES = [
   { mal_id: "1", name: "⚔️ Ekshen" },
@@ -121,7 +123,7 @@ const Search = () => {
     <div className="w-full max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Фильтры + Поиск */}
-        <aside className="md:w-80 w-full bg-zinc-900/90 rounded-3xl p-6 shadow-2xl border border-zinc-800/70 mb-8 md:mb-0">
+        <aside className="md:w-80 w-full bg-zinc-900/90 rounded-3xl p-6 shadow-2xl border border-zinc-800/70 mb-8 md:mb-0 h-fit">
           
           {/* Поисковый input */}
           <div className="mb-6 relative">
