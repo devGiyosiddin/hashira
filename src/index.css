@@ -1,10 +1,130 @@
 @import url('App.css');
 @import url('/src/assets/normalize.css');
 
+/* TailwindCSS */
+
+:root {
+    /* inspect */
+        --surface: #13151c;
+        --surface2: #1c1f2b;
+        --border: #2a2d3a;
+        --text: #e8eaf2;
+        --muted: #6b6f85;
+        --danger: #ff4757;
+        --success: #47ff8a;
+    
+        --shadow-card: 0 4px 24px rgba(71, 255, 232, 0.08);
+        --shadow-glow: 0 0 24px rgba(71, 255, 232, 0.35);
+        --shadow-focus: 0 0 0 3px rgba(71, 255, 232, 0.20);
+        --shadow-hover: 0 8px 40px rgba(71, 255, 232, 0.18);
+        --gradient: linear-gradient(135deg, #47ffe8 0%, #47ffe8 100%);
+
+
+
+    /* COLORS */
+    --accent: #a855f7;
+    --accent-400: red;
+    --accent2: #47ffe8;
+    --accent3: #ff47e8;
+    --text: #ecf0f1;
+    --bg: #111;
+    --bg-: ;
+    --btn: ;
+    --btn: ;
+    --btn-3: #313131;
+    --btn-3-hover: #ff47e8;
+    --btn: ;
+
+    
+    /* RADIUS */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-full: 100px;
+    
+    /* SHADOW */
+    --sh-animecard: rgba(216, 53, 53, 0.3) 0px 8px 32px,
+        rgba(255, 255, 255, 0.1) 0px 1px 0px inset;
+    --sh-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --sh-xl: ;
+    --sh-md: ;
+    --sh-sm: ;
+    --sh-2xl: ;
+
+    /* -----Z-INDEX - LAYERS------ */
+    /* BASE CONTENT */
+    --z-base: 0;
+    --z-content: 1;
+    --z-badge: 2;
+    --z-btn: 3;
+    --z-card:4;
+    --z-card-hover: 5;
+    --z-card-btn: 6;
+    --z-card-badge: 6;
+    --z-card-content: 7;
+    --z-sticky-card: 10;
+    --z-vp: 11;
+    --z-vp-btn: 12;
+    --z-base-dropdown: 15;
+    --z-base-dropdown-btn: 16;
+    --z-base-dropdown-panel: 18;
+
+    /* NAVIGATION & HEADER */
+    --z-header: 30;
+    --z-logo:31;
+    --z-header-btn: 32;
+    --z-header-dropdown: 33;
+
+    /* OVERLAYS */
+    --z-overlay: 35;
+    --z-sidebar: 38;
+    --z-drawer: 38;
+
+    /* MODALS & POPUPS */
+    --z-modal: 40;
+    --z-modal-btn: 41; 
+    --z-modal-badge: 41;
+    --z-modal-close: 44;
+    --z-lightbox: 45;
+
+    /* FLOATING UI */
+    --z-tooltip: 50;
+    --z-popover: 50;
+    --z-dropdown: 52;
+
+    /* NOTIFICATIONS */
+    --z-toast: 60;
+    --z-snackbar: 60;
+
+    /* TOP LEVEL */
+    --z-loading: 70;
+    --z-cookie-banner: 75;
+    --z-spotlight: 80;
+    --z-critical: 90;
+
+
+    /* FONT */
+    --font-head: 'Montserrat', 'Arial', sans-serif;
+
+
+    --border-color: var(--border, #bdc3c7);
+    --primary-color: var(--accent, #3498db);
+    --secondary-color: var(--accent2, #2ecc71);
+    --button-bg: var(--surface2, #313131);
+    --button-bg-hover: var(--surface, #3a3a3a);
+    --button-bg-color: var(--surface2, #ffffff21);
+
+    --danger-color: #b92d2da1;
+    --green-color: #3ba100c2;
+    --violet-color: #7700ff79;
+    --grey-color: #232323a1;
+    --grey-2-color: #321f3aa1;
+}
+
 :root {
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
-    --bg-color: #111;
     --text-color: #ecf0f1;
     --border-color: #bdc3c7;
     --button-bg-color: #ffffff21;
@@ -15,8 +135,46 @@
     --grey-2-color: #321f3aa1;
     --button-bg: #313131;
     --button-bg-hover: #3a3a3a; 
-    --font-family: 'Montserrat','Arial', sans-serif;
 }
+
+
+/* ── Theme Studio bridge ── */
+:root {
+    --bg-primary: var(--bg, #ffffff);
+    --bg-secondary: var(--surface, #f8f9fa);
+    --bg-tertiary: var(--surface2, #e9ecef);
+    --text-primary: var(--text, #212529);
+    --text-secondary: var(--muted, #6c757d);
+    --text-accent: var(--accent, #0d6efd);
+    --border-color: var(--border, #dee2e6);
+    --shadow: var(--shadow-card, rgba(0, 0, 0, 0.1));
+}
+
+@theme {
+    /* COLORS */
+    --purple-500: var(--accent);
+    --purple-400: var(--accent-400);
+    --btn-3: var(--btn-3);
+    --btn-3-hover: var(--btn-3-hover);
+    --gray-500: var(--muted);
+
+    /* RADIUS */
+    --rounded-xl: var(--r-xl);
+    --rounded-sm: var(--r-sm);
+    --rounded-xs: var(--r-xs);
+    --rounded-lg: var(--r-lg);
+    --rounded-full: var(--r-full);
+
+    /* SHADOW */
+    --shadow-lg: var(--sh-lg);
+    --shadow-xl: var(--sh-xl);
+    --shadow-sm: var(--sh-sm);
+    --shadow-md: var(--sh-md);
+    --shadow-2xl: var(--sh-2xl);
+    --anime-card-sh: var(--sh-animecard):
+}
+
+
 
 /* GLOBAL STYLES */
 html {
@@ -39,14 +197,14 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    font-family: var(--font-family);
     font-size: 1rem;
     font-weight: normal;
     line-height: 1.5px;
     padding: 0;
     margin: 0;
-    color: var(--text-color);
-    background-color: var(--bg-color);
+    color: var(--text);
+    background-color: var(--bg);
+    font-family: var(--font-head);
     user-select: none;
 }
 

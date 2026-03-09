@@ -1,13 +1,14 @@
 import './homePage.css';
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { useSearchStore } from "../../store/searchStore";
-import { useDebounce } from "use-debounce";
+
+import type { Anime } from "../../types/anime";
+import type { ContinueWatchingItem } from "../../types/anime";
 import { HeroBanner } from '../../components';
+import { Link } from "react-router-dom";
 import Sidebar from "../../components/SideBar/SideBar";
 import { continueWatchingData } from "../../data/MockData";
-import type { ContinueWatchingItem } from "../../types/anime";
-import type { Anime } from "../../types/anime";
+import { useDebounce } from "use-debounce";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchStore } from "../../store/searchStore";
 
 // API fuktsiyalar
 const fetchTopAnime = async () => {
@@ -32,15 +33,12 @@ const ContinueWatchingCard = ({ item }: { item: ContinueWatchingItem }) => {
     <Link
       key={item.mal_id}
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl backdrop-blur-sm border-none shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block
-                 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80"
-      style={{
-        background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-      }}
+      className="group relative overflow-hidden rounded-lg backdrop-blur-sm border-none shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block
+        h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80
+        bg-linear-to-r from-accent to-accent2 sh-animecard"
     >
       {/* Background image */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-(--z-base)">
         <img
           src={item.images.jpg.large_image_url || item.images.jpg.image_url}
           alt={item.title}
@@ -48,7 +46,7 @@ const ContinueWatchingCard = ({ item }: { item: ContinueWatchingItem }) => {
         />
         
         {/* Top right badges */}
-        <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
+        <div className="absolute top-2 right-2 flex items-center gap-1 z-(--z-badge)">
           <span className="p-1 rounded-full bg-blue-500/80 backdrop-blur-sm w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
             <svg
               className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-white"
@@ -74,7 +72,7 @@ const ContinueWatchingCard = ({ item }: { item: ContinueWatchingItem }) => {
         </div>
 
         {/* Last watched indicator */}
-        <div className="absolute bottom-2 right-2 bg-orange-600/90 backdrop-blur-sm text-white rounded-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold flex items-center gap-1 h-7 sm:h-8 z-10">
+        <div className="absolute bottom-2 right-2 bg-orange-600/90 backdrop-blur-sm text-white rounded-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold flex items-center gap-1 h-7 sm:h-8 z-(--z-badge)">
           {item.lastWatched}
         </div>
 
@@ -86,7 +84,7 @@ const ContinueWatchingCard = ({ item }: { item: ContinueWatchingItem }) => {
       </div>
 
       {/* Progress bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-10">
+      <div className="absolute bottom-0 left-0 right-0 z-(--z-card-btn)">
         <div className="bg-black/50 backdrop-blur-sm h-2">
           <div 
             className="bg-gradient-to-r from-purple-500 to-pink-500 h-full transition-all duration-300"
@@ -96,7 +94,7 @@ const ContinueWatchingCard = ({ item }: { item: ContinueWatchingItem }) => {
       </div>
 
       {/* Title and episode info overlay */}
-      <div className="absolute bottom-2 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+      <div className="absolute bottom-2 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-(--z-card-content)) opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
         <h3 className="text-white text-base sm:text-lg md:text-xl font-bold line-clamp-1 mb-2">
           {item.title}
         </h3>
@@ -115,7 +113,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
     <Link
       key={item.mal_id}
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl backdrop-blur-sm border-none shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block
+      className="group relative overflow-hidden rounded-(--r-lg) backdrop-blur-sm border-none shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block
                  h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80"
       style={{
         background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
@@ -131,7 +129,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
         />
         
         {/* Tepa-o'ng ikonkalar */}
-        <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
+        <div className="absolute top-2 right-2 flex items-center gap-1 z-(--z-card-badge)">
           <span className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
             <svg
               className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-white"
@@ -183,7 +181,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
       </div>
 
       {/* Title overlay - faqat hover qilinganda ko'rsatilsin */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/90 to-transparent z-(--z-card-hover) opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
       <h3 className="text-white text-base sm:text-lg md:text-xl font-bold line-clamp-2">
           {item.title}
         </h3>
@@ -332,7 +330,7 @@ const HomePage = () => {
             <div className="text-center mt-12">
               <Link 
                 to="/all"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-(--r-lg) shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 <span className="mr-2">📺</span>
                 Посмотреть все аниме

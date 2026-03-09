@@ -1,10 +1,12 @@
 import './animeDetailPage.css';
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { Play, PlayIcon } from 'lucide-react';
-import StatusDropdown from './animeStatus/AnimeStatus';
-import EpisodesSection from '../../components/EpisodesSection/EpisodesSection';
+
 import type { AnimeDetails, Episode } from '../../types/anime';
+import { Play, PlayIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+
+import EpisodesSection from '../../components/EpisodesSection/EpisodesSection';
+import StatusDropdown from './animeStatus/AnimeStatus';
+import { useParams } from 'react-router-dom';
 
 const SynopsisSection = ({ anime }: { anime: AnimeDetails }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -161,10 +163,6 @@ const AnimeDetailPage = () => {
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
       <div className="relative"
-        style={{
-          // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-          boxShadow: 'rgb(19, 17, 17) 0px 0px 80px 40px inset',
-        }}
       >
         {/* Background Image with Parallax */}
         <div 
@@ -179,7 +177,7 @@ const AnimeDetailPage = () => {
         />
 
         {/* Main Content */}
-        <div className="relative z-10 h-full flex items-center">
+        <div className="relative z-(--z-content) h-full flex items-center">
           <div className="flex gap-12 items-center pb-16 px-6 lg:px-16">
             {/* Left Content - Poster */}
             <div className="flex">
@@ -302,10 +300,10 @@ const AnimeDetailPage = () => {
                   {/* Watch Button */}
                 <button
                   onClick={() => isMovieOrSingleEpisode() ? setShowVideoPlayer(true) : playEpisode()}
-                  className="bg-white flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-black rounded-full "
+                  className="bg-white flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer text-sm sm:text-base text-black rounded-full  rounded-xl"
                   style={{
-                    borderTopLeftRadius: '6px',
-                    borderEndEndRadius: '6px',
+                    // borderTopLeftRadius: '6px',
+                    // borderEndEndRadius: '6px',
                   }}
                 >
                   <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
@@ -320,10 +318,10 @@ const AnimeDetailPage = () => {
                 {/* Notify Button */}
                 <button
                   onClick={() => alert('Bu funksiya hali qo\'shilmagan')}
-                  className="bg-[var(--grey-color)] text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-[var(--primary-color)] hover:shadow-[var(--primary-color)] hover:shadow-lg rounded-full"
+                  className="bg-[var(--grey-color)] text-gray-300 border border-gray-600/50 hover:bg-gray-700/50 px-4 sm:px-6 py-3 sm:py-4 font-bold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base cursor-pointer hover:text-white hover:border-[var(--primary-color)] hover:shadow-[var(--primary-color)] hover:shadow-lg rounded-full rounded-xl"
                   style={{
-                    borderTopLeftRadius: '6px',
-                    borderEndEndRadius: '6px',
+                    // borderTopLeftRadius: '6px',
+                    // borderEndEndRadius: '6px',
                   }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-bell-icon lucide-bell">
@@ -386,11 +384,11 @@ const AnimeDetailPage = () => {
 
       {/* Trailer Modal */}
       {showTrailer && anime.trailer?.youtube_id && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="relative rounded-2xl overflow-hidden max-w-4xl w-full">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-(--z-modal) flex items-center justify-center p-4">
+          <div className="relative rounded-(--r-lg) overflow-hidden max-w-4xl w-full">
             <button
               onClick={() => setShowTrailer(false)}
-              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors duration-300"
+              className="absolute top-4 right-4 z-(--z-modal-btn) w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors duration-300"
             >
               ×
             </button>

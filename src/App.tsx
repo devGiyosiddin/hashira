@@ -1,12 +1,15 @@
 import './App.css';
-import SiteHeader from './components/Header/SiteHeader';
-import HomePage from './pages/HomePage/HomePage';
+
 import { Route, Routes } from 'react-router-dom';
-import Search from './components/Search/Search';
-import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
+
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 import AllAnime from './pages/All/Allanime';
-import WatchPage from './pages/watch';
+import AnimeDetailPage from './pages/AnimeDetail/AnimeDetailPage';
+import HomePage from './pages/HomePage/HomePage';
 import Leaderboard from './pages/LeaderBoard/LeaderBoard';
+import Search from './components/Search/Search';
+import SiteHeader from './components/Header/SiteHeader';
+import WatchPage from './pages/watch';
 
 function App() {
   return (
@@ -26,6 +29,7 @@ function App() {
             <Route path="/news" element={<div>News Page</div>} />
             <Route path="/forum" element={<div>Forum Page</div>} />
             <Route path="/search" element={<div>Search Page</div>} />
+            <Route path="/cyrex" element={<AdminPanel /> } />    
           </Routes>
         </main>
     </div>

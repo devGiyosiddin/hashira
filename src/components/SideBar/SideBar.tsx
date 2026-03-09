@@ -1,6 +1,7 @@
+import { ChartBarStacked, LibraryBig, Trophy } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { Trophy, ChartBarStacked, LibraryBig } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+
 import Theme from '../theme/Theme';
 
 const Sidebar = () => {
@@ -81,7 +82,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className="sticky top-[-35px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-40 overflow-hidden lg:flex hidden"
+    <aside className="sticky top-[-35px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-(--z-sidebar) overflow-hidden lg:flex hidden"
     style={{
       'height': 'fit-content',
       'transition': 'top 0.3s ease-in-out'
@@ -125,7 +126,7 @@ const Sidebar = () => {
       {/* Хостинг */}
       {/* <div className="px-4 py-4 border-t border-zinc-700/50">
         <h3 className="text-zinc-400 text-sm font-semibold mb-3">ХОСТИНГ ПРЕДОСТАВЛЕН</h3>
-        <div className="flex items-center space-x-2 bg-blue-600/20 rounded-lg p-3">
+        <div className="flex items-center space-x-2 bg-blue-600/20 rounded-(--r-lg) p-3">
           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
             <span className="text-white text-xs font-bold">C</span>
           </div>
@@ -139,8 +140,10 @@ const Sidebar = () => {
           {socialItems.map((item) => (
             <a
               key={item.id}
-              href={item.external ? '#' : item.path}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-zinc-300 hover:bg-zinc-800/50 hover:text-white transition-all duration-200"
+              // href={item.external ? '#' : item.path}
+              href='https://t.me/dc_hashira'
+              target='_blank'
+              className="flex items-center space-x-3 px-4 py-3 rounded-(--r-lg) text-zinc-300 hover:bg-zinc-800/50 hover:text-white transition-all duration-200"
             >
               <span className="text-lg">{item.icon}</span>
               <span className="font-medium">{item.label}</span>

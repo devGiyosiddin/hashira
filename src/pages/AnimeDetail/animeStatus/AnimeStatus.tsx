@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { ChevronDown, Check } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 // Status tipini belgilaymiz
 interface Status {
@@ -35,7 +35,7 @@ const StatusDropdown = () => {
     };
 
     return (
-        <div className="relative inline-block text-left font-sans z-50">
+        <div className="relative inline-block text-left font-sans z-(--z-base-dropdown)">
             {/* Main Button */}
             <div>
                 <button
@@ -62,7 +62,7 @@ const StatusDropdown = () => {
                                            ${showDropdown ? 'rotate-180' : ''}`} />
                     
                     {/* Subtle glow effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-blue-500/0 
+                    <div className="absolute inset-0 rounded-(--r-lg) bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-blue-500/0 
                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
             </div>
@@ -72,14 +72,14 @@ const StatusDropdown = () => {
                 <>
                     {/* Backdrop */}
                     <div 
-                        className="fixed inset-0 z-10" 
+                        className="fixed inset-0 z-(--z-base-dropdown-btn)" 
                         onClick={() => setShowDropdown(false)}
                     ></div>
                     
                     {/* Dropdown Panel */}
                     <div className="absolute mt-3 w-52 rounded-xl shadow-2xl 
                                    bg-black/60 backdrop-blur-2xl border border-white/10
-                                   ring-1 ring-purple-500/20 z-1000
+                                   ring-1 ring-purple-500/20 z-(--z-base-dropdown-panel)
                                    transform transition-all duration-300 ease-out
                                    animate-in fade-in-0 slide-in-from-top-1 zoom-in-95
                                    opacity-100 scale-100 translate-y-0"

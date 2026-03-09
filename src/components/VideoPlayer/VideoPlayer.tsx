@@ -1,6 +1,7 @@
+import { Maximize, Pause, Play, Settings, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+
 import Hls from 'hls.js';
-import { Play, Pause, Volume2, VolumeX, Maximize, SkipForward, SkipBack, Settings } from 'lucide-react';
 
 interface VideoPlayerProps {
   source: string;
@@ -221,7 +222,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   if (error) {
     return (
-      <div className="w-full h-96 bg-slate-900 rounded-lg flex items-center justify-center">
+      <div className="w-full h-96 bg-slate-900 rounded-(--r-lg) flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-400 text-lg mb-2">⚠️ Video Error</div>
           <p className="text-gray-400">{error}</p>
@@ -234,7 +235,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   return (
     <div 
       ref={containerRef}
-      className="relative w-full bg-black rounded-lg overflow-hidden group"
+      className="relative w-full bg-black rounded-(--r-lg) overflow-hidden group"
       style={{ aspectRatio: '16/9', minHeight: 320 }}
       onMouseMove={showControlsTemporarily}
       onMouseLeave={() => isPlaying && setShowControls(false)}
@@ -263,7 +264,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       {showSkipIntro && (
         <button
           onClick={skipIntro}
-          className="absolute top-4 right-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors shadow-lg"
+          className="absolute top-4 right-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-(--r-lg) font-semibold transition-colors shadow-lg"
         >
           Skip Intro
         </button>
@@ -272,7 +273,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       {showSkipOutro && (
         <button
           onClick={skipOutro}
-          className="absolute top-4 right-4 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors shadow-lg"
+          className="absolute top-4 right-4 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-(--r-lg) font-semibold transition-colors shadow-lg"
         >
           Skip Outro
         </button>
@@ -352,7 +353,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 step="0.1"
                 value={isMuted ? 0 : volume}
                 onChange={handleVolumeChange}
-                className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                className="w-24 h-1 bg-gray-600 rounded-(--r-lg) appearance-none cursor-pointer slider"
               />
             </div>
 

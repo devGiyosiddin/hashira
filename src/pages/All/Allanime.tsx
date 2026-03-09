@@ -1,10 +1,12 @@
 import './allAnime.css';
+
+import type { Anime, FetchAnimeParams, FetchAnimeResponse } from "../../types/anime";
+import { useCallback, useEffect, useRef } from "react";
+
+import { Link } from "react-router-dom";
+import { useDebounce } from "use-debounce";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchStore } from "../../store/searchStore";
-import { useDebounce } from "use-debounce";
-import { useEffect, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
-import type { Anime, FetchAnimeResponse, FetchAnimeParams } from "../../types/anime";
 
 // API функция для получения всех аниме
 const fetchAllAnime = async ({ pageParam = 1 }: FetchAnimeParams): Promise<FetchAnimeResponse> => {
@@ -25,14 +27,14 @@ const AnimeCard = ({ item }: { item: Anime }) => {
     <Link 
       key={item.mal_id}
       to={`/anime/${item.mal_id}`}
-      className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
+      className="group relative overflow-hidden rounded-(--r-lg) bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
       style={{
         background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
       }}
     >
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-(--z-base)">
         <img
           src={item.images.jpg.large_image_url || item.images.jpg.image_url}
           alt={item.title}
@@ -43,7 +45,7 @@ const AnimeCard = ({ item }: { item: Anime }) => {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-80 flex flex-col p-6">
+      <div className="relative z-(--z-card) h-80 flex flex-col p-6">
         {/* Rating Badge */}
         <div className="absolute top-4 right-4 bg-yellow-500/90 backdrop-blur-sm text-black px-2 py-1 rounded-full text-sm font-bold shadow-lg">
           ⭐ {item.score || 'N/A'}
@@ -75,8 +77,8 @@ const AnimeCard = ({ item }: { item: Anime }) => {
         </div>
 
         {/* Watch indicator */}
-        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-500 z-20">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-1.5 px-3 rounded-lg text-sm font-semibold">
+        <div className="opacity-0 group-hover:opacity-100 absolute bottom-6 left-6 transition-all duration-500 z-(--z-card-btn)">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-1.5 px-3 rounded-(--r-lg) text-sm font-semibold">
             👁️ Ko'rish
           </div>
         </div>

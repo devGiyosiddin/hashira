@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
 import './section.css';
+
+import type { ReactNode } from "react";
 
 interface SectionProps {
     title: string;

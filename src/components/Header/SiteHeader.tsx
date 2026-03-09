@@ -1,12 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Trophy, ChartBarStacked, LibraryBig } from 'lucide-react';
-import { Settings2 } from "lucide-react";
 import './siteHeader.css';
+
+import { ChartBarStacked, LibraryBig, Trophy } from 'lucide-react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useRef, useState } from "react";
+
 import type { AnimeSearchResult } from "../../types/anime";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RandomAnimeButton from "./RandomAnimeButton";
+import { Settings2 } from "lucide-react";
 
 const fetchSearchedAnime = async (animeName: string): Promise<AnimeSearchResult[]> => {
     const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(animeName)}&limit=8`;
@@ -36,6 +38,7 @@ const SiteHeader = () => {
     const mobileSearchContainerRef = useRef<HTMLDivElement>(null);
     const [showHeader, setShowHeader] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const location = useLocation();
 
     const menuItems = [
         {
@@ -63,6 +66,13 @@ const SiteHeader = () => {
           path: '/collection'
         }
       ];
+      
+    // Онуллировать состояние scrolled site header
+    useEffect(() => {
+        setShowHeader(true);
+        setLastScrollY(0);
+        window.scrollTo(0,0);
+    }, [location.key])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -191,14 +201,14 @@ const SiteHeader = () => {
     
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-12 py-5 sm:py-6 transition-all duration-400 flex flex-col backdrop-blur-lg ${showHeader ? 'translate-y-0' : '-translate-y-full'}
+            className={`fixed top-0 left-0 right-0 z-(--z-header) px-4 sm:px-6 lg:px-12 py-5 sm:py-6 transition-all duration-400 flex flex-col backdrop-blurounded-(--r-lg) ${showHeader ? 'translate-y-0' : '-translate-y-full'}
                 `}
             style={{
                 backdropFilter: scrolled ? 'blur(24px)' : 'blur(0)',
                 background: 'linear-gradient(180deg,#000c,#0000)'
             }}
         >
-            <div className="relative z-10 flex items-center justify-between">
+            <div className="relative z-(--z-logo) flex items-center justify-between">
                 {/* Logo */}
                 <Link
                     to="/"
@@ -242,7 +252,7 @@ const SiteHeader = () => {
                         {showDropdown && searchResults.length > 0 && (
                             <div
                                 ref={dropdownRef}
-                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-800/95 backdrop-blur-lg border border-zinc-600/50 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50"
+                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-800/95 backdrop-blurounded-(--r-lg) border border-zinc-600/50 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-(--z-header-btn)"
                                 style={{
                                     background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.95), rgba(24, 24, 27, 0.95))',
                                     boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)'
@@ -257,7 +267,7 @@ const SiteHeader = () => {
                                         <img
                                             src={anime.images.jpg.image_url}
                                             alt={anime.title}
-                                            className="w-12 h-16 object-cover rounded-lg flex-shrink-0"
+                                            className="w-12 h-16 object-cover rounded-(--r-lg) flex-shrink-0"
                                         />
                                         <div className="flex-1 min-w-0">
                                             <h4 className="text-white font-medium text-sm truncate">
@@ -350,7 +360,7 @@ const SiteHeader = () => {
                         {showMobileDropdown && mobileSearchResults.length > 0 && (
                             <div
                                 ref={mobileDropdownRef}
-                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-800/95 backdrop-blur-lg border border-zinc-600/50 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-500"
+                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-800/95 backdrop-blurounded-(--r-lg) border border-zinc-600/50 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-(--z-header-dropdown)"
                                 style={{
                                     background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.95), rgba(24, 24, 27, 0.95))',
                                     boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)'
@@ -365,7 +375,7 @@ const SiteHeader = () => {
                                         <img
                                             src={anime.images.jpg.image_url}
                                             alt={anime.title}
-                                            className="w-12 h-16 object-cover rounded-lg flex-shrink-0"
+                                            className="w-12 h-16 object-cover rounded-(--r-lg) flex-shrink-0"
                                         />
                                         <div className="flex-1 min-w-0">
                                             <h4 className="text-white font-medium text-sm truncate">

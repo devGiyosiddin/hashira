@@ -132,7 +132,7 @@ const Search = () => {
               type="search"
               placeholder="Anime qidiring..."
               onChange={handleSearch}
-              className="w-full py-3 pl-5 pr-12 rounded-2xl border-2 border-purple-500/30 bg-zinc-900/80 backdrop-blur-sm text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-300 shadow-lg"
+              className="w-full py-3 pl-5 pr-12 rounded-(--r-lg) border-2 border-purple-500/30 bg-zinc-900/80 backdrop-blur-sm text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(145deg, rgba(24, 24, 27, 0.9), rgba(39, 39, 42, 0.8))',
                 boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(168, 85, 247, 0.1)'
@@ -265,14 +265,14 @@ const Search = () => {
               <Link
               key={anime.mal_id}
               to={`/anime/${anime.mal_id}`}
-              className="group relative overflow-hidden rounded-2xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
+              className="group relative overflow-hidden rounded-(--r-lg) bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/50 block"
               style={{
                 background: 'linear-gradient(145deg, rgba(39, 39, 42, 0.8), rgba(24, 24, 27, 0.9))',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
               }}
             >
                 {/* Фоновое изображение */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-(--z-base)">
                   <img
                     src={anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url}
                     alt={anime.title}
@@ -283,7 +283,7 @@ const Search = () => {
                 </div>
 
                 {/* Контент */}
-                <div className="relative z-10 h-80 flex flex-col justify-end p-6">
+                <div className="relative z-(--z-header-dropdown) h-80 flex flex-col justify-end p-6">
                   {/* Рейтинг */}
                   {anime.score && (
                     <div className="absolute top-4 right-4 bg-yellow-500/90 backdrop-blur-sm text-black px-3 py-1 rounded-full text-sm font-bold shadow-lg">

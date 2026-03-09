@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
+
 import EpisodesSection from '../../components/EpisodesSection/EpisodesSection';
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
+import { useParams } from 'react-router-dom';
 
 // Типы можно вынести в отдельный файл, если потребуется
 interface AnimeDetails {
@@ -79,7 +80,7 @@ const WatchPage: React.FC = () => {
     // Здесь можно реализовать реальную логику выбора источника видео по номеру серии
     // Например, если есть массив ссылок на видео по эпизодам
     // Пока что возвращаем тестовый файл
-    return '/public/test.mp4';
+    return '/public/test/test.mp4';
   };
 
   const handlePlayEpisode = (epNum?: number) => {
@@ -100,7 +101,7 @@ const WatchPage: React.FC = () => {
           />
         </div>
       <div className="max-w-4xl mx-auto pt-8">
-        <h1 className="text-3xl font-bold text-white mb-4 text-center">
+        <h1 className="text-3xl font-bold text-(--text) mb-4 text-center">
           {anime.title_english || anime.title} — {currentEpisode}-серия
         </h1>
       </div>

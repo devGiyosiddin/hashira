@@ -41,3 +41,825 @@ body {
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=DM+Sans:wght@400;500;600;700&family=Share+Tech+Mono&family=Crimson+Pro:wght@400;600;700&display=swap');
+
+.ts *,
+.ts *::before,
+.ts *::after {
+    box-sizing: border-box;
+}
+
+/* Trigger */
+.ts-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border, #2a2d3a);
+    background: var(--surface2, #1c1f2b);
+    color: var(--text, #e8eaf2);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color .2s, color .2s;
+}
+
+.ts-btn:hover {
+    border-color: var(--accent, #e8ff47);
+    color: var(--accent, #e8ff47);
+}
+
+.ts-btn-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1.5px solid rgba(255, 255, 255, .12);
+}
+
+.ts-btn-label {
+    flex: 1;
+    text-align: left;
+}
+
+.ts-btn-arr {
+    font-size: 9px;
+    color: var(--muted, #6b6f85);
+    transition: transform .2s;
+}
+
+.ts-btn-arr.open {
+    transform: rotate(180deg);
+}
+
+/* Overlay */
+.ts-ov {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: tsF .2s ease;
+}
+
+@keyframes tsF {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+/* Dialog */
+.ts-dlg {
+    width: 100%;
+    max-width: 1080px;
+    max-height: 90vh;
+    background: var(--surface, #13151c);
+    border: 1px solid var(--border, #2a2d3a);
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 32px 100px rgba(0, 0, 0, .65);
+    animation: tsU .28s cubic-bezier(.22, .68, 0, 1.2);
+    font-family: 'Syne', sans-serif;
+}
+
+@keyframes tsU {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(.97)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+/* Dialog header */
+.ts-dh {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px 16px;
+    border-bottom: 1px solid var(--border, #2a2d3a);
+    flex-shrink: 0;
+}
+
+.ts-dh h1 {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: var(--text, #e8eaf2);
+}
+
+.ts-dh h1 em {
+    color: var(--accent, #e8ff47);
+    font-style: normal;
+}
+
+.ts-dh p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted, #6b6f85);
+    margin-top: 2px;
+}
+
+.ts-dh-sp {
+    flex: 1;
+}
+
+.ts-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    border: 1px solid var(--border, #2a2d3a);
+    background: var(--surface2, #1c1f2b);
+    color: var(--muted, #6b6f85);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .15s, color .15s;
+    z-index: var(--z-modal-close);
+}
+
+.ts-close:hover {
+    border-color: var(--danger, #ff4757);
+    color: var(--danger, #ff4757);
+}
+
+/* Body layout */
+.ts-body {
+    display: grid;
+    grid-template-columns: 1fr 370px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ts-left {
+    border-right: 1px solid var(--border, #2a2d3a);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.ts-left::-webkit-scrollbar,
+.ts-right::-webkit-scrollbar {
+    width: 3px;
+}
+
+.ts-left::-webkit-scrollbar-thumb,
+.ts-right::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.ts-right {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section label */
+.sl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted, #6b6f85);
+    margin-bottom: 12px;
+}
+
+/* Theme grid */
+.ts-tgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+/* Theme card */
+.ts-tc {
+    border: 2px solid var(--border, #2a2d3a);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: var(--surface2, #1c1f2b);
+    transition: transform .18s, border-color .18s, box-shadow .18s;
+}
+
+.ts-tc:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent, #e8ff47);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.ts-tc.sel {
+    border-color: var(--accent, #e8ff47);
+    box-shadow: 0 0 0 1px var(--accent, #e8ff47);
+}
+
+.ts-tc-ck {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent, #e8ff47);
+    color: #000;
+    font-size: 9px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal-badge);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+}
+
+.ts-tc-prev {
+    height: 76px;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ts-tc-bar {
+    height: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 7px;
+    gap: 4px;
+}
+
+.ts-tc-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.ts-tc-line {
+    height: 7px;
+    border-radius: 3px;
+}
+
+.ts-tc-glow {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    opacity: .18;
+    filter: blur(14px);
+    pointer-events: none;
+}
+
+.ts-tc-inf {
+    padding: 9px 11px 11px;
+}
+
+.ts-tc-name {
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 1px;
+    color: var(--text, #e8eaf2);
+}
+
+.ts-tc-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--muted, #6b6f85);
+    margin-bottom: 7px;
+}
+
+.ts-tc-sw {
+    display: flex;
+    gap: 3px;
+}
+
+.ts-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, .08);
+}
+
+/* Right tabs */
+.ts-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border, #2a2d3a);
+    flex-shrink: 0;
+}
+
+.ts-tab {
+    flex: 1;
+    padding: 11px 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--muted, #6b6f85);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+}
+
+.ts-tab:hover {
+    color: var(--text, #e8eaf2);
+}
+
+.ts-tab.on {
+    color: var(--accent, #e8ff47);
+    border-bottom-color: var(--accent, #e8ff47);
+}
+
+/* Tab pane */
+.ts-pane {
+    padding: 16px;
+    flex: 1;
+}
+
+/* Field */
+.ts-f {
+    margin-bottom: 18px;
+}
+
+.ts-fl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted, #6b6f85);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ts-fl span {
+    color: var(--accent, #e8ff47);
+    font-size: 10px;
+}
+
+/* Accent presets */
+.ts-aps {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.ts-ap {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform .15s, border-color .15s, box-shadow .15s;
+    flex-shrink: 0;
+}
+
+.ts-ap:hover {
+    transform: scale(1.2);
+}
+
+.ts-ap.sel {
+    border-color: var(--text, #e8eaf2);
+    box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--text, #e8eaf2);
+}
+
+/* Color row */
+.ts-cr {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ts-ci {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    border: 2px solid var(--border, #2a2d3a);
+    cursor: pointer;
+    padding: 2px;
+    background: transparent;
+    transition: border-color .15s;
+}
+
+.ts-ci:hover {
+    border-color: var(--accent, #e8ff47);
+}
+
+.ts-ch {
+    background: var(--surface2, #1c1f2b);
+    border: 1px solid var(--border, #2a2d3a);
+    border-radius: 9px;
+    padding: 8px 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text, #e8eaf2);
+    outline: none;
+    width: 108px;
+    transition: border-color .15s;
+}
+
+.ts-ch:focus {
+    border-color: var(--accent, #e8ff47);
+}
+
+/* Radius */
+.ts-rps {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.ts-rp {
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border, #2a2d3a);
+    background: var(--surface2, #1c1f2b);
+    color: var(--muted, #6b6f85);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.ts-rp:hover {
+    border-color: var(--accent, #e8ff47);
+    color: var(--text, #e8eaf2);
+}
+
+.ts-rp.sel {
+    background: var(--accent, #e8ff47);
+    color: #000;
+    border-color: var(--accent, #e8ff47);
+    font-weight: 700;
+}
+
+.ts-rprev {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.ts-rbox {
+    width: 40px;
+    height: 40px;
+    background: var(--surface2, #1c1f2b);
+    border: 2px solid var(--accent, #e8ff47);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: var(--muted, #6b6f85);
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Fonts */
+.ts-fonts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ts-fo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border, #2a2d3a);
+    background: var(--surface2, #1c1f2b);
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.ts-fo:hover {
+    border-color: var(--accent, #e8ff47);
+}
+
+.ts-fo.sel {
+    border-color: var(--accent, #e8ff47);
+    background: rgba(232, 255, 71, .05);
+}
+
+.ts-fo-sa {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text, #e8eaf2);
+    min-width: 34px;
+}
+
+.ts-fo-nm {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted, #6b6f85);
+}
+
+.ts-fo-ck {
+    margin-left: auto;
+    color: var(--accent, #e8ff47);
+    font-size: 13px;
+}
+
+/* Token rows */
+.ts-toks {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ts-tok {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    background: var(--surface2, #1c1f2b);
+    border: 1px solid var(--border, #2a2d3a);
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: border-color .15s;
+}
+
+.ts-tok:hover {
+    border-color: var(--accent, #e8ff47);
+}
+
+.ts-tok-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, .08);
+}
+
+.ts-tok-nm {
+    font-size: 10px;
+    color: var(--muted, #6b6f85);
+    flex: 1;
+}
+
+.ts-tok-vl {
+    font-size: 10px;
+    color: var(--text, #e8eaf2);
+}
+
+.ts-tok-ok {
+    font-size: 10px;
+    color: var(--success, #47ff8a);
+}
+
+/* Shadow boxes */
+.ts-shbs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ts-shb {
+    padding: 11px 13px;
+    border-radius: 9px;
+    background: var(--surface2, #1c1f2b);
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: border-color .15s;
+    border: 1px solid var(--border, #2a2d3a);
+}
+
+.ts-shb:hover {
+    border-color: var(--accent, #e8ff47);
+}
+
+.ts-shb-nm {
+    font-size: 10px;
+    color: var(--accent, #e8ff47);
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.ts-shb-vl {
+    font-size: 9px;
+    color: var(--muted, #6b6f85);
+    word-break: break-all;
+}
+
+/* Inspector */
+.ts-ins {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ts-ins-r {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--surface2, #1c1f2b);
+    border: 1px solid var(--border, #2a2d3a);
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all .15s;
+}
+
+.ts-ins-r:hover {
+    border-color: var(--accent, #e8ff47);
+    background: rgba(255, 255, 255, .02);
+}
+
+.ts-ins-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, .08);
+}
+
+.ts-ins-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ts-ins-var {
+    font-size: 9px;
+    color: var(--muted, #6b6f85);
+}
+
+.ts-ins-val {
+    font-size: 10px;
+    color: var(--text, #e8eaf2);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ts-ins-bdg {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--muted, #6b6f85);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+/* Export */
+.ts-exp pre {
+    background: var(--surface2, #1c1f2b);
+    border: 1px solid var(--border, #2a2d3a);
+    border-radius: 9px;
+    padding: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent, #e8ff47);
+    line-height: 1.8;
+    overflow-x: auto;
+    max-height: 190px;
+    overflow-y: auto;
+    margin-top: 6px;
+}
+
+.ts-exp pre.json {
+    color: var(--text, #e8eaf2);
+}
+
+.ts-exp pre::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+.ts-exp pre::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.ts-cpbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border, #2a2d3a);
+    color: var(--text, #e8eaf2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+    margin-top: 6px;
+}
+
+.ts-cpbtn:hover {
+    border-color: var(--accent, #e8ff47);
+    color: var(--accent, #e8ff47);
+}
+
+.ts-exp-sec {
+    margin-bottom: 18px;
+}
+
+.ts-exp-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted, #6b6f85);
+}
+
+/* Footer */
+.ts-foot {
+    padding: 13px 22px;
+    border-top: 1px solid var(--border, #2a2d3a);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.ts-foot-info {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted, #6b6f85);
+}
+
+.ts-foot-info b {
+    color: var(--accent, #e8ff47);
+}
+
+.ts-apply {
+    padding: 9px 22px;
+    border-radius: 10px;
+    background: var(--accent, #e8ff47);
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .15s;
+}
+
+.ts-apply:hover {
+    opacity: .85;
+    transform: translateY(-1px);
+}
+
+.ts-cancel {
+    padding: 9px 16px;
+    border-radius: 10px;
+    background: var(--surface2, #1c1f2b);
+    color: var(--text, #e8eaf2);
+    border: 1px solid var(--border, #2a2d3a);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color .15s;
+}
+
+.ts-cancel:hover {
+    border-color: var(--accent, #e8ff47);
+}
+
+/* Divider */
+.ts-div {
+    border: none;
+    border-top: 1px solid var(--border, #2a2d3a);
+    margin: 14px 0;
+}
