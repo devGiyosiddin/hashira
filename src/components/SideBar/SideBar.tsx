@@ -82,7 +82,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className="sticky top-[-35px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-(--z-sidebar) overflow-hidden lg:flex hidden"
+    <aside className="sticky top-[-35px] h-fit-content bg-(--bg-color) w-64 flex flex-col z-(--z-btn) overflow-hidden lg:flex hidden"
     style={{
       'height': 'fit-content',
       'transition': 'top 0.3s ease-in-out'
